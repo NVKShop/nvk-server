@@ -8,4 +8,4 @@ env:
     - secure: "jokELQtGvZ5YXz1FPhOqfbtmKt5Ci9zM+PKwiiTni462nJ3D4HsNq94NkuVpjwfr2Z1847xr+WiqBO8H7Xw8xsLVIqVk6NXfWMwwLD6jWUwwn4HfdjK+NfHnFE+f3OWHs6YvuzoL4MYnrepRELH7ycxE2db+nZhPHhBAK9Tu2jWiIWoNXrpDO94vGBGMsbd/bkJU1NQYYESmOAQkSQmiFhDs8vJQNDpuj2gxaPo4GetS0NWwz+wOBmnMS8qx9oxvcl2Sb7G6yWthELnG7BTLNIhawFBAZ3k88rEhytjptsMalDg0PekcYXua9Ny77z8Gf1FOXCM+Rbyh/faP5ojKHFUdATK6a57qay01WCq8HJL5VQmO9nGXKu+GTN0X9KOJaDzk1WAC7/hvxKa9L7cTyPHiU/MotI0mIeTEDx9SRYEZsc+PzIVCkdFlUieIXAzFbRxSHx0H6ClILtyxsau29IeCuCTtHE8lJAIJNtWw0yB3BJ59mV4gD3/miZCeBcltFEAIzL/escQF8lLK9B02heP3G97DQrfE1JExEPa2BEN/8fn6oiUsylKhlnm6UIUFHZwosPTGqtVReQ+RBPeMQwwya+FrgnSXtgmNyok0Y1H33dkG1vfsNAqlwcfLQVzS8Qz8AftMH2vSjfqL47CdjJ+c661iWbV7btoDIEltE6c="
     
 after_success:
-    "curl --ftp-create-dirs -T nvkshop.war -u $FTP_USER:$FTP_PASS ftp://$SERVER"
+    "curl --ftp-create-dirs -T nvk-web/target/nvkshop.war -u $FTP_USER:$FTP_PASS ftp://$SERVER"
