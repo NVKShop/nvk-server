@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<context:annotation-config />
+	<context:property-placeholder />
+	
+	<context:component-scan base-package="hu.unideb.inf.nvk.web" use-default-filters="false">
+		<context:include-filter expression="org.springframework.stereotype.Controller" type="annotation" />
+	</context:component-scan>
+	
+<!-- TODO: 	Declare controllerAdvice -->
+	
+	<mvc:annotation-driven />
+	<mvc:resources location="/, classpath:/META-INF/web-resources/" mapping="/resources/**" />
+	<mvc:default-servlet-handler />
+
+	<mvc:view-controller path="/" view-name="redirect:/main.html" />
+	<mvc:view-controller path="/main.html" view-name="main" />
+
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+	</mvc:interceptors>
+
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" p:defaultLocale="en" />
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames" value="/WEB-INF/i18n/errors,/WEB-INF/i18n/messages,/WEB-INF/i18n/generals,/WEB-INF/i18n/validations" />
+		<property name="fallbackToSystemLocale" value="false" />
+		<property name="cacheSeconds" value="${resourceBundle.cacheSeconds:-1}" />
+	</bean>
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	
+	<bean id="contentNegotiatorManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<property name="mediaTypes">
+			<props>
+				<prop key="json">application/json</prop>
+				<prop key="html">text/html</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="contentNegotiator" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" p:order="1">
+		<property name="contentNegotiationManager" ref="contentNegotiatorManager" />
+		<property name="defaultViews">
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" p:extractValueFromSingleKeyModel="true" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="templateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+		<property name="prefix" value="/WEB-INF/templates/" />
+		<property name="suffix" value=".html" />
+		<property name="templateMode" value="HTML5" />
+		<property name="characterEncoding" value="UTF-8" />
+		<property name="cacheable" value="${thymeleaf.cacheable:true}" />
+	</bean>
+		
+	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<property name="templateResolver" ref="templateResolver" />
+			<property name="additionalDialects">
+			<set>
+				<bean class="org.thymeleaf.extras.java8time.dialect.Java8TimeDialect" />
+				<bean class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect" />
+			</set>
+		</property>
+	</bean>
+	<bean class="org.thymeleaf.spring4.view.AjaxThymeleafViewResolver">
+		<property name="templateEngine" ref="templateEngine" />
+		<property name="contentType" value="text/html;charset=utf-8" />
+		<property name="viewClass" value="org.thymeleaf.spring4.view.AjaxThymeleafView" />
+	</bean>
+
+
+</beans>
