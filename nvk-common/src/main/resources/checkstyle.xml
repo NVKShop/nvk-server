@@ -18,4 +18,5 @@
 			<property name="excludeScope" value="private"/>
 		</module>
 	</module>
+	
 </module>
