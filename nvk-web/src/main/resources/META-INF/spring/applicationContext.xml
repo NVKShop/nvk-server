@@ -9,13 +9,6 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<context:annotation-config />
-	<context:property-placeholder
-		location="file:${NVK_HOME}/settings/datasource.properties,
-		file:${NVK_HOME}/settings/logging.properties,
-		file:${NVK_HOME}/settings/liquibase.properties,
-		file:${NVK_HOME}/settings/webapp.properties,
-		file:${NVK_HOME}/settings/scheduling.properties,
-		file:${NVK_HOME}/settings/smtp.properties" />
 
 <!-- TODO: sessionfactory, databasesource -->
 
