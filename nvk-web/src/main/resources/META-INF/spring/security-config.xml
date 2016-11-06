@@ -27,7 +27,7 @@
 	<security:http>
 		<security:http-basic />
 		<security:intercept-url pattern="/secured/**"
-			access="hasRole('USER')" />
+			access="hasAnyRole('USER','ADMIN')" />
 	</security:http>
 
 	<security:authentication-manager>
