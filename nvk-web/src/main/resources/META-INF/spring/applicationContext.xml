@@ -1,32 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<context:annotation-config />
+	<context:component-scan base-package="hu.unideb.inf.rft.nvkshop.*"></context:component-scan>
 
-<!-- TODO: sessionfactory, databasesource -->
+	<!-- spring config for database connection -->
+	<import resource="classpath:spring-core.xml" />
+	
+	<!-- spring sercurity config -->
+	<import resource="classpath:META-INF/spring/security-config.xml" />
 
-
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager"
-		p:sessionFactory-ref="sessionFactory" />
-	<tx:annotation-driven />
-
-
-
-	<!-- DAO beans here -->
-
-	<!-- Service beans here -->
-
-	<!-- Scheduling beans config here -->
-
-	<!-- Job beans here -->
-
-	<!-- Trigger beans here -->
 </beans>

@@ -1,4 +1,4 @@
-package hu.unideb.inf.nvk.web;
+package hu.unideb.inf.nvkshop.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
