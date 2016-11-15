@@ -134,7 +134,11 @@ public class UserRegistrationRequestServiceImpl extends LoggabeBaseServiceImpl i
 		} catch (Exception e) {
 			log.warn("Failed to send registration activation message to user. Email = {}", email);
 		}
+	}
 
+	@Override
+	public void remove(UserRegistrationRequest request) {
+		userRegistrationRequestDao.delete(request);
 	}
 
 }

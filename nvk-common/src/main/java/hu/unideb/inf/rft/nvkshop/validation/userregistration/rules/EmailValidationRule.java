@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
 import hu.unideb.inf.rft.nvkshop.validation.ValidationRule;
-import hu.unideb.inf.rft.nvkshop.validation.ValidationViolation;
+import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationViolation;
+import hu.unideb.inf.rft.nvkshop.validation.userregistration.UserValidationViolations;
 
 @Service
 @Qualifier("userValidation")
@@ -23,8 +24,7 @@ public class EmailValidationRule implements ValidationRule<UserRegistrationReque
 		if (entity.getEmail().matches(EMAIL_REGEXP)) {
 			return Collections.EMPTY_LIST;
 		} else {
-			return Arrays.asList(new ValidationViolation("email address is not valid",
-					"the given email address is not a valid one"));
+			return Arrays.asList(UserValidationViolations.EMAIL_NOT_VALID);
 		}
 
 	}

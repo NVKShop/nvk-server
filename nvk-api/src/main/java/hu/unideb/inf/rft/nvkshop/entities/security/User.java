@@ -41,9 +41,6 @@ public class User extends IdentifyableUserBaseEntity {
 	@Column(name = "phone_number")
 	private String phoneNumber;
 
-	@Column(name = "email")
-	private String email;
-
 	@Column(name = "first_name")
 	private String firstName;
 
@@ -63,7 +60,6 @@ public class User extends IdentifyableUserBaseEntity {
 		this.banned = banned;
 		this.roles = roles;
 		this.phoneNumber = phoneNumber;
-		this.email = email;
 	}
 
 	public String getPassword() {
@@ -98,20 +94,11 @@ public class User extends IdentifyableUserBaseEntity {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((banned == null) ? 0 : banned.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
 		return result;
@@ -136,13 +123,6 @@ public class User extends IdentifyableUserBaseEntity {
 		} else if (!banned.equals(other.banned)) {
 			return false;
 		}
-		if (email == null) {
-			if (other.email != null) {
-				return false;
-			}
-		} else if (!email.equals(other.email)) {
-			return false;
-		}
 		if (password == null) {
 			if (other.password != null) {
 				return false;
@@ -162,8 +142,7 @@ public class User extends IdentifyableUserBaseEntity {
 
 	@Override
 	public String toString() {
-		return "User [password=" + password + ", banned=" + banned + ", roles=" + roles + ", phoneNumber=" + phoneNumber
-				+ ", email=" + email + "]";
+		return "User [password=" + password + ", banned=" + banned + ", roles=" + roles + ", phoneNumber=" + phoneNumber;
 	}
 
 }
