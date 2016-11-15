@@ -19,4 +19,9 @@ public class IdentifyableUserBaseEntityServiceImpl extends LoggabeBaseServiceImp
 		return identifyableUserBaseEntity.findByUserName(userName);
 	}
 
+	@Override
+	public IdentifyableUserBaseEntity findByEmail(String email) {
+		return identifyableUserBaseEntity.findByEmail(email);
+	}
+
 }

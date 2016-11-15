@@ -43,6 +43,7 @@ public class UserServiceImpl extends LoggabeBaseServiceImpl implements UserServi
 		User u = dozerMapper.map(request, User.class);
 
 		userDao.save(u);
+		userRegistrationRequestSerivce.remove(request);
 	}
 
 }

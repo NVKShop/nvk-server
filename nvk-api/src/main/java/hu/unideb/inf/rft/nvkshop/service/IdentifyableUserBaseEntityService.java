@@ -5,5 +5,6 @@ import hu.unideb.inf.rft.nvkshop.entities.security.IdentifyableUserBaseEntity;
 public interface IdentifyableUserBaseEntityService {
 
 	IdentifyableUserBaseEntity findByUserName(String userName);
-	
+
+	IdentifyableUserBaseEntity findByEmail(String email);
 }

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
 import hu.unideb.inf.rft.nvkshop.validation.ValidationRule;
-import hu.unideb.inf.rft.nvkshop.validation.ValidationViolation;
 import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationException;
+import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationViolation;
 
 @Service
 public class UserValidator {

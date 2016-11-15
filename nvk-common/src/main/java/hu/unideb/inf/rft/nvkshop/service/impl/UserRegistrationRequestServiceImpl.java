@@ -43,4 +43,9 @@ public class UserRegistrationRequestServiceImpl extends LoggabeBaseServiceImpl
 		userRegistrationRequestDao.save(request);
 	}
 
+	@Override
+	public void remove(UserRegistrationRequest request) {
+		userRegistrationRequestDao.delete(request);
+	}
+
 }
