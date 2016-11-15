@@ -11,6 +11,7 @@ import hu.unideb.inf.rft.nvkshop.LoggabeBaseServiceImpl;
 import hu.unideb.inf.rft.nvkshop.entities.security.User;
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
 import hu.unideb.inf.rft.nvkshop.repositories.UserDao;
+import hu.unideb.inf.rft.nvkshop.service.DeletedEntityException;
 import hu.unideb.inf.rft.nvkshop.service.UserRegistrationRequestService;
 import hu.unideb.inf.rft.nvkshop.service.UserService;
 import lombok.Setter;
@@ -36,8 +37,12 @@ public class UserServiceImpl extends LoggabeBaseServiceImpl implements UserServi
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void activateRegistration(String activationCode) {
+
 		UserRegistrationRequest request = userRegistrationRequestSerivce.findByActivationCode(activationCode);
 
+		if (request == null) {
+			throw new DeletedEntityException();
+		}
 		Mapper dozerMapper = new DozerBeanMapper();
 
 		User u = dozerMapper.map(request, User.class);

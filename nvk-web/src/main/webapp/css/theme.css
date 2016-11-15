@@ -1,0 +1,18 @@
+textarea {
+    resize: none;
+}
+
+body {
+	background-color: #520585;
+	background-image: linear-gradient(to bottom, #a4b2da 0, #adbade 100%);
+	background-repeat: repeat-x;
+	padding-top: 60px;
+}
+
+body, html {
+	height: 100%;
+}
+
+.table-hover > tbody > tr {
+	transition: background-color 500ms;
+}

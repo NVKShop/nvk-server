@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div class="form-group" th:fragment="sized-input(field, fieldSize, label, labelSize, required)" th:classappend="${#fields.hasErrors(field)} ? 'has-error'">
+		<label th:class="${'__${labelSize}__'} +' control-label'">
+			<span th:text="${label}">Label</span>
+			<sup th:if="${required}" class="text-danger">*</sup>
+		</label> 
+		<div th:class="${'__${fieldSize}__'}">
+				<input th:field="*{__${field}__}" type="text" class="form-control" /> 
+				<span data-th-if="${#fields.hasErrors(field)}" class="help-block" data-th-errors="*{__${field}__}">Error message</span>
+		</div>
+	</div>
+
+</body>
+</html>

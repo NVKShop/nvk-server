@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head data-th-fragment="head">
+<title data-th-text="#{application.title}">CV Factory</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<link data-th-href="@{/resources/images/favicon.png}" href="../../images/favicon.png" type="image/png" rel="shortcut icon" />
+<link data-th-href="@{/resources/css/bootstrap.min.css}" href="../../css/bootstrap.min.css" rel="stylesheet"></link>
+<link data-th-href="@{/resources/css/bootstrap-theme.min.css}" href="../../css/bootstrap-theme.min.css" rel="stylesheet"></link>
+<link data-th-href="@{/resources/css/theme.css}" href="../../css/theme.css" rel="stylesheet"></link>
+<link data-th-href="@{/resources/css/toastr.min.css}" href="../../css/toastr.min.css" rel="stylesheet"></link>
+
+<link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
+</head>
+<body>
+	<div class="container">
+		<div class="col-xs-offset-2 col-xs-8">
+				<div class="jumbotron">
+					<div class="text-center">
+						<div>
+							<h3><strong>NVK-SHOP </strong></h3>									
+						</div>
+					</div>
+				</div>
+			</div>		
+		<div class="loginForm">
+<!-- 		TODO: Wire this:  -->
+<!-- 		data-th-action="@{/j_spring_security_check}"  -->
+			<form action="#" method="post" data-th-object="${loginForm}" >
+			<div class="row">
+				<div class="form-group col-xs-offset-4 col-xs-4">
+					<label data-th-text="#{login.userName}">User name</label>
+					<input type="text" class="form-control" data-th-field="*{userName}"></input>
+				</div>
+				<div class="form-group col-xs-offset-4 col-xs-4">
+					<label data-th-text="#{login.password}">Password</label>
+					<input type="password" class="form-control" data-th-field="*{password}"></input>
+				</div>
+				<div class="col-xs-offset-4 col-xs-4">
+					<button type="submit" class="btn btn-default" data-th-text="#{login.submit}">Login</button>
+				 	<a href="#" data-th-href="@{/registration.html}"  data-th-text="#{registration.registration}" class="btn btn-default col-xs-offset-4" role="button">Cancel</a>
+				</div>
+				<br/> 
+				<div class="col-xs-offset-4 col-xs-4">
+					<a href="#" data-th-href="@{/lostpassword.html}"  data-th-text="#{registration.lostPassword}" class="btn btn-default" role="button">Cancel</a>
+				
+				</div>
+				 <div>
+				 </div>
+				<div data-th-if="${failure}" class="form-group col-xs-offset-4 col-xs-4 has-error">
+					<strong class="help-block" data-th-text="#{login.failure}">Login failure</strong>
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+	<script type="text/javascript" data-th-src="@{/resources/js/jquery.min.js}" src="js/jquery.min.js"></script>
+	<script type="text/javascript" data-th-src="@{/resources/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" data-th-src="@{/resources/js/toastr.min.js}" src="js/toastr.min.js"></script>
+
+<script data-th-if="${successMsg}" data-th-inline="javascript" type="text/javascript">
+	/*<![CDATA[*/
+		toastr.success([[#{${successMsg}}]], [[#{general.toastrSuccess}]]);
+	/*]]>*/
+	</script>
+	<script data-th-if="${errorMsg}" data-th-inline="javascript" type="text/javascript">
+	/*<![CDATA[*/
+		toastr.error([[#{${errorMsg}}]], [[#{general.toastrError}]]);
+	/*]]>*/
+	</script>
+</body>
+</html>

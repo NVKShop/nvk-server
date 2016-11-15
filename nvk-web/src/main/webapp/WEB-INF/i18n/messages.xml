@@ -2,6 +2,42 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 
-	<entry key="application.title">Web application</entry>
+<!-- Application -->
+	<entry key="application.title">NVK-Shop</entry>
 
+	<!-- Titles -->
+	<entry key="titles.registration"> NVK-Shop : Registration </entry>
+	<entry key="titles.passwordReset"> NVK-Shop : Reset password</entry>
+	<entry key="titles.passwordRecover"> NVK-Shop : New password</entry>
+	
+	<!-- Login -->
+	<entry key="login.failure">Wrong username or password!</entry>
+	<entry key="login.password">Password</entry>
+	<entry key="login.userName">User name</entry>
+	<entry key="login.submit">Login</entry>
+	<entry key="login.title">Login</entry>
+
+	<!-- Registration -->
+	<entry key="registration.passwordConfirm">Type your password again</entry>
+	<entry key="registration.passwordsNotMatch">Password do not match!</entry>
+	<entry key="registration.passwordMatch">Password match!</entry>
+	<entry key="registration.registration">Registration</entry>
+	<entry key="registration.submit">Submit registration</entry>
+	<entry key="registration.success">You successfully registered in the system. We will send you a message with the activation link soon. </entry>
+ 	<entry key="registration.invalidActivationCode">The registration activation was failed, because the given activation code is invalid.</entry>
+	<entry key="registration.activationSuccess">Activation succeeded. Now you can log in. </entry>
+	<entry key="registration.sendRecovery">Send recovery email</entry>
+	<entry key="registration.lostPasswordInfo">To send a password recovery email type your already registered email addres here!</entry>
+	<entry key="registration.passwordRecoverySent">Password recovery sent to your e-mail address!</entry>
+	<entry key="registration.lostPassword">Recover password</entry>
+	<entry key="registration.passwordReseted">Your password was reseted. Now you can log in.</entry>
+	<entry key="registration.permamentlyDeletedUser"> This account permamently deleted from the system.</entry>
+	<entry key="registration.invalidActivationCode">This activation code is invalid!</entry>
+	<entry key="registration.phoneNumber">Phone number</entry>
+	<entry key="registration.userName">User name</entry>
+	<entry key="registration.fisrtName">First name</entry>
+	<entry key="registration.lastName">Last name</entry>
+	<entry key="registration.emailAlreadyRegistered">This email already registered! Try to reset your password.</entry>
+	<entry key="registration.emailNotValid">Please type a valid email address!</entry>
+	<entry key="registration.userNameAlreadyRegistered">This username is already registered in  our webshop! Please choose an another one!</entry>
 </properties>
