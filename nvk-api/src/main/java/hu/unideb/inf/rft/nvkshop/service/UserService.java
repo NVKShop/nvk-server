@@ -1,9 +1,12 @@
 package hu.unideb.inf.rft.nvkshop.service;
 
-import hu.unideb.inf.rft.nvkshop.entities.User;
+
+import hu.unideb.inf.rft.nvkshop.entities.security.User;
 
 public interface UserService {
 
-	public User findByUserName(String username);
+	User findByUserName(String username);
 
+	void activateRegistration(String activationCode);
+	
 }

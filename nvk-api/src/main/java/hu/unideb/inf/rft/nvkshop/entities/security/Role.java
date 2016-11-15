@@ -1,13 +1,9 @@
-package hu.unideb.inf.rft.nvkshop.entities;
+package hu.unideb.inf.rft.nvkshop.entities.security;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import hu.unideb.inf.rft.nvkshop.entities.base.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "roles")
@@ -25,7 +21,6 @@ public class Role extends BaseEntity {
 
 	public Role() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Role(String roleName) {

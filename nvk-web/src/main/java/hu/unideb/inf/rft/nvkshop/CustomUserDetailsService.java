@@ -3,20 +3,16 @@ package hu.unideb.inf.rft.nvkshop;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
-import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import hu.unideb.inf.rft.nvkshop.entities.Role;
-import hu.unideb.inf.rft.nvkshop.entities.User;
+import hu.unideb.inf.rft.nvkshop.entities.security.Role;
+import hu.unideb.inf.rft.nvkshop.entities.security.User;
 import hu.unideb.inf.rft.nvkshop.service.UserService;
 
 @Service(value = "customUserDetailsService")

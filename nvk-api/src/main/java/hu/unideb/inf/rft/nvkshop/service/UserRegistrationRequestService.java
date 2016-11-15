@@ -1,0 +1,12 @@
+package hu.unideb.inf.rft.nvkshop.service;
+
+import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
+import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationException;
+
+public interface UserRegistrationRequestService {
+
+	UserRegistrationRequest findByActivationCode(String activationCode);
+	
+	void attemptRegistration(UserRegistrationRequest request) throws ValidationException;
+	
+}
