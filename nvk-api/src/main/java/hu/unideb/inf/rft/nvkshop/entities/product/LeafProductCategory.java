@@ -7,11 +7,11 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
-@Entity
-@DiscriminatorValue(value="LEAF_CATEGORY")
+//@Entity
+//@DiscriminatorValue(value="LEAF_CATEGORY")
 public class LeafProductCategory extends AbstractProductCategory {
 
-	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=false,mappedBy="category_id")
+//	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=false,mappedBy="category_id")
 	private List<Item> items;
 
 	public List<Item> getItems() {

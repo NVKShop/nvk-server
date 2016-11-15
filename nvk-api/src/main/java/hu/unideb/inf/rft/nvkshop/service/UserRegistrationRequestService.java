@@ -11,4 +11,8 @@ public interface UserRegistrationRequestService {
 	
 	void attemptRegistration(UserRegistrationRequest request) throws ValidationException;
 	
+	UserRegistrationRequest findByEmail(String email);
+	
+	UserRegistrationRequest findByUserName(String userName);
+	
 }

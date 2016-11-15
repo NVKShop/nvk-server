@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import hu.unideb.inf.rft.nvkshop.entities.base.BaseEntity;
 import hu.unideb.inf.rft.nvkshop.entities.security.User;
@@ -19,7 +20,8 @@ import hu.unideb.inf.rft.nvkshop.entities.security.User;
 @Table(name = "orders")
 public class Order extends BaseEntity {
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, mappedBy = "item_order_id")
+	// @OneToMany(mappedBy = "items")
+	@Transient
 	private List<ItemOrder> items;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
@@ -29,7 +31,9 @@ public class Order extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private PayType payType;
 
-	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "order")
+	// @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade =
+	// CascadeType.ALL)
+	@Transient
 	private Address deliveryAddress;
 
 	public List<ItemOrder> getItems() {

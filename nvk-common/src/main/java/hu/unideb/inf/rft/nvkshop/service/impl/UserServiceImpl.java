@@ -46,4 +46,9 @@ public class UserServiceImpl extends LoggabeBaseServiceImpl implements UserServi
 		userRegistrationRequestSerivce.remove(request);
 	}
 
+	@Override
+	public User findByEmail(String email) {
+		return userDao.findByEmail(email);
+	}
+
 }

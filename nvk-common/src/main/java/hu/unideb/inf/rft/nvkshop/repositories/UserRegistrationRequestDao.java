@@ -14,4 +14,6 @@ public interface UserRegistrationRequestDao extends JpaRepository<UserRegistrati
 	@Query("SELECT u FROM UserRegistrationRequest u WHERE u.userName.userName = :userName")
 	UserRegistrationRequest findByUserName(String userName);
 	
+	UserRegistrationRequest findByEmail(String email);
+	
 }

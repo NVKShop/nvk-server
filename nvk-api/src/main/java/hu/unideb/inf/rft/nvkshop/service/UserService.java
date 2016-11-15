@@ -9,4 +9,6 @@ public interface UserService {
 
 	void activateRegistration(String activationCode);
 	
+	User findByEmail(String email);
+	
 }

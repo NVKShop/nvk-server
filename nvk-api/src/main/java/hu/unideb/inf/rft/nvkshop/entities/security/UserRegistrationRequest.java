@@ -5,12 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import hu.unideb.inf.rft.nvkshop.entities.base.BaseEntity;
+
 @Entity
 @Table(name = "registration_requests")
-public class UserRegistrationRequest extends IdentifyableUserBaseEntity {
-
-	@Column(name = "email", nullable = false)
-	private String email;
+public class UserRegistrationRequest extends BaseEntity {
 
 	@Column(name = "first_name")
 	private String firstName;
@@ -27,13 +26,11 @@ public class UserRegistrationRequest extends IdentifyableUserBaseEntity {
 	@Column(name = "activation_code")
 	private String activationCode;
 
-	public String getEmail() {
-		return email;
-	}
+	@Column(name = "user_name", unique = true, nullable = false, updatable = false)
+	private String userName;
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	@Column(name = "email", unique = true, nullable = false)
+	private String email;
 
 	public String getFirstName() {
 		return firstName;
@@ -72,22 +69,28 @@ public class UserRegistrationRequest extends IdentifyableUserBaseEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserRegistrationRequest(String email, String firstName, String lastName, String password,
-			String passwordConfirmation) {
-		super();
-		this.email = email;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.password = password;
-		this.passwordConfirmation = passwordConfirmation;
-	}
-
 	public String getActivationCode() {
 		return activationCode;
 	}
 
 	public void setActivationCode(String activationCode) {
 		this.activationCode = activationCode;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import hu.unideb.inf.rft.nvkshop.entities.security.IdentifyableUserBaseEntity;
+import hu.unideb.inf.rft.nvkshop.entities.security.User;
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
-import hu.unideb.inf.rft.nvkshop.service.IdentifyableUserBaseEntityService;
+import hu.unideb.inf.rft.nvkshop.service.UserRegistrationRequestService;
+import hu.unideb.inf.rft.nvkshop.service.UserService;
 import hu.unideb.inf.rft.nvkshop.validation.ValidationRule;
 import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationViolation;
 import hu.unideb.inf.rft.nvkshop.validation.userregistration.UserValidationViolations;
@@ -20,14 +21,18 @@ import hu.unideb.inf.rft.nvkshop.validation.userregistration.UserValidationViola
 public class UserNameValidationRule implements ValidationRule<UserRegistrationRequest> {
 
 	@Autowired
-	private IdentifyableUserBaseEntityService identifyableUserBaseEntityService;
+	private UserRegistrationRequestService userRegistrationRequestService;
+
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public List<ValidationViolation> validate(UserRegistrationRequest entity) {
+		UserRegistrationRequest registrationRequest = userRegistrationRequestService
+				.findByUserName(entity.getUserName());
 
-		IdentifyableUserBaseEntity abstractUser = identifyableUserBaseEntityService.findByUserName(entity.getUserName());
-		
-		if (abstractUser == null) {
+		User user = userService.findByUserName(entity.getUserName());
+		if (registrationRequest == null && user == null) {
 			return Collections.emptyList();
 		} else {
 			return Arrays.asList(UserValidationViolations.USERNAME_EXISTS);

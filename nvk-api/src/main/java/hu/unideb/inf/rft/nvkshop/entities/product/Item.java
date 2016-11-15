@@ -10,7 +10,7 @@ import hu.unideb.inf.rft.nvkshop.entities.base.BaseEntity;
 
 @Entity
 @Table(name = "items")
-//@Audited
+// @Audited
 public class Item extends BaseEntity {
 
 	@Column(name = "name")
