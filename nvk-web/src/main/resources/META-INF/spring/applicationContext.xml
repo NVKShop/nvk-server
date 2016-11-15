@@ -23,5 +23,17 @@
 		<property name="fallbackToSystemLocale" value="false" />
 		<property name="cacheSeconds" value="${resourceBundle.cacheSeconds:-1}" />
 	</bean>
+<!-- TODO: 	Ebben be kell állítani egy mappát ahol a templatek vannak az emailekhez, ezek most a parent modul /templates mappájában vannak -->
+	<bean
+		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean"
+		p:defaultEncoding="UTF-8" p:templateLoaderPath="file:${NVK_HOME}/templates" />
+	
+<!-- TODO:	be kell settelni az alábbi cuccokat: -->
+	<bean class="org.springframework.mail.javamail.JavaMailSenderImpl"
+		p:host="${smtp.host}" p:port="${smtp.port}" p:username="${smtp.user}"
+		p:password="${smtp.password}" p:javaMailProperties-ref="javaMailProperties" />
+<!-- Support beans -->
+<!-- TODO: ezeket is be kell settelni valahonnan -->
+	<bean class="hu.unideb.inf.rft.nvkshop.service.Settings" p:baseUrl="${webapp.baseUrl}" p:fromAddress="${smtp.fromAddress}"  p:defaultLanguage="${webapp.defaultLanguage}"/>
 
 </beans>

@@ -4,17 +4,26 @@ public class RegistrationRequestForm {
 
 	private String fistName;
 	private String lastName;
+	private String userName;
 	private String email;
 	private String password;
 	private String passwordConfirm;
-	private Integer id;
+	private String phoneNumber;
 
-	public Integer getId() {
-		return id;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getFistName() {

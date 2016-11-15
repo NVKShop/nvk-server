@@ -1,15 +1,25 @@
 package hu.unideb.inf.nvkshop.web;
 
+import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
+import hu.unideb.inf.rft.nvkshop.service.UserRegistrationRequestService;
+import hu.unideb.inf.rft.nvkshop.service.UserService;
+import hu.unideb.inf.rft.nvkshop.validation.ValidationViolation;
+import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationException;
 
 /**
  * Registration controller
@@ -23,6 +33,12 @@ public class RegistrationController extends AbstractNvkController {
 	/** Registration controller */
 	public RegistrationController() {
 	}
+
+	@Autowired
+	private UserRegistrationRequestService registrationService;
+
+	@Autowired
+	private UserService userService;
 
 	/** SLF4J Logger */
 	private final Logger log = LoggerFactory.getLogger(RegistrationController.class);
@@ -65,6 +81,21 @@ public class RegistrationController extends AbstractNvkController {
 			return "registration";
 		}
 
+		Mapper dz = new DozerBeanMapper();
+		UserRegistrationRequest request = dz.map(form, UserRegistrationRequest.class);
+
+		try {
+			registrationService.attemptRegistration(request);
+		} catch (ValidationException e) {
+			for (ValidationViolation v : e.getViolations()) {
+				switch (v.getCause()) {
+				// case :
+				// case :
+				}
+
+			}
+		}
+
 		//
 		// try {
 		// log.info("Try to register user.");
@@ -79,7 +110,7 @@ public class RegistrationController extends AbstractNvkController {
 	}
 
 	/**
-	 * Activate user registration.
+	 * Activate user registration by the activation code URL code.
 	 * 
 	 * @param form the form
 	 * @param errors the errors
@@ -88,27 +119,20 @@ public class RegistrationController extends AbstractNvkController {
 	 * @return the view name
 	 */
 	@RequestMapping(value = "/registration/activation", method = RequestMethod.GET, produces = "text/html")
-	public String activateRegistration(@RequestParam("token") String token, Model model, RedirectAttributes redirectAttrs) {
-		//
-		// log.info("Try to activate registraion. Token={}", token);
-		// if (!StringUtils.hasText(token)) {
-		// redirectAttrs.addFlashAttribute("errorMsg", "registration.invalidToken");
-		// } else {
-		//
-		// if (user == null) {
-		// redirectAttrs.addFlashAttribute("errorMsg", "registration.invalidToken");
-		// } else if (user.getStatus() != UserStatus.ACTIVATION_LINK_SENT) {
-		// redirectAttrs.addFlashAttribute("errorMsg", "registration.userAlreadyActivatedOrDeleted");
-		// } else {
-		// try {
-		// userService.activateUserRegistration(user);
-		// redirectAttrs.addFlashAttribute("successMsg", "registration.activationSuccess");
-		// } catch (Exception e) {
-		// redirectAttrs.addFlashAttribute("errorMsg", "registration.invalidToken");
-		// }
-		// }
-		//
-		// }
+	public String activateRegistration(@RequestParam("activationCode") String activationCode, Model model,
+			RedirectAttributes redirectAttrs) {
+
+		log.info("Try to activate registraion. ActivationCode ={}", activationCode);
+		if (!StringUtils.hasText(activationCode)) {
+			redirectAttrs.addFlashAttribute("errorMsg", "registration.invalidToken");
+		} else {
+			try {
+				userService.activateRegistration(activationCode);
+				redirectAttrs.addFlashAttribute("successMsg", "registration.activationSuccess");
+			} catch (Exception e) {
+				redirectAttrs.addFlashAttribute("errorMsg", "registration.invaliActivationCode");
+			}
+		}
 		return "redirect:/login.html";
 	}
 
