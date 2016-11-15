@@ -1,4 +1,4 @@
-package hu.unideb.inf.rft.nvkshop.entities;
+package hu.unideb.inf.rft.nvkshop.entities.security;
 
 import java.util.List;
 
@@ -10,30 +10,30 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
-import hu.unideb.inf.rft.nvkshop.entities.base.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import hu.unideb.inf.rft.nvkshop.entities.product.Address;
+
+import hu.unideb.inf.rft.nvkshop.entities.product.Address;
+
+import hu.unideb.inf.rft.nvkshop.entities.product.Address;
+
+import hu.unideb.inf.rft.nvkshop.entities.product.Address;
 
 @Entity
 @Table(name = "users")
 @EntityListeners(value = { UserEntityListener.class })
-public class User extends BaseEntity {
-
-	@Column(name = "username", nullable = false, unique = true)
-	private String userName;
+public class User extends IdentifyableUserBaseEntity {
 
 	@Column(name = "passwd", nullable = false)
 	private String password;
 
-	@Column(name = "banned")
+	@Column(name = "banned", columnDefinition = "default 0")
 	private Boolean banned;
 
-	@ManyToMany(cascade = { CascadeType.ALL },fetch=FetchType.EAGER)
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinTable(name = "users_roles_sw", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<Role> roles;
 
@@ -44,27 +44,26 @@ public class User extends BaseEntity {
 	@Column(name = "email")
 	private String email;
 
-	public User(String userName, String password, Boolean banned, List<Role> roles, String phoneNumber, String email) {
+	@Column(name = "first_name")
+	private String firstName;
+
+	@Column(name = "last_name")
+	private String lastName;
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user_id")
+	private List<Address> addresses;
+
+	public User() {
 		super();
-		this.userName = userName;
+	}
+
+	public User(String password, Boolean banned, List<Role> roles, String phoneNumber, String email) {
+		super();
 		this.password = password;
 		this.banned = banned;
 		this.roles = roles;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
-	}
-
-	public User() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 
 	public String getPassword() {
@@ -115,7 +114,6 @@ public class User extends BaseEntity {
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
-		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		return result;
 	}
 
@@ -159,20 +157,13 @@ public class User extends BaseEntity {
 		} else if (!phoneNumber.equals(other.phoneNumber)) {
 			return false;
 		}
-		if (userName == null) {
-			if (other.userName != null) {
-				return false;
-			}
-		} else if (!userName.equals(other.userName)) {
-			return false;
-		}
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "User [userName=" + userName + ", password=" + password + ", banned=" + banned + ", roles=" + roles
-				+ ", phoneNumber=" + phoneNumber + ", email=" + email + "]";
+		return "User [password=" + password + ", banned=" + banned + ", roles=" + roles + ", phoneNumber=" + phoneNumber
+				+ ", email=" + email + "]";
 	}
 
 }

@@ -1,4 +1,4 @@
-package hu.unideb.inf.rft.nvkshop.entities;
+package hu.unideb.inf.rft.nvkshop.entities.security;
 
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
