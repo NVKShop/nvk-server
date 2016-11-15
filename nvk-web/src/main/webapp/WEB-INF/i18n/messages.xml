@@ -19,7 +19,7 @@
 
 	<!-- Registration -->
 	<entry key="registration.passwordConfirm">Type your password again</entry>
-	<entry key="registration.passwordNotMatch">Password do not match!</entry>
+	<entry key="registration.passwordsNotMatch">Password do not match!</entry>
 	<entry key="registration.passwordMatch">Password match!</entry>
 	<entry key="registration.registration">Registration</entry>
 	<entry key="registration.submit">Submit registration</entry>
@@ -37,4 +37,7 @@
 	<entry key="registration.userName">User name</entry>
 	<entry key="registration.fisrtName">First name</entry>
 	<entry key="registration.lastName">Last name</entry>
+	<entry key="registration.emailAlreadyRegistered">This email already registered! Try to reset your password.</entry>
+	<entry key="registration.emailNotValid">Please type a valid email address!</entry>
+	<entry key="registration.userNameAlreadyRegistered">This username is already registered in  our webshop! Please choose an another one!</entry>
 </properties>

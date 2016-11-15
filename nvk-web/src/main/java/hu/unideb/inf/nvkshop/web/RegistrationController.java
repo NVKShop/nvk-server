@@ -18,8 +18,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
 import hu.unideb.inf.rft.nvkshop.service.UserRegistrationRequestService;
 import hu.unideb.inf.rft.nvkshop.service.UserService;
-import hu.unideb.inf.rft.nvkshop.validation.ValidationViolation;
 import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationException;
+import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationViolation;
+import hu.unideb.inf.rft.nvkshop.validation.userregistration.UserValidationViolations;
 
 /**
  * Registration controller
@@ -87,26 +88,24 @@ public class RegistrationController extends AbstractNvkController {
 		try {
 			registrationService.attemptRegistration(request);
 		} catch (ValidationException e) {
-			for (ValidationViolation v : e.getViolations()) {
-				switch (v.getCause()) {
-				// case :
-				// case :
+			for (ValidationViolation violation : e.getViolations()) {
+				if (violation instanceof UserValidationViolations) {
+					switch ((UserValidationViolations) violation) {
+					case EMAIL_EXISTS:
+						errors.rejectValue("email", "registration.emailAlreadyRegistered");
+					case EMAIL_NOT_VALID:
+						errors.rejectValue("email", "registration.emailNotValid");
+					case USERNAME_EXISTS:
+						errors.rejectValue("username", "registration.userNameAlreadyRegistered");
+					case PASSWORD_MISMATCH:
+						errors.rejectValue("password", "registration.passwordsNotMatch");
+						errors.rejectValue("passwordConfirm", "registration.passwordsNotMatch");
+					}
 				}
-
 			}
+			return "registration";
 		}
-
-		//
-		// try {
-		// log.info("Try to register user.");
-		// // userService.registerUser(form.getName(), form.getEmail(), form.getPassword());
-		//
-		// } catch (EntityConflictionException ex) {
-		// }
-		//
-		// redirectAttrs.addFlashAttribute("successMsg", "registration.success");
 		return "redirect:/login.html";
-
 	}
 
 	/**
