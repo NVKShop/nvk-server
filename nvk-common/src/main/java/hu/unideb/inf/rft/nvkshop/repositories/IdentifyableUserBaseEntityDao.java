@@ -10,4 +10,6 @@ public interface IdentifyableUserBaseEntityDao extends JpaRepository<Identifyabl
 
 	IdentifyableUserBaseEntity findByUserName(String userName);
 
+	IdentifyableUserBaseEntity findByEmail(String email);
+	
 }

@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
 
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
 import hu.unideb.inf.rft.nvkshop.validation.ValidationRule;
-import hu.unideb.inf.rft.nvkshop.validation.ValidationViolation;
+import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationViolation;
+import hu.unideb.inf.rft.nvkshop.validation.userregistration.UserValidationViolations;
 
 @Service
 @Qualifier("userValidation")
@@ -22,7 +23,7 @@ public class PasswordMatchValidationRule implements ValidationRule<UserRegistrat
 		if (BCrypt.checkpw(entity.getPasswordConfirmation(), entity.getPassword())) {
 			return Collections.EMPTY_LIST;
 		} else {
-			return Arrays.asList(new ValidationViolation("password mismatch", "the two password fields must match"));
+			return Arrays.asList(UserValidationViolations.PASSWORD_MISMATCH);
 		}
 	}
 
