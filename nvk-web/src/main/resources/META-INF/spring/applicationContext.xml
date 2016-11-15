@@ -11,8 +11,17 @@
 
 	<!-- spring config for database connection -->
 	<import resource="classpath:spring-core.xml" />
-	
+
 	<!-- spring sercurity config -->
 	<import resource="classpath:META-INF/spring/security-config.xml" />
+
+	<!-- messaging beans -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames"
+			value="/WEB-INF/i18n/generals,/WEB-INF/i18n/messages," />
+		<property name="fallbackToSystemLocale" value="false" />
+		<property name="cacheSeconds" value="${resourceBundle.cacheSeconds:-1}" />
+	</bean>
 
 </beans>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+<!-- Application -->
+	<entry key="application.title">NVK-Webshop</entry>
+
+	<!-- Titles -->
+	<entry key="titles.registration"> NVK-Shop : Registration </entry>
+	<entry key="titles.passwordReset"> NVK-Shop : Reset password</entry>
+	<entry key="titles.passwordRecover"> NVK-Shop : New password</entry>
+	
+	<!-- Login -->
+	<entry key="login.failure">Hibás felhasználónév vagy jelszó!</entry>
+ 	<entry key="login.password">Jelszó</entry>
+ 	<entry key="login.userName">Felhasználó</entry>
+ 	<entry key="login.submit">Bejelentkezés</entry>
+ 	<entry key="login.title">Bejelentkezés</entry>
+
+	<!-- Registration -->
+	<entry key="registration.passwordConfirm">Kérjük adja meg újra jelszavát!</entry>
+	<entry key="registration.passwordNotMatch">A megadott jelszavak nem egyeznek!</entry>
+	<entry key="registration.passwordMatch">A jelszavak egyeznek!</entry>
+	<entry key="registration.registration">Regisztráció</entry>
+	<entry key="registration.submit">Regisztráció véglegesítése</entry>
+	<entry key="registration.success">Sikeresen regisztrált webshopunkra! A megadott email címre hamarosan küldünk egy aktivációs linket tartalmazó levelet. </entry>
+ 	<entry key="registration.invalidToken">A regisztráció aktivációja nem sikerült mivel a megadott token lejárt!</entry>
+	<entry key="registration.activationSuccess">A regisztráció aktiválása sikerült! Mostmár bejelentkezhet fiókjába!</entry>
+	<entry key="registration.sendRecovery">Jelszó helyreállító email küldése</entry>
+	<entry key="registration.lostPasswordInfo">A jelszó helyreállító email kiküldéséhez kérjük adja meg korában  regisztrált email címmét</entry>
+	<entry key="registration.passwordRecoverySent">A jelszó helyreállító email elküldésre került a megadott email címre!</entry>
+	<entry key="registration.lostPassword">Jelszó helyreállítás</entry>
+	<entry key="registration.passwordReseted">Az Ön jelszava helyreállításra került.</entry>
+	<entry key="registration.permamentlyDeletedUser">Ez a fiók átmenetileg zárolásra került.</entry>
+	<entry key="registration.invalidToken">A kapott token hibás vagy lejárt. </entry>
+
+</properties>

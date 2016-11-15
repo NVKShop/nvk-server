@@ -1,0 +1,25 @@
+body {
+/* 	background-image: url(../images/bg.jpg); */
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+}
+
+
+body {
+	font-family: Raleway, sans-serif;
+	padding-top: 120px;
+}
+
+.loginForm, .loginTitle {
+	color: blue;
+	text-align: center;
+}
+
+.loginTitle {
+	font-size: 32px;
+}
+
+.loginSeparator {
+	border-top: 1px dotted white;
+	margin-bottom: 2em;
+	margin-top: 0.5em;
+}
