@@ -37,7 +37,7 @@ public abstract class BaseEntity {
 	protected Date dateOfModification;
 
 	// @Version
-	@Column(name = "version", columnDefinition = "default 0")
+	@Column(name = "version")
 	protected Integer version;
 
 }

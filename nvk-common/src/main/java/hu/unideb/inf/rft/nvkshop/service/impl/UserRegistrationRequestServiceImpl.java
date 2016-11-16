@@ -141,4 +141,14 @@ public class UserRegistrationRequestServiceImpl extends LoggabeBaseServiceImpl i
 		userRegistrationRequestDao.delete(request);
 	}
 
+	@Override
+	public UserRegistrationRequest findByEmail(String email) {
+		return userRegistrationRequestDao.findByEmail(email);
+	}
+
+	@Override
+	public UserRegistrationRequest findByUserName(String userName) {
+		return userRegistrationRequestDao.findByUserName(userName);
+	}
+
 }

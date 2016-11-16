@@ -10,27 +10,22 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Pattern;
 
-import hu.unideb.inf.rft.nvkshop.entities.product.Address;
-
-import hu.unideb.inf.rft.nvkshop.entities.product.Address;
-
-import hu.unideb.inf.rft.nvkshop.entities.product.Address;
-
+import hu.unideb.inf.rft.nvkshop.entities.base.BaseEntity;
 import hu.unideb.inf.rft.nvkshop.entities.product.Address;
 
 @Entity
 @Table(name = "users")
 @EntityListeners(value = { UserEntityListener.class })
-public class User extends IdentifyableUserBaseEntity {
+public class User extends BaseEntity {
 
 	@Column(name = "passwd", nullable = false)
 	private String password;
 
-	@Column(name = "banned", columnDefinition = "default 0")
+	@Column(name = "banned")
 	private Boolean banned;
 
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
@@ -47,7 +42,16 @@ public class User extends IdentifyableUserBaseEntity {
 	@Column(name = "last_name")
 	private String lastName;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user_id")
+	@Column(name = "user_name", unique = true, nullable = false, updatable = false)
+	protected String userName;
+
+	@Column(name = "email", unique = true, nullable = false)
+	protected String email;
+
+	// @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy =
+	// "user_id")
+	@Transient
+
 	private List<Address> addresses;
 
 	public User() {
@@ -142,7 +146,48 @@ public class User extends IdentifyableUserBaseEntity {
 
 	@Override
 	public String toString() {
-		return "User [password=" + password + ", banned=" + banned + ", roles=" + roles + ", phoneNumber=" + phoneNumber;
+		return "User [password=" + password + ", banned=" + banned + ", roles=" + roles + ", phoneNumber="
+				+ phoneNumber;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
 	}
 
 }

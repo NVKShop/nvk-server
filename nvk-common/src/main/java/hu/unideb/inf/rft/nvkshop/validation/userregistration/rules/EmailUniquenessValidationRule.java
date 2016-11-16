@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import hu.unideb.inf.rft.nvkshop.entities.security.IdentifyableUserBaseEntity;
 import hu.unideb.inf.rft.nvkshop.entities.security.User;
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
-import hu.unideb.inf.rft.nvkshop.service.IdentifyableUserBaseEntityService;
+import hu.unideb.inf.rft.nvkshop.service.UserRegistrationRequestService;
+import hu.unideb.inf.rft.nvkshop.service.UserService;
 import hu.unideb.inf.rft.nvkshop.validation.ValidationRule;
 import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationViolation;
 import hu.unideb.inf.rft.nvkshop.validation.userregistration.UserValidationViolations;
@@ -23,14 +23,20 @@ import lombok.Setter;
 public class EmailUniquenessValidationRule implements ValidationRule<UserRegistrationRequest> {
 
 	@Autowired
-	private IdentifyableUserBaseEntityService identifyableUserBaseEntityService;
+	private UserService userService;
+
+	@Autowired
+	private UserRegistrationRequestService userRegistrationRequestService;
 
 	@Override
 	public List<ValidationViolation> validate(UserRegistrationRequest entity) {
-		IdentifyableUserBaseEntity user = identifyableUserBaseEntityService.findByEmail(entity.getEmail());
-		if (user == null) {
+		UserRegistrationRequest registrationRequest = userRegistrationRequestService.findByEmail(entity.getEmail());
+
+		User user = userService.findByEmail(entity.getEmail());
+
+		if (registrationRequest == null && user == null) {
 			return Collections.EMPTY_LIST;
-		}else{
+		} else {
 			return Arrays.asList(UserValidationViolations.EMAIL_EXISTS);
 		}
 	}

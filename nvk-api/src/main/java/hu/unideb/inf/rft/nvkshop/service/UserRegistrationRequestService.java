@@ -10,7 +10,11 @@ public interface UserRegistrationRequestService {
 	UserRegistrationRequest findByActivationCode(String activationCode);
 
 	void attemptRegistration(UserRegistrationRequest request) throws ValidationException;
-
+	
+	UserRegistrationRequest findByEmail(String email);
+	
+	UserRegistrationRequest findByUserName(String userName);
+	
 	/**
 	 * Send registration link in email by a request.
 	 * 
