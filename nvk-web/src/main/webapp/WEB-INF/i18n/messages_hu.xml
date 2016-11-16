@@ -19,7 +19,7 @@
 
 	<!-- Registration -->
 	<entry key="registration.passwordConfirm">Kérjük adja meg újra jelszavát!</entry>
-	<entry key="registration.passwordNotMatch">A megadott jelszavak nem egyeznek!</entry>
+	<entry key="registration.passwordsNotMatch">A megadott jelszavak nem egyeznek!</entry>
 	<entry key="registration.passwordMatch">A jelszavak egyeznek!</entry>
 	<entry key="registration.registration">Regisztráció</entry>
 	<entry key="registration.submit">Regisztráció véglegesítése</entry>
@@ -32,6 +32,13 @@
 	<entry key="registration.lostPassword">Jelszó helyreállítás</entry>
 	<entry key="registration.passwordReseted">Az Ön jelszava helyreállításra került.</entry>
 	<entry key="registration.permamentlyDeletedUser">Ez a fiók átmenetileg zárolásra került.</entry>
-	<entry key="registration.invalidToken">A kapott token hibás vagy lejárt. </entry>
+	<entry key="registration.invalidActivationCode">Az aktivációs kód helytelen!</entry>
+	<entry key="registration.phoneNumber">Telefonszám</entry>
+	<entry key="registration.userName">Felhasználónév</entry>
+	<entry key="registration.fisrtName">Keresztnév</entry>
+	<entry key="registration.lastName">Vezetéknév</entry>
+	<entry key="registration.emailAlreadyRegistered">Ez az email-cím már regisztrálva van a rendszerünkben!Kérjük próbálja meg a jelszó helyreállítást.</entry>
+	<entry key="registration.emailNotValid">Kérjük adjon meg egy valós email címmet!</entry>
+	<entry key="registration.userNameAlreadyRegistered">Ez a felhasználónév már foglalt! Kérjük válasszon egy másikat.</entry>
 
 </properties>
