@@ -35,6 +35,13 @@ public class UserServiceImpl extends LoggabeBaseServiceImpl implements UserServi
 	}
 
 	@Override
+	@Transactional
+	public User findById(Long id) {
+		User user = userDao.findById(id);
+		return user;
+	}
+
+	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void activateRegistration(String activationCode) {
 

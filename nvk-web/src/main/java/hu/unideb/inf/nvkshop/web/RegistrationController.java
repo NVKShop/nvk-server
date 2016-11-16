@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
+import hu.unideb.inf.rft.nvkshop.service.DeletedEntityException;
 import hu.unideb.inf.rft.nvkshop.service.UserRegistrationRequestService;
 import hu.unideb.inf.rft.nvkshop.service.UserService;
 import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationException;
@@ -134,5 +135,102 @@ public class RegistrationController extends AbstractNvkController {
 		}
 		return "redirect:/login.html";
 	}
+
+	/**
+	 * Password recovery step 1.
+	 * 
+	 * @param errors the errors
+	 * @param model the model
+	 * @return
+	 */
+	@RequestMapping(value = "/lostpassword", method = RequestMethod.GET, produces = "text/html")
+	public String lostPassword(Model model) {
+
+		log.info("Password recovery step 1.");
+		RegistrationRequestForm form = new RegistrationRequestForm();
+		model.addAttribute("registrationForm", form);
+		return "lostpassword";
+
+	}
+
+	@RequestMapping(value = "/lostpassword", method = RequestMethod.POST, produces = "text/html")
+	public String lostPasswordSubmit(RegistrationRequestForm form, Errors errors, Model model, RedirectAttributes redirectAttrs) {
+
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "validation.required");
+
+		if (errors.hasErrors()) {
+			return "lostpassword";
+		}
+
+		// emailValidator(form.getEmail(), "email", errors, log);
+		if (errors.hasErrors()) {
+			return "lostpassword";
+		}
+
+		try {
+			log.info("Try recover user password. Email = {}", form.getEmail());
+			// userService.recoverUserPassword(form.getEmail());
+		} catch (DeletedEntityException ex) {
+			errors.rejectValue("email", "validation.notARegisteredEmail");
+		}
+
+		if (errors.hasErrors()) {
+			return "lostpassword";
+		}
+
+		redirectAttrs.addFlashAttribute("successMsg", "registration.passwordRecoverySent");
+		return "redirect:/login.html";
+
+	}
+
+	@RequestMapping(value = "/passwordrecover", method = RequestMethod.GET, produces = "text/html")
+	public String passwordRecover(@RequestParam("activationCode") String activationCode, Model model, RedirectAttributes redirectAttrs) {
+
+		log.info("Password recovery step 2.");
+		try {
+			// User user = userService.findById(id);
+			redirectAttrs.addFlashAttribute("errorMsg", "registration.permamentlyDeletedUser");
+		} catch (DeletedEntityException ex) {
+			redirectAttrs.addFlashAttribute("errorMsg", "registration.invalidToken");
+			return "redirect:/login.html";
+			// TODO: add another catch block to blocked user
+		}
+
+		PasswordRecoveryForm form = new PasswordRecoveryForm();
+		// form.setId(user.getId());
+		// form.setEmail(user.getEmail());
+		model.addAttribute("registrationForm", form);
+		return "passwordrecover";
+
+	}
+	//
+	// @RequestMapping(value = "/passwordrecover", method = RequestMethod.POST, produces = "text/html")
+	// public String passwordRecoverSubmit(RegistrationForm form, Errors errors, Model model, RedirectAttributes redirectAttrs) {
+	// log.info("Password recovery step 2.");
+	//
+	// ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "validation.required");
+	// ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passwordConfirm", "validation.required");
+	//
+	// if (errors.hasErrors()) {
+	// return "passwordrecover";
+	// }
+	// if (!form.getPassword().equals(form.getPasswordConfirm()))
+	// errors.rejectValue("passwordConfirm", "validation.passwordsNotMatch");
+	//
+	// if (errors.hasErrors()) {
+	// return "passwordrecover";
+	// }
+	// try {
+	// log.info("Set new password for user. Id = {}", form.getId());
+	// userService.updateUser(form.getId(), form.getPassword(), null, null, UserStatus.ACTIVE);
+	// } catch (MissingEntityException ex) {
+	// errors.rejectValue("email", "validation.notARegisteredEmail");
+	// redirectAttrs.addFlashAttribute("errorMsg", "registration.permamentlyDeletedUser");
+	// return "redirect:/login.html";
+	// }
+	// redirectAttrs.addFlashAttribute("successMsg", "registration.passwordReseted");
+	// return "redirect:/login.html";
+
+	// }
 
 }
