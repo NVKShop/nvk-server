@@ -1,10 +1,57 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
 <body>
+	<nav class="navbar navbar-default navbar-fixed-top" th:fragment="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#ad-navbar-collapse">
+					<span class="sr-only" th:text="#{menu.toggleNavigation}">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<h4 style="vertical-align: text-bottom;">
+					<a style="text-decoration: none; color: black;" th:href="@{/main.html}" href="#"></a>
+				</h4>
+			</div>
 
+			<div class="collapse navbar-collapse" id="ad-navbar-collapse">
+				<ul class="nav navbar-nav navbar-left">
+					<li><a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span><img
+								th:src="@{/resources/images/flags/__${#locale.language}__.png}" /></span> <b class="caret"></b>
+					</a> 
+						<ul class="dropdown-menu" role="menu">
+							<li><a th:href="@{/(locale=en)}" href="#"><img src="../../resources/images/flags/en.png"
+									th:src="@{/resources/images/flags/en.png}"></img> <span th:text="#{language.english}">EN</span></a></li>
+							<li><a th:href="@{/(locale=hu)}" href="#"><img src="../../resources/images/flags/hu.png"
+									th:src="@{/resources/images/flags/hu.png}"></img> <span th:text="#{language.hungarian}">HU</span></a></li>
+						</ul></li>
+				</ul>
+				
+				<ul>
+					<li>
+						<span th:text="#{basket.basket}">Basket </span> <span th:text="#{basket.totalItems}"> Total items </span><span th:text=${totalItems}></span><br/>
+						<span th:text="#{basket.totalPrize}">Total price:</span><span th:text="#{titalPrice}"> 300E</span>
+					<ul class="dropdown-menu" role="menu">
+<!-- 		TODO:			set item view href -->
+							<li th:each= " item: *{basketItems}"><a th:href="" href="#"><span th:text="${item.name} : "></span><span th:text="${item.price}"></span></a></li>
+					</ul>
+					</li>
+				</ul>
+				
+<!-- 		TODO: set user profile href -->
+				<!-- 				Use just after authentiucation created!  -->
+				<!-- 				<ul class="nav navbar-nav navbar-right"> -->
+				<!-- 					<li data-sec-authorize="isAuthenticated()"> -->
+				<!-- 						<a href="#"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span data-sec-authentication="principal.displayName">John Doe</span> </a> -->
+				<!-- 					</li> -->
+				<!-- 					<li> -->
+				<!-- 						<a th:href="@{/j_spring_security_logout}" href="#"> <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> <span th:text="#{menu.logout}">Logout</span> </a> -->
+				<!-- 					</li> -->
+				<!-- 				</ul> -->
+
+			</div>
+		</div>
+
+	</nav>
 </body>
+
 </html>
