@@ -6,6 +6,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -29,7 +31,7 @@ public class User extends BaseEntity {
 	private Boolean banned;
 
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	@JoinTable(name = "users_roles_sw", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "users_roles_sw", joinColumns = @JoinColumn(name = "user_id") , inverseJoinColumns = @JoinColumn(name = "role_id") )
 	private List<Role> roles;
 
 	@Pattern(regexp = "(^$|[0-9]{10})")
@@ -47,6 +49,10 @@ public class User extends BaseEntity {
 
 	@Column(name = "email", unique = true, nullable = false)
 	protected String email;
+
+	@Column(name = "language")
+	@Enumerated(EnumType.STRING)
+	protected Language language;
 
 	// @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy =
 	// "user_id")
@@ -146,8 +152,7 @@ public class User extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "User [password=" + password + ", banned=" + banned + ", roles=" + roles + ", phoneNumber="
-				+ phoneNumber;
+		return "User [password=" + password + ", banned=" + banned + ", roles=" + roles + ", phoneNumber=" + phoneNumber;
 	}
 
 	public String getFirstName() {
@@ -188,6 +193,14 @@ public class User extends BaseEntity {
 
 	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
+	}
+
+	public Language getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(Language language) {
+		this.language = language;
 	}
 
 }

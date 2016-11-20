@@ -1,5 +1,7 @@
 package hu.unideb.inf.rft.nvkshop.service.impl;
 
+import java.util.Date;
+
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +10,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import hu.unideb.inf.rft.nvkshop.LoggabeBaseServiceImpl;
+import hu.unideb.inf.rft.nvkshop.entities.security.Language;
 import hu.unideb.inf.rft.nvkshop.entities.security.User;
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
 import hu.unideb.inf.rft.nvkshop.repositories.UserDao;
+import hu.unideb.inf.rft.nvkshop.service.BannedUserException;
 import hu.unideb.inf.rft.nvkshop.service.DeletedEntityException;
+import hu.unideb.inf.rft.nvkshop.service.InvalidAccessException;
 import hu.unideb.inf.rft.nvkshop.service.UserRegistrationRequestService;
 import hu.unideb.inf.rft.nvkshop.service.UserService;
 import lombok.Setter;
@@ -56,6 +61,33 @@ public class UserServiceImpl extends LoggabeBaseServiceImpl implements UserServi
 
 		userDao.save(u);
 		userRegistrationRequestSerivce.remove(request);
+	}
+
+	@Override
+	@Transactional
+	public void editUserBasicDatas(Long id, String firstName, String lastName, String phoneNumber, Language selectedLanguage) {
+
+		User user = findById(id);
+		if (user == null) {
+			throw new DeletedEntityException();
+		}
+		if (user.getBanned().booleanValue()) {
+			throw new BannedUserException();
+		}
+
+		// FIXME: not important
+		if (!(selectedLanguage instanceof Language)) {
+			throw new InvalidAccessException();
+		}
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		// TODO: validate passwd
+		user.setPhoneNumber(phoneNumber);
+		user.setDateOfModification(new Date());
+		user.setLanguage(selectedLanguage);
+		logger.info("User modification saved id: {} ", id);
+		userDao.saveAndFlush(user);
+
 	}
 
 	@Override

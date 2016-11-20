@@ -60,4 +60,8 @@
 		<field>
 		</field>
 </mapping>
+<mapping>
+	<class-a>hu.unideb.inf.rft.nvkshop.entities.security.User</class-a>
+	<class-b>hu.unideb.inf.rft.nvkshop.web.UserForm</class-b>
+</mapping>
 </mappings> 

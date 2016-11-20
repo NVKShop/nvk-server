@@ -1,5 +1,6 @@
 package hu.unideb.inf.rft.nvkshop.service;
 
+import hu.unideb.inf.rft.nvkshop.entities.security.Language;
 import hu.unideb.inf.rft.nvkshop.entities.security.User;
 
 public interface UserService {
@@ -17,4 +18,15 @@ public interface UserService {
 	User findById(Long id);
 
 	User findByEmail(String email);
+
+	/**
+	 * Editing user basic informations
+	 * 
+	 * @param id the user id
+	 * @param firstName the first name to change
+	 * @param lastName the last name to change
+	 * @param phoneNumber the phoneNumber to change
+	 * @param language the user selected language of the system
+	 */
+	void editUserBasicDatas(Long id, String firstName, String lastName, String phoneNumber, Language language);
 }
