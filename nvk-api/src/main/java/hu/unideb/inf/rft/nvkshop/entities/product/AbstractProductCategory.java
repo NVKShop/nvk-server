@@ -1,22 +1,14 @@
 package hu.unideb.inf.rft.nvkshop.entities.product;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
-
 import hu.unideb.inf.rft.nvkshop.entities.base.BaseEntity;
 
-@Entity
-@Table(name = "abstract_category")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "type")
+// @Entity
+// @Table(name = "abstract_category")
+// @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+// @DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "type")
 public abstract class AbstractProductCategory extends BaseEntity {
 
-	@Column(name = "name")
+	// @Column(name = "name")
 	public String name;
 
 	public String getName() {
