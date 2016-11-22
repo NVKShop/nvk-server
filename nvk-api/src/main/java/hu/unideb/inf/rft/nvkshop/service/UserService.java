@@ -17,6 +17,12 @@ public interface UserService {
 	 */
 	User findById(Long id);
 
+	/**
+	 * Find user by email
+	 * 
+	 * @param email the email
+	 * @return the user or <code>null<
+	 */
 	User findByEmail(String email);
 
 	/**

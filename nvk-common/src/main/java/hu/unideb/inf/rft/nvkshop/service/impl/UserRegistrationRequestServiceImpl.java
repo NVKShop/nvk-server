@@ -2,6 +2,7 @@ package hu.unideb.inf.rft.nvkshop.service.impl;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -25,16 +26,17 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import hu.unideb.inf.rft.nvkshop.LoggabeBaseServiceImpl;
+import hu.unideb.inf.rft.nvkshop.entities.security.UserPasswordRecovery;
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
+import hu.unideb.inf.rft.nvkshop.repositories.UserPasswordRecoveryDao;
 import hu.unideb.inf.rft.nvkshop.repositories.UserRegistrationRequestDao;
+import hu.unideb.inf.rft.nvkshop.service.DeletedEntityException;
 import hu.unideb.inf.rft.nvkshop.service.Settings;
 import hu.unideb.inf.rft.nvkshop.service.UserRegistrationRequestService;
 import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationException;
 import hu.unideb.inf.rft.nvkshop.validation.userregistration.UserValidator;
-import lombok.Setter;
 
 @Service
-@Setter
 public class UserRegistrationRequestServiceImpl extends LoggabeBaseServiceImpl implements UserRegistrationRequestService {
 
 	@Autowired
@@ -60,6 +62,9 @@ public class UserRegistrationRequestServiceImpl extends LoggabeBaseServiceImpl i
 
 	@Autowired
 	private UserValidator validator;
+
+	@Autowired
+	private UserPasswordRecoveryDao passwordRecoveryDao;
 
 	@Override
 	public UserRegistrationRequest findByActivationCode(String activationCode) {
@@ -134,6 +139,19 @@ public class UserRegistrationRequestServiceImpl extends LoggabeBaseServiceImpl i
 		} catch (Exception e) {
 			log.warn("Failed to send registration activation message to user. Email = {}", email);
 		}
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public UserPasswordRecovery findUserPasswordRecoveryByActivationCode(String activationCode) {
+
+		UserPasswordRecovery passwordRecovery = passwordRecoveryDao.findByActivationCode(activationCode);
+
+		if (passwordRecovery == null || passwordRecovery.getDueDate().after(new Date())) {
+			throw new DeletedEntityException();
+		}
+
+		return passwordRecovery;
 	}
 
 	@Override

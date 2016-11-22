@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import hu.unideb.inf.rft.nvkshop.entities.security.UserPasswordRecovery;
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
 import hu.unideb.inf.rft.nvkshop.service.DeletedEntityException;
 import hu.unideb.inf.rft.nvkshop.service.UserRegistrationRequestService;
@@ -162,11 +163,6 @@ public class RegistrationController extends AbstractNvkController {
 			return "lostpassword";
 		}
 
-		// emailValidator(form.getEmail(), "email", errors, log);
-		if (errors.hasErrors()) {
-			return "lostpassword";
-		}
-
 		try {
 			log.info("Try recover user password. Email = {}", form.getEmail());
 			// userService.recoverUserPassword(form.getEmail());
@@ -186,51 +182,48 @@ public class RegistrationController extends AbstractNvkController {
 	@RequestMapping(value = "/passwordrecover", method = RequestMethod.GET, produces = "text/html")
 	public String passwordRecover(@RequestParam("activationCode") String activationCode, Model model, RedirectAttributes redirectAttrs) {
 
+		UserPasswordRecovery passwordRecovery;
 		log.info("Password recovery step 2.");
 		try {
-			// User user = userService.findById(id);
-			redirectAttrs.addFlashAttribute("errorMsg", "registration.permamentlyDeletedUser");
+			passwordRecovery = registrationService.findUserPasswordRecoveryByActivationCode(activationCode);
 		} catch (DeletedEntityException ex) {
-			redirectAttrs.addFlashAttribute("errorMsg", "registration.invalidToken");
+			redirectAttrs.addFlashAttribute("errorMsg", "registration.invalidOrExpiredToken");
 			return "redirect:/login.html";
-			// TODO: add another catch block to blocked user
 		}
 
 		PasswordRecoveryForm form = new PasswordRecoveryForm();
-		// form.setId(user.getId());
-		// form.setEmail(user.getEmail());
+		form.setId(passwordRecovery.getUser().getId());
 		model.addAttribute("registrationForm", form);
 		return "passwordrecover";
 
 	}
-	//
-	// @RequestMapping(value = "/passwordrecover", method = RequestMethod.POST, produces = "text/html")
-	// public String passwordRecoverSubmit(RegistrationForm form, Errors errors, Model model, RedirectAttributes redirectAttrs) {
-	// log.info("Password recovery step 2.");
-	//
-	// ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "validation.required");
-	// ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passwordConfirm", "validation.required");
-	//
-	// if (errors.hasErrors()) {
-	// return "passwordrecover";
-	// }
-	// if (!form.getPassword().equals(form.getPasswordConfirm()))
-	// errors.rejectValue("passwordConfirm", "validation.passwordsNotMatch");
-	//
-	// if (errors.hasErrors()) {
-	// return "passwordrecover";
-	// }
-	// try {
-	// log.info("Set new password for user. Id = {}", form.getId());
-	// userService.updateUser(form.getId(), form.getPassword(), null, null, UserStatus.ACTIVE);
-	// } catch (MissingEntityException ex) {
-	// errors.rejectValue("email", "validation.notARegisteredEmail");
-	// redirectAttrs.addFlashAttribute("errorMsg", "registration.permamentlyDeletedUser");
-	// return "redirect:/login.html";
-	// }
-	// redirectAttrs.addFlashAttribute("successMsg", "registration.passwordReseted");
-	// return "redirect:/login.html";
 
-	// }
+	@RequestMapping(value = "/passwordrecover", method = RequestMethod.POST, produces = "text/html")
+	public String passwordRecoverSubmit(PasswordRecoveryForm form, Errors errors, Model model, RedirectAttributes redirectAttrs) {
+		log.info("Password recovery step 2.");
+
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "validation.required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passwordAgain", "validation.required");
+
+		if (errors.hasErrors()) {
+			return "passwordrecover";
+		}
+		if (!form.getPassword().equals(form.getPasswordAgain()))
+			errors.rejectValue("passwordConfirm", "validation.passwordsNotMatch");
+
+		if (errors.hasErrors()) {
+			return "passwordrecover";
+		}
+		try {
+			log.info("Set new password for user. Id = {}", form.getId());
+		} catch (DeletedEntityException ex) {
+			errors.rejectValue("email", "validation.notARegisteredEmail");
+			redirectAttrs.addFlashAttribute("errorMsg", "registration.permamentlyDeletedUser");
+			return "redirect:/login.html";
+		}
+		redirectAttrs.addFlashAttribute("successMsg", "registration.passwordReseted");
+		return "redirect:/login.html";
+
+	}
 
 }
