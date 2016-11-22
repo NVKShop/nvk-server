@@ -10,17 +10,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
-@Entity
-@DiscriminatorValue(value = "MAIN_CATEGORY")
+//@Entity
+//@DiscriminatorValue(value = "MAIN_CATEGORY")
 public class ProductCategory extends AbstractProductCategory {
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "parent_id", insertable = false, updatable = false)
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "parent_id", insertable = false, updatable = false)
 	private AbstractProductCategory parent;
 
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "parent_id")
-	@OrderColumn
+//	@OneToMany(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "parent_id")
+//	@OrderColumn
 	private List<AbstractProductCategory> children;
 
 	public AbstractProductCategory getParent() {

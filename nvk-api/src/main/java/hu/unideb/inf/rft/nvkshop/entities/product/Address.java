@@ -6,23 +6,23 @@ import javax.persistence.Table;
 
 import hu.unideb.inf.rft.nvkshop.entities.base.BaseEntity;
 
-@Entity
-@Table(name = "address")
+//@Entity
+//@Table(name = "address")
 public class Address extends BaseEntity {
 
-	@Column(name = "country")
+//	@Column(name = "country")
 	private String country;
 
-	@Column(name = "zip_code")
+//	@Column(name = "zip_code")
 	private String zip;
 
-	@Column(name = "street")
+//	@Column(name = "street")
 	private String street;
 
-	@Column(name = "house_number")
+//	@Column(name = "house_number")
 	private String houseNumber;
-
-	@Column(name = "city")
+//
+//	@Column(name = "city")
 	private String city;
 
 	public String getCountry() {
