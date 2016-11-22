@@ -29,10 +29,11 @@
 		</field>
 	</mapping>
 
-<mapping>
-	<class-a>hu.unideb.inf.rft.nvkshop.web.RegistrationRequestForm
+	<mapping>
+		<class-a>hu.unideb.inf.rft.nvkshop.web.RegistrationRequestForm
 		</class-a>
-		<class-b>hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest</class-b>
+		<class-b>hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest
+		</class-b>
 		<field>
 			<a>userName</a>
 			<b>userName</b>
@@ -57,11 +58,5 @@
 			<a>email</a>
 			<b>email</b>
 		</field>
-		<field>
-		</field>
-</mapping>
-<mapping>
-	<class-a>hu.unideb.inf.rft.nvkshop.entities.security.User</class-a>
-	<class-b>hu.unideb.inf.rft.nvkshop.web.UserForm</class-b>
-</mapping>
+	</mapping>
 </mappings> 
