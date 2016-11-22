@@ -8,21 +8,21 @@ import org.hibernate.envers.Audited;
 
 import hu.unideb.inf.rft.nvkshop.entities.base.BaseEntity;
 
-@Entity
-@Table(name = "items")
+//@Entity
+//@Table(name = "items")
 // @Audited
 public class Item extends BaseEntity {
 
-	@Column(name = "name")
+//	@Column(name = "name")
 	private String name;
 
-	@Column(name = "description")
+//	@Column(name = "description")
 	private String description;
 
-	@Column(name = "price")
+//	@Column(name = "price")
 	private Double price;
 
-	@Column(name = "stock")
+//	@Column(name = "stock")
 	private Integer inStock;
 
 	public String getName() {

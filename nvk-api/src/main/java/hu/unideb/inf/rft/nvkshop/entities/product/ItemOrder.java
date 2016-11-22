@@ -7,15 +7,15 @@ import javax.persistence.Transient;
 
 import hu.unideb.inf.rft.nvkshop.entities.base.BaseEntity;
 
-@Entity
-@Table(name = "item_order_sw")	
+//@Entity
+//@Table(name = "item_order_sw")	
 public class ItemOrder extends BaseEntity {
 	
 //	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@Transient
+//	@Transient
 	private Item item;
 
-	@Column(name="quantity")
+//	@Column(name="quantity")
 	private Integer quantity;
 
 	public Item getItem() {

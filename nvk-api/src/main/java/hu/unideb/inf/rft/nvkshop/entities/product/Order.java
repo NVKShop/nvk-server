@@ -16,24 +16,24 @@ import javax.persistence.Transient;
 import hu.unideb.inf.rft.nvkshop.entities.base.BaseEntity;
 import hu.unideb.inf.rft.nvkshop.entities.security.User;
 
-@Entity
-@Table(name = "orders")
+//@Entity
+//@Table(name = "orders")
 public class Order extends BaseEntity {
 
 	// @OneToMany(mappedBy = "items")
-	@Transient
+//	@Transient
 	private List<ItemOrder> items;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
+//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
 	private User user;
 
-	@Column(name = "pay_type")
-	@Enumerated(EnumType.STRING)
+//	@Column(name = "pay_type")
+//	@Enumerated(EnumType.STRING)
 	private PayType payType;
 
 	// @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade =
 	// CascadeType.ALL)
-	@Transient
+//	@Transient
 	private Address deliveryAddress;
 
 	public List<ItemOrder> getItems() {
