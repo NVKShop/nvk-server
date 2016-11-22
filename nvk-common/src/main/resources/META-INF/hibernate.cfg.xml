@@ -6,6 +6,6 @@
 		<mapping class="hu.unideb.inf.rft.nvkshop.entities.security.Role" />
 		<mapping class="hu.unideb.inf.rft.nvkshop.entities.security.User" />
 		<mapping class="hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest" />
-
+		<mapping class="hu.unideb.inf.rft.nvkshop.entities.security.UserPasswordRecovery />
 	</session-factory>
 </hibernate-configuration>
