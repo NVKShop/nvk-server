@@ -2,16 +2,10 @@ package hu.unideb.inf.rft.nvkshop.entities.product;
 
 import hu.unideb.inf.rft.nvkshop.entities.base.BaseEntity;
 
-<<<<<<< HEAD
 // @Entity
 // @Table(name = "abstract_category")
 // @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 // @DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "type")
-=======
-//@Entity
-//@Table(name = "abstract_category")
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-//@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "type")
 public abstract class AbstractProductCategory extends BaseEntity {
 
 	// @Column(name = "name")
