@@ -12,7 +12,7 @@ env:
     - secure: "W8HPfxLdRfOfp8sYecHmZ7gVrwBhERxWxxh/WcJOcPeMAwQSseppdQ4t0BlBSwscEGiiQdsPs4smJB/jxfEAWJYN6f8c/GJefjsqc4NNVGClUvF5ZtJo0VT3J1wXnFGhAeELNFbp4XZMnWOZRUDa6vvFEqOs3YwwTQZ5o6LwTlbSja4Ov+S3uh+cFwZjsYLOYIArgz/d16Mor0f//j0DmbbOl4XV67PpvUjkhNNZJT1uqRiBS4LYBALf8zW8b3oiSv/Z13mz+k+1ItEVIsyjAlcl5J/QoP0kusSU5JpnH2pQGXKKtr0R7aHouA0i+ceoF+Nezbo028VL/5mA/4GgodK6UEDEi3NRoJ19Nm7XYolDxryygzlOK325KO5L2yVRltlh5PHejR3/zf98lT/lfluyN6E+e0i0bfiJilmLOSiBVv+YLPj173vo10jphKNMAbMl8vURTdcYKk3IadK+VKtQLMG9Xg72p4C/XPgtkX2VWOmftBse3ctWdUwVvttb9i6LMAOkLkapU3fyQDXT7AWwF7ye7O/gFu1+mRAYq4An79ljuSNYJ4hcNL/7AK6vKYs3yF7OgPgjpSe7dsA/uE4u/5ZuvgXWyIAOfuhz9ugPuPlXwC7E7cFF90geU/8FCpcjrOY80Ihx2fG8zfKH23Y8gVI/qHk5wg3iA7viiaA="
 
 script:
-	mvn clean install -Dsmtp.user=$EMAIL_USER -Dsmtp.passsword=$EMAIL_PASSWORD -Dnvkshop.dburl=$DB_URL -Dnvkshop.username=$DB_USER -Dnvkshop.password=$DB_PASS -Dapp.location=$SERVER
+    - mvn test -Dsmtp.user=$EMAIL_USER -Dsmtp.passsword=$EMAIL_PASSWORD -Dnvkshop.dburl=$DB_URL -Dnvkshop.username=$DB_USER -Dnvkshop.password=$DB_PASS -Dapp.location=$SERVER
 
 after_success:
     "curl -T nvk-web/target/nvkshop.war -u $FTP_USER:$FTP_PASS $SERVER"
