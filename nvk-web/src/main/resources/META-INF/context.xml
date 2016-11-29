@@ -2,10 +2,9 @@
 <Context path="/">
 
  <Resource name="NVKDS" auth="Container" type="javax.sql.DataSource"
-    maxActive="50" maxIdle="30" maxWait="10000" username="root"
-    password="Psw91" driverClassName="com.mysql.jdbc.Driver"
-    url="jdbc:mysql://localhost:3306/nvkshop" />
-
+    maxActive="50" maxIdle="30" maxWait="10000" username="${nvkshop.username}"
+    password="${nvkshop.password}" driverClassName="com.mysql.jdbc.Driver"
+    url="${nvkshop.dburl}" />
 		
 	<ResourceLink name="NVKDS" global="NVKDS"
 		type="javax.sql.DataSource" />

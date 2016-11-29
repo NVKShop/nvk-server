@@ -1,8 +1,5 @@
 package hu.unideb.inf.nvkshop.web;
 
-import java.util.List;
-
-import hu.unideb.inf.rft.nvkshop.entities.product.Address;
 import hu.unideb.inf.rft.nvkshop.entities.security.Language;
 import lombok.Data;
 
@@ -15,5 +12,4 @@ public class UserForm {
 	private String phoneNumber;
 	private Language language;
 
-	private List<Address> addresses;
 }

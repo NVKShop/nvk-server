@@ -42,7 +42,7 @@ public class UserServiceImpl extends LoggabeBaseServiceImpl implements UserServi
 	@Override
 	@Transactional
 	public User findById(Long id) {
-		User user = userDao.findById(id);
+		User user = userDao.getOne(id);
 		return user;
 	}
 
@@ -64,24 +64,25 @@ public class UserServiceImpl extends LoggabeBaseServiceImpl implements UserServi
 	}
 
 	@Override
-	@Transactional
-	public void editUserBasicDatas(Long id, String firstName, String lastName, String phoneNumber, Language selectedLanguage) {
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void editUserBasicDatas(Long id, String firstName, String lastName, String phoneNumber,
+			Language selectedLanguage) {
 
 		User user = findById(id);
 		if (user == null) {
 			throw new DeletedEntityException();
 		}
-		if (user.getBanned().booleanValue()) {
-			throw new BannedUserException();
-		}
-
+		//if he is banned, login must be denied
 		// FIXME: not important
+//		if (user.getBanned()) {
+//			throw new BannedUserException();
+//		}
+
 		if (!(selectedLanguage instanceof Language)) {
 			throw new InvalidAccessException();
 		}
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
-		// TODO: validate passwd
 		user.setPhoneNumber(phoneNumber);
 		user.setDateOfModification(new Date());
 		user.setLanguage(selectedLanguage);

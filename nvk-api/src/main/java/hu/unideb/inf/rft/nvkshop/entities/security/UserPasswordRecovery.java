@@ -3,12 +3,16 @@ package hu.unideb.inf.rft.nvkshop.entities.security;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import hu.unideb.inf.rft.nvkshop.entities.base.BaseEntity;
 
+@Entity
+@Table(name="password_recovery")
 public class UserPasswordRecovery extends BaseEntity {
 
 	@OneToOne

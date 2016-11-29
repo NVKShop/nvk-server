@@ -16,19 +16,5 @@ public interface UserRegistrationRequestService {
 
 	UserRegistrationRequest findByUserName(String userName);
 
-	/**
-	 * Send registration link in email by a request.
-	 * 
-	 * @param id the ID of the registrationRequest
-	 */
-	void sendRegistrationRequest(Long id);
-
-	/**
-	 * Find unexpired user password recovery by activation code.
-	 * 
-	 * @param activationCode the activation code not <code>null</code>
-	 * @return the password recovery entity or empty reference
-	 */
 	UserPasswordRecovery findUserPasswordRecoveryByActivationCode(String activationCode);
-
 }

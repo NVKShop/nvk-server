@@ -44,23 +44,33 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<failOnMissingWebXml>true</failOnMissingWebXml>
+					<webResources>
+						<resource>
+							<directory>src/main/resources/META-INF</directory>
+							<filtering>true</filtering>
+							<targetPath>META-INF</targetPath>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
 		</plugins>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 			</resource>
-			<resource>
-				<directory>src/${environment}/resources</directory>
-			</resource>
 		</resources>
 	</build>
 
 	<properties>
 		<smtp.host>smtp.gmail.com</smtp.host>
-		<smtp.port>465</smtp.port>
-		<smtp.user>nvkshop.noreply</smtp.user>
-		<smtp.password>nvkShop123</smtp.password>
+		<smtp.port>587</smtp.port>
 	</properties>
 
 	<dependencies>
@@ -217,18 +227,6 @@
 			<version>5.5.1</version>
 		</dependency>
 	</dependencies>
-
-	<profiles>
-		<profile>
-			<id>runtime</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<environment>runtime</environment>
-			</properties>
-		</profile>
-	</profiles>
 
 </project>
 

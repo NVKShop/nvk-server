@@ -22,17 +22,23 @@
 			value="/WEB-INF/i18n/generals,/WEB-INF/i18n/messages" />
 		<property name="fallbackToSystemLocale" value="false" />
 	</bean>
-<!-- TODO: 	Ebben be kell állítani egy mappát ahol a templatek vannak az emailekhez, ezek most a parent modul /templates mappájában vannak -->
 	<bean
 		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean"
-		p:defaultEncoding="UTF-8" p:templateLoaderPath="file:${project.basedir/..}/templates" />
-	
-<!-- TODO:	be kell settelni az alábbi cuccokat: -->
+		p:defaultEncoding="UTF-8" p:templateLoaderPath="file:${project.basedir}/../templates" />
+
 	<bean class="org.springframework.mail.javamail.JavaMailSenderImpl"
-		p:host="smtp.gmail.com" p:port="465" p:username="nvkshop.noreply@gmail.com"
-		p:password="nvkShop123" />
-<!-- Support beans -->
-<!-- TODO: ezeket is be kell settelni valahonnan -->
-	<bean class="hu.unideb.inf.rft.nvkshop.service.Settings" p:baseUrl="89.46.73.165" p:fromAddress="nvkshop@gmail.com"  p:defaultLanguage="hu_HU"/>
+		p:host="${smtp.host}" p:port="${smtp.port}" p:username="${smtp.user}"
+		p:password="${smtp.password}">
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- Support beans -->
+	<bean class="hu.unideb.inf.rft.nvkshop.service.Settings"
+		p:baseUrl="${app.location}" p:fromAddress="${smtp.user}"
+		p:defaultLanguage="hu" />
 
 </beans>

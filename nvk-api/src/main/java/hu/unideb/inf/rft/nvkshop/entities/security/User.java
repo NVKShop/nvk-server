@@ -13,11 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.Pattern;
 
 import hu.unideb.inf.rft.nvkshop.entities.base.BaseEntity;
-import hu.unideb.inf.rft.nvkshop.entities.product.Address;
 
 @Entity
 @Table(name = "users")
@@ -53,12 +51,6 @@ public class User extends BaseEntity {
 	@Column(name = "language")
 	@Enumerated(EnumType.STRING)
 	protected Language language;
-
-	// @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy =
-	// "user_id")
-	@Transient
-
-	private List<Address> addresses;
 
 	public User() {
 		super();
@@ -185,14 +177,6 @@ public class User extends BaseEntity {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public List<Address> getAddresses() {
-		return addresses;
-	}
-
-	public void setAddresses(List<Address> addresses) {
-		this.addresses = addresses;
 	}
 
 	public Language getLanguage() {
