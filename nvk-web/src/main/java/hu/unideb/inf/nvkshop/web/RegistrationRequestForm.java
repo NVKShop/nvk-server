@@ -2,7 +2,7 @@ package hu.unideb.inf.nvkshop.web;
 
 public class RegistrationRequestForm {
 
-	private String fistName;
+	private String firstName;
 	private String lastName;
 	private String userName;
 	private String email;
@@ -10,28 +10,12 @@ public class RegistrationRequestForm {
 	private String passwordConfirm;
 	private String phoneNumber;
 
-	public String getPhoneNumber() {
-		return phoneNumber;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getFistName() {
-		return fistName;
-	}
-
-	public void setFistName(String fistName) {
-		this.fistName = fistName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public String getLastName() {
@@ -40,6 +24,14 @@ public class RegistrationRequestForm {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getEmail() {
@@ -64,6 +56,14 @@ public class RegistrationRequestForm {
 
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 }

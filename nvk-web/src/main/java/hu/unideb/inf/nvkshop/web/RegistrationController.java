@@ -30,13 +30,10 @@ import hu.unideb.inf.rft.nvkshop.validation.userregistration.UserValidationViola
  * @author FV
  *
  */
-@Controller
+@Controller("registrationController")
 public class RegistrationController extends AbstractNvkController {
 
 	/** Registration controller */
-	public RegistrationController() {
-	}
-
 	@Autowired
 	private UserRegistrationRequestService registrationService;
 
@@ -56,7 +53,7 @@ public class RegistrationController extends AbstractNvkController {
 	public String registration(Model model) {
 
 		RegistrationRequestForm form = new RegistrationRequestForm();
-		model.addAttribute("registrationForm", form);
+		model.addAttribute("registrationRequestForm", form);
 		log.info("Registration request handling.");
 		return "registration";
 	}
@@ -77,6 +74,7 @@ public class RegistrationController extends AbstractNvkController {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "validation.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "validation.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "validation.required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName", "validation.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "validation.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passwordConfirm", "validation.required");
 

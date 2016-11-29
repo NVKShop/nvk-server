@@ -9,12 +9,13 @@
 	<context:annotation-config />
 	<context:property-placeholder />
 	
-	<context:component-scan base-package="hu.unideb.inf.nvk.web" use-default-filters="false">
+	<context:component-scan base-package="hu.unideb.inf.nvkshop.web" use-default-filters="false">
 		<context:include-filter expression="org.springframework.stereotype.Controller" type="annotation" />
 	</context:component-scan>
-	
-<!-- TODO: 	Declare controllerAdvice -->
-	
+ 
+ 	<bean class="hu.unideb.inf.nvkshop.web.NvkControllerAdvice"/>
+ 
+ 
 	<mvc:annotation-driven />
 	<mvc:resources location="/, classpath:/META-INF/web-resources/" mapping="/resources/**" />
 	<mvc:default-servlet-handler />
@@ -27,11 +28,6 @@
 	</mvc:interceptors>
 
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" p:defaultLocale="en" />
-	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<property name="basenames" value="/WEB-INF/i18n/errors,/WEB-INF/i18n/messages,/WEB-INF/i18n/generals,/WEB-INF/i18n/validations" />
-		<property name="fallbackToSystemLocale" value="false" />
-		<property name="cacheSeconds" value="${resourceBundle.cacheSeconds:-1}" />
-	</bean>
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 	
 	<bean id="contentNegotiatorManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
@@ -42,6 +38,7 @@
 			</props>
 		</property>
 	</bean>
+
 	<bean id="contentNegotiator" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" p:order="1">
 		<property name="contentNegotiationManager" ref="contentNegotiatorManager" />
 		<property name="defaultViews">
@@ -58,7 +55,7 @@
 		<property name="characterEncoding" value="UTF-8" />
 		<property name="cacheable" value="${thymeleaf.cacheable:true}" />
 	</bean>
-		
+
 	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
 		<property name="templateResolver" ref="templateResolver" />
 			<property name="additionalDialects">
@@ -68,11 +65,10 @@
 			</set>
 		</property>
 	</bean>
+
 	<bean class="org.thymeleaf.spring4.view.AjaxThymeleafViewResolver">
 		<property name="templateEngine" ref="templateEngine" />
 		<property name="contentType" value="text/html;charset=utf-8" />
 		<property name="viewClass" value="org.thymeleaf.spring4.view.AjaxThymeleafView" />
 	</bean>
-
-
 </beans>

@@ -27,7 +27,7 @@
 		<div class="loginForm">
 <!-- 		TODO: Wire this:  -->
 <!-- 		data-th-action="@{/j_spring_security_check}"  -->
-			<form action="#" method="post" data-th-object="${loginForm}" >
+			<form th:action="@{/login}" action="#" method="post" data-th-object="${loginForm}" >
 			<div class="row">
 				<div class="form-group col-xs-offset-4 col-xs-4">
 					<label data-th-text="#{login.userName}">User name</label>

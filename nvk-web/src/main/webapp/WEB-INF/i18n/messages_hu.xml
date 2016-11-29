@@ -35,10 +35,13 @@
 	<entry key="registration.invalidActivationCode">Az aktivációs kód helytelen!</entry>
 	<entry key="registration.phoneNumber">Telefonszám</entry>
 	<entry key="registration.userName">Felhasználónév</entry>
-	<entry key="registration.fisrtName">Keresztnév</entry>
+	<entry key="registration.firstName">Keresztnév</entry>
 	<entry key="registration.lastName">Vezetéknév</entry>
 	<entry key="registration.emailAlreadyRegistered">Ez az email-cím már regisztrálva van a rendszerünkben!Kérjük próbálja meg a jelszó helyreállítást.</entry>
 	<entry key="registration.emailNotValid">Kérjük adjon meg egy valós email címmet!</entry>
 	<entry key="registration.userNameAlreadyRegistered">Ez a felhasználónév már foglalt! Kérjük válasszon egy másikat.</entry>
+	
+	<entry key="validation.required">Kötelező mező!</entry>
+
 
 </properties>

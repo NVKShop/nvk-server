@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title data-th-text="#{application.title} + ' - ' + #{error.title}">NVK-SHOP - Error!</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<link data-th-href="@{/resources/images/favicon.png}" href="../../images/favicon.png" type="image/png" rel="shortcut icon" />
+<link data-th-href="@{/resources/css/bootstrap.min.css}" href="../../css/bootstrap.min.css" rel="stylesheet"></link>
+<link data-th-href="@{/resources/css/bootstrap-theme.min.css}" href="../../css/bootstrap-theme.min.css" rel="stylesheet"></link>
+<link data-th-href="@{/resources/css/theme.css}" href="../../css/theme.css" rel="stylesheet"></link>
+<link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
+</head>
+<body>
+	<nav data-th-replace="fragments/navbar :: navbar"></nav>
+	<div class="container">
+  		<h1 class="page-header" data-th-text="#{error.heading}">Error!</h1>
+		<p data-th-utext="#{error.description}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non tortor ac quam vestibulum euismod a at magna. Integer hendrerit massa vel est iaculis, at ornare metus blandit. Duis pellentesque purus metus, vitae semper sem aliquet a. Sed quis vulputate ex. Sed viverra mauris enim, eu vehicula sem accumsan et. In sed neque et est condimentum gravida. Maecenas pharetra auctor velit, sed laoreet elit eleifend eget.</p>
+	</div>
+	<script type="text/javascript" data-th-src="@{/resources/js/jquery.min.js}" src="js/jquery.min.js"></script>
+	<script type="text/javascript" data-th-src="@{/resources/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
+</body>
+</html>

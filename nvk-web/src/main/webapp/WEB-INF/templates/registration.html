@@ -14,12 +14,12 @@
 <body>
 
 	<h1 class="page-header" data-th-text="#{titles.registration}">Registration</h1>
-	<form data-th-action="@{/registration.html}" data-th-object="${registrationForm}" class="form-horizontal" action="#" method="post">
+	<form data-th-action="@{/registration.html}" data-th-object="${registrationRequestForm}" class="form-horizontal" action="#" method="post">
 		<fieldset>
 			<div th:replace="fragments/inputs :: sized-input(field='userName',  fieldSize='col-sm-3', label=#{registration.userName}, labelSize='col-sm-2', required=true)"></div>
 			<div th:replace="fragments/inputs :: sized-input(field='firstName',  fieldSize='col-sm-3', label=#{registration.firstName}, labelSize='col-sm-2', required=true)"></div>
 			<div th:replace="fragments/inputs :: sized-input(field='lastName',  fieldSize='col-sm-3', label=#{registration.lastName}, labelSize='col-sm-2', required=true)"></div>
-			<div th:replace="fragments/inputs :: sized-input(field='phoneNumber',  fieldSize='col-sm-3', label=#{registration.phoneNumber}, labelSize='col-sm-2', required=true)"></div>
+			<div th:replace="fragments/inputs :: sized-input(field='phoneNumber',  fieldSize='col-sm-3', label=#{registration.phoneNumber}, labelSize='col-sm-2', required=false)"></div>
 					
 				<div class="form-group" th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
 				<label class="col-sm-2 control-label">

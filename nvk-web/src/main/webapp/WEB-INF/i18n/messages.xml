@@ -35,9 +35,12 @@
 	<entry key="registration.invalidActivationCode">This activation code is invalid!</entry>
 	<entry key="registration.phoneNumber">Phone number</entry>
 	<entry key="registration.userName">User name</entry>
-	<entry key="registration.fisrtName">First name</entry>
+	<entry key="registration.firstName">First name</entry>
 	<entry key="registration.lastName">Last name</entry>
 	<entry key="registration.emailAlreadyRegistered">This email already registered! Try to reset your password.</entry>
 	<entry key="registration.emailNotValid">Please type a valid email address!</entry>
 	<entry key="registration.userNameAlreadyRegistered">This username is already registered in  our webshop! Please choose an another one!</entry>
+
+	<entry key="validation.required">Required field!</entry>
+
 </properties>

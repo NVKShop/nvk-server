@@ -3,7 +3,7 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
-	<display-name>nvk</display-name>
+	<display-name>nvk-web-app</display-name>
 	<resource-ref>
 		<description>MySql DS</description>
 		<res-ref-name>NVKDS</res-ref-name>
@@ -50,7 +50,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<servlet>
-		<servlet-name>nvk</servlet-name>
+		<servlet-name>nvk-web</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
@@ -59,10 +59,10 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>nvk</servlet-name>
+		<servlet-name>nvk-web</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-	</welcome-file-list>
+<!-- 	<welcome-file-list> -->
+<!-- 		<welcome-file>index.html</welcome-file> -->
+<!-- 	</welcome-file-list> -->
 </web-app>
