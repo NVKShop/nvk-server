@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.springframework.beans.factory.BeanCurrentlyInCreationException;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +13,7 @@ import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationViolation;
 import hu.unideb.inf.rft.nvkshop.validation.userregistration.UserValidationViolations;
 
 @Service
-@Qualifier("userValidation")
+// @Qualifier("userValidation")
 public class PasswordMatchValidationRule implements ValidationRule<UserRegistrationRequest> {
 
 	@Override
