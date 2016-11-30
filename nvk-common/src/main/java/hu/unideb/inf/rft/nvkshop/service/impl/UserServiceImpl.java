@@ -4,17 +4,17 @@ import java.util.Date;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import hu.unideb.inf.rft.nvkshop.LoggabeBaseServiceImpl;
 import hu.unideb.inf.rft.nvkshop.entities.security.Language;
 import hu.unideb.inf.rft.nvkshop.entities.security.User;
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
+import hu.unideb.inf.rft.nvkshop.logging.Log;
 import hu.unideb.inf.rft.nvkshop.repositories.UserDao;
-import hu.unideb.inf.rft.nvkshop.service.BannedUserException;
 import hu.unideb.inf.rft.nvkshop.service.DeletedEntityException;
 import hu.unideb.inf.rft.nvkshop.service.InvalidAccessException;
 import hu.unideb.inf.rft.nvkshop.service.UserRegistrationRequestService;
@@ -23,11 +23,14 @@ import lombok.Setter;
 
 @Setter
 @Service
-public class UserServiceImpl extends LoggabeBaseServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
 
+	@Log
+	private Logger logger;
+	
 	@Autowired
 	private UserRegistrationRequestService userRegistrationRequestSerivce;
 

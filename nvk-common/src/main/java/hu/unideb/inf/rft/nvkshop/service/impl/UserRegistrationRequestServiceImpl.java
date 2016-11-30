@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -14,11 +13,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import hu.unideb.inf.rft.nvkshop.LoggabeBaseServiceImpl;
+import hu.unideb.inf.rft.nvkshop.entities.security.User;
 import hu.unideb.inf.rft.nvkshop.entities.security.UserPasswordRecovery;
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
 import hu.unideb.inf.rft.nvkshop.eventhandling.EmailSendingEvent;
 import hu.unideb.inf.rft.nvkshop.eventhandling.EventType;
+import hu.unideb.inf.rft.nvkshop.logging.Log;
 import hu.unideb.inf.rft.nvkshop.repositories.UserPasswordRecoveryDao;
 import hu.unideb.inf.rft.nvkshop.repositories.UserRegistrationRequestDao;
 import hu.unideb.inf.rft.nvkshop.service.DeletedEntityException;
@@ -28,13 +28,13 @@ import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationException;
 import hu.unideb.inf.rft.nvkshop.validation.userregistration.UserValidator;
 
 @Service
-public class UserRegistrationRequestServiceImpl extends LoggabeBaseServiceImpl
-		implements UserRegistrationRequestService {
+public class UserRegistrationRequestServiceImpl implements UserRegistrationRequestService {
 
 	@Autowired
 	private Settings settings;
 
-	private final Logger log = LoggerFactory.getLogger(UserRegistrationRequest.class);
+	@Log
+	private Logger logger;
 
 	@Autowired
 	private UserRegistrationRequestDao userRegistrationRequestDao;
@@ -47,7 +47,7 @@ public class UserRegistrationRequestServiceImpl extends LoggabeBaseServiceImpl
 
 	@Autowired
 	private ApplicationEventPublisher eventPublisher;
-	
+
 	@Override
 	public UserRegistrationRequest findByActivationCode(String activationCode) {
 		return userRegistrationRequestDao.findByActivationCode(activationCode);
@@ -62,34 +62,26 @@ public class UserRegistrationRequestServiceImpl extends LoggabeBaseServiceImpl
 		validator.validate(request);
 
 		request = userRegistrationRequestDao.save(request);
-		
+
 		String activationCode = request.getActivationCode();
 		String locale = settings.getDefaultLanguage();
 		String url = settings.getBaseUrl() + "/registration/activation.html?activationCode=" + activationCode
 				+ "&locale=" + locale;
-		
+
 		Map<String, Object> emailParameters = new HashMap<>();
 		emailParameters.put("url", url);
 		emailParameters.put("userName", request.getUserName());
 		String email = request.getEmail();
-		
-		EmailSendingEvent activationEmailSenderEvent = new EmailSendingEvent(EventType.REGISTRATION_ACTIVATION,emailParameters,email);
-		
+
+		EmailSendingEvent activationEmailSenderEvent = new EmailSendingEvent(EventType.REGISTRATION_ACTIVATION,
+				emailParameters, email);
+
 		eventPublisher.publishEvent(activationEmailSenderEvent);
+		logger.info("The user {} was successfully registrated with activation code: {}", request.getUserName(),
+				request.getActivationCode());
 	}
 
-	@Override
-	@Transactional(readOnly = true)
-	public UserPasswordRecovery findUserPasswordRecoveryByActivationCode(String activationCode) {
-
-		UserPasswordRecovery passwordRecovery = passwordRecoveryDao.findByActivationCode(activationCode);
-
-		if (passwordRecovery == null || passwordRecovery.getDueDate().after(new Date())) {
-			throw new DeletedEntityException();
-		}
-
-		return passwordRecovery;
-	}
+	
 
 	@Override
 	public void remove(UserRegistrationRequest request) {

@@ -8,7 +8,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.event.EventListener;
@@ -19,9 +18,9 @@ import org.springframework.stereotype.Component;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
-import hu.unideb.inf.rft.nvkshop.eventhandling.EmailSendingEvent;
 import hu.unideb.inf.rft.nvkshop.eventhandling.EmailSenderEventHandler;
+import hu.unideb.inf.rft.nvkshop.eventhandling.EmailSendingEvent;
+import hu.unideb.inf.rft.nvkshop.logging.Log;
 import hu.unideb.inf.rft.nvkshop.service.Settings;
 
 @Component
@@ -39,8 +38,9 @@ public class EmailSenderEventHandlerImpl implements EmailSenderEventHandler {
 
 	@Autowired
 	private Settings settings;
-	
-	private final Logger log = LoggerFactory.getLogger(UserRegistrationRequest.class);
+
+	@Log
+	private Logger logger;
 
 	@Override
 	@EventListener(classes = EmailSendingEvent.class)
@@ -49,24 +49,26 @@ public class EmailSenderEventHandlerImpl implements EmailSenderEventHandler {
 
 		Template template = null;
 		try (StringWriter writer = new StringWriter(BUFFER_SIZE)) {
-			template = freemarker.getTemplate(event.getEventType().getTemplateName(),Locale.forLanguageTag(locale));
+			template = freemarker.getTemplate(event.getEventType().getTemplateName(), Locale.forLanguageTag(locale));
 
 			template.process(event.getPayload(), writer);
 			MimeMessage mimeMessage = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 			helper.setFrom(settings.getFromAddress());
 			helper.addTo(event.getTo());
-			//FIXME: proper subject handling
+			// FIXME: proper subject handling
 			helper.setSubject("NVKShop account");
 			helper.setText(writer.toString(), true);
 
 			mailSender.send(mimeMessage);
+			logger.info("Email send to user {} with the template {}", event.getTo(),
+					event.getEventType().getTemplateName());
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		} catch (TemplateException e) {
-			log.error("The template {} is invalid", template.getName());
+			logger.error("The template {} is invalid", template.getName());
 		}
 	}
 

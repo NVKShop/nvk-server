@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import hu.unideb.inf.rft.nvkshop.entities.security.UserPasswordRecovery;
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
 import hu.unideb.inf.rft.nvkshop.service.DeletedEntityException;
+import hu.unideb.inf.rft.nvkshop.service.UserPasswordRecoveryService;
 import hu.unideb.inf.rft.nvkshop.service.UserRegistrationRequestService;
 import hu.unideb.inf.rft.nvkshop.service.UserService;
 import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationException;
@@ -37,6 +38,9 @@ public class RegistrationController extends AbstractNvkController {
 	@Autowired
 	private UserRegistrationRequestService registrationService;
 
+	@Autowired
+	private UserPasswordRecoveryService userPasswordRecoveryService;
+	
 	@Autowired
 	private UserService userService;
 
@@ -183,7 +187,7 @@ public class RegistrationController extends AbstractNvkController {
 		UserPasswordRecovery passwordRecovery;
 		log.info("Password recovery step 2.");
 		try {
-			passwordRecovery = registrationService.findUserPasswordRecoveryByActivationCode(activationCode);
+			passwordRecovery = userPasswordRecoveryService.findUserPasswordRecoveryByActivationCode(activationCode);
 		} catch (DeletedEntityException ex) {
 			redirectAttrs.addFlashAttribute("errorMsg", "registration.invalidOrExpiredToken");
 			return "redirect:/login.html";
