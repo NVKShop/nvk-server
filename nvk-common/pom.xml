@@ -12,6 +12,13 @@
 	<packaging>jar</packaging>
 
 
+	<properties>
+		<jdbc.driverClassname>com.mysql.jdbc.Driver</jdbc.driverClassname>
+		<hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect>
+		<hibernate.hbm2ddl.auto>create</hibernate.hbm2ddl.auto>
+		<hibernate.hbm2ddl.import_files>import.sql</hibernate.hbm2ddl.import_files>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.freemarker</groupId>
@@ -270,6 +277,22 @@
 						<goals>
 							<goal>report</goal>
 						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>write-project-properties</goal>
+						</goals>
+						<configuration>
+							<outputFile>target/classes/application.properties</outputFile>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
