@@ -16,44 +16,48 @@
 
 	<context:component-scan base-package="hu.unideb.inf.nvkshop.*" />
 
-	<jpa:repositories base-package="hu.unideb.inf.rft.nvkshop.*"
-		repository-impl-postfix="Impl" />
+	<bean class="hu.unideb.inf.rft.nvkshop.config.DatabaseConfig" />
 
-	<bean id="entityManagerFactory"
-		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<!-- <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" 
-			/> -->
-		<!-- <property name="persistenceUnitName" value="hu.unideb.inf.nvkshop" 
-			/> -->
-		<property name="packagesToScan" value="hu.unideb.inf.rft.nvkshop.*" />
-		<property name="dataSource" ref="dataSource" />
-		<property name="jpaProperties">
-			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
-				<prop key="hibernate.hbm2ddl.import_files">import.sql</prop>
-			</props>
-		</property>
-		<property name="persistenceProvider">
-			<bean class="org.hibernate.jpa.HibernatePersistenceProvider"></bean>
-		</property>
-	</bean>
+	<!-- <jpa:repositories base-package="hu.unideb.inf.rft.nvkshop.*" -->
+	<!-- repository-impl-postfix="Impl" /> -->
 
-	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<property name="jndiName" value="java:comp/env/NVKDS" />
-	</bean>
+	<!-- <bean id="entityManagerFactory" -->
+	<!-- class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"> -->
+	<!-- <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" -->
+	<!-- /> -->
+	<!-- <property name="persistenceUnitName" value="hu.unideb.inf.nvkshop" -->
+	<!-- /> -->
+	<!-- <property name="packagesToScan" value="hu.unideb.inf.rft.nvkshop.*" 
+		/> -->
+	<!-- <property name="dataSource" ref="dataSource" /> -->
+	<!-- <property name="jpaProperties"> -->
+	<!-- <props> -->
+	<!-- <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop> -->
+	<!-- <prop key="hibernate.show_sql">true</prop> -->
+	<!-- <prop key="hibernate.hbm2ddl.auto">create</prop> -->
+	<!-- <prop key="hibernate.hbm2ddl.import_files">import.sql</prop> -->
+	<!-- </props> -->
+	<!-- </property> -->
+	<!-- <property name="persistenceProvider"> -->
+	<!-- <bean class="org.hibernate.jpa.HibernatePersistenceProvider"></bean> -->
+	<!-- </property> -->
+	<!-- </bean> -->
 
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
+	<!-- <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> -->
+	<!-- <property name="jndiName" value="java:comp/env/NVKDS" /> -->
+	<!-- </bean> -->
 
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="classpath:META-INF/hibernate.cfg.xml" />
-	</bean>
+	<!-- <bean id="transactionManager" -->
+	<!-- class="org.springframework.orm.hibernate5.HibernateTransactionManager"> -->
+	<!-- <property name="sessionFactory" ref="sessionFactory" /> -->
+	<!-- </bean> -->
+
+	<!-- <bean id="sessionFactory" -->
+	<!-- class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"> -->
+	<!-- <property name="dataSource" ref="dataSource" /> -->
+	<!-- <property name="configLocation" value="classpath:META-INF/hibernate.cfg.xml" 
+		/> -->
+	<!-- </bean> -->
 
 	<tx:annotation-driven />
 
