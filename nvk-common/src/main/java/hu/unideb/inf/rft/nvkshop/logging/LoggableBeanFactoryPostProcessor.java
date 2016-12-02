@@ -9,7 +9,7 @@ import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class LoggableBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
