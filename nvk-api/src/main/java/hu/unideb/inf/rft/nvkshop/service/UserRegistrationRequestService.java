@@ -1,5 +1,6 @@
 package hu.unideb.inf.rft.nvkshop.service;
 
+import hu.unideb.inf.rft.nvkshop.entities.security.UserPasswordRecovery;
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
 import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationException;
 
@@ -14,4 +15,6 @@ public interface UserRegistrationRequestService {
 	UserRegistrationRequest findByEmail(String email);
 
 	UserRegistrationRequest findByUserName(String userName);
+
+	UserPasswordRecovery findUserPasswordRecoveryByActivationCode(String activationCode);
 }

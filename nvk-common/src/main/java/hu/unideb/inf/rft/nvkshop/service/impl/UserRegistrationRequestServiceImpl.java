@@ -1,5 +1,6 @@
 package hu.unideb.inf.rft.nvkshop.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -12,12 +13,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import hu.unideb.inf.rft.nvkshop.entities.security.User;
+import hu.unideb.inf.rft.nvkshop.entities.security.UserPasswordRecovery;
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
 import hu.unideb.inf.rft.nvkshop.eventhandling.EmailSendingEvent;
 import hu.unideb.inf.rft.nvkshop.eventhandling.EventType;
 import hu.unideb.inf.rft.nvkshop.logging.Log;
 import hu.unideb.inf.rft.nvkshop.repositories.UserPasswordRecoveryDao;
 import hu.unideb.inf.rft.nvkshop.repositories.UserRegistrationRequestDao;
+import hu.unideb.inf.rft.nvkshop.service.DeletedEntityException;
 import hu.unideb.inf.rft.nvkshop.service.Settings;
 import hu.unideb.inf.rft.nvkshop.service.UserRegistrationRequestService;
 import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationException;
