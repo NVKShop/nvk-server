@@ -69,6 +69,10 @@
 	</build>
 
 	<properties>
+		<hibernate.showsql>true</hibernate.showsql>
+		<hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect>
+		<db.driver>com.mysql.jdbc.Driver</db.driver>
+		
 		<smtp.host>smtp.gmail.com</smtp.host>
 		<smtp.port>587</smtp.port>
 	</properties>
