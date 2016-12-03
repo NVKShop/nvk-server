@@ -58,5 +58,9 @@
 			<a>email</a>
 			<b>email</b>
 		</field>
+		<field>
+			<a>passwordConfirm</a>
+			<b>passwordConfirmation</b>
+		</field>
 	</mapping>
 </mappings> 

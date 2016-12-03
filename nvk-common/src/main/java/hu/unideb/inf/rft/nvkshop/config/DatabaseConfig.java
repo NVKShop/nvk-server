@@ -33,7 +33,6 @@ public class DatabaseConfig {
 	private static final String PROPERTY_NAME_HIBERNATE_FORMAT_SQL = "hibernate.format_sql";
 	private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
 	private static final String PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO = "hibernate.hbm2ddl.auto";
-	private static final String PROPERTY_NAME_H_CONNECTION_PROVIDER = "hibernate.connection.provider_class";
 
 	private static final String JDBC_USERNAME = "nvkshop.username";
 	private static final String JDBC_URL = "nvkshop.dburl";
@@ -80,7 +79,6 @@ public class DatabaseConfig {
 		jpaProperties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, "true");
 		jpaProperties.put(PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO,
 				env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO));
-//		jpaProperties.put(PROPERTY_NAME_H_CONNECTION_PROVIDER, "com.zaxxer.hikari.hibernate.HikariConnectionProvider");
 		entityManagerFactoryBean.setJpaProperties(jpaProperties);
 		entityManagerFactoryBean.afterPropertiesSet();
 		return entityManagerFactoryBean;

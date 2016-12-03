@@ -1,0 +1,27 @@
+package hu.unideb.inf.rft.nvkshop.repositories;
+
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import hu.unideb.inf.rft.nvkshop.entities.product.Category;
+import hu.unideb.inf.rft.nvkshop.entities.product.Product;
+import hu.unideb.inf.rft.nvkshop.util.PriceSearchTag;
+
+@Repository
+public interface ProductDao extends JpaRepository<Product, Long>, PagingAndSortingRepository<Product, Long> {
+
+	List<Product> findByCategory(Category category);
+
+	@Query("SELECT p FROM Product p WHERE p.name like :searchTerm AND p.category IN :categories AND p.price > :#{#price.lowerLimit} AND p.price < :#{#price.upperLimit}")
+	Page<Product> search(@Param("searchTerm") String searchTerm, @Param("categories") List<Category> categories,
+			@Param("price") PriceSearchTag price, Pageable pageable);
+
+}

@@ -15,31 +15,25 @@ import org.springframework.transaction.annotation.Transactional;
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
 import hu.unideb.inf.rft.nvkshop.eventhandling.EmailSendingEvent;
 import hu.unideb.inf.rft.nvkshop.eventhandling.EventType;
-import hu.unideb.inf.rft.nvkshop.logging.Log;
-import hu.unideb.inf.rft.nvkshop.repositories.UserPasswordRecoveryDao;
 import hu.unideb.inf.rft.nvkshop.repositories.UserRegistrationRequestDao;
 import hu.unideb.inf.rft.nvkshop.service.Settings;
 import hu.unideb.inf.rft.nvkshop.service.UserRegistrationRequestService;
 import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationException;
 import hu.unideb.inf.rft.nvkshop.validation.userregistration.UserValidator;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class UserRegistrationRequestServiceImpl implements UserRegistrationRequestService {
 
 	@Autowired
 	private Settings settings;
 
-	@Log
-	private Logger logger;
-
 	@Autowired
 	private UserRegistrationRequestDao userRegistrationRequestDao;
 
 	@Autowired
 	private UserValidator validator;
-
-	@Autowired
-	private UserPasswordRecoveryDao passwordRecoveryDao;
 
 	@Autowired
 	private ApplicationEventPublisher eventPublisher;
@@ -73,7 +67,7 @@ public class UserRegistrationRequestServiceImpl implements UserRegistrationReque
 				emailParameters, email);
 
 		eventPublisher.publishEvent(activationEmailSenderEvent);
-		logger.info("The user {} was successfully registrated with activation code: {}", request.getUserName(),
+		log.info("The user {} was successfully registrated with activation code: {}", request.getUserName(),
 				request.getActivationCode());
 	}
 

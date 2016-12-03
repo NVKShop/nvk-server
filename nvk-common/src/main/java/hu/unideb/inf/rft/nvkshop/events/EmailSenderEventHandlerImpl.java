@@ -20,10 +20,11 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import hu.unideb.inf.rft.nvkshop.eventhandling.EmailSenderEventHandler;
 import hu.unideb.inf.rft.nvkshop.eventhandling.EmailSendingEvent;
-import hu.unideb.inf.rft.nvkshop.logging.Log;
 import hu.unideb.inf.rft.nvkshop.service.Settings;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class EmailSenderEventHandlerImpl implements EmailSenderEventHandler {
 	private static final int BUFFER_SIZE = 2048;
 
@@ -38,9 +39,6 @@ public class EmailSenderEventHandlerImpl implements EmailSenderEventHandler {
 
 	@Autowired
 	private Settings settings;
-
-	@Log
-	private Logger logger;
 
 	@Override
 	@EventListener(classes = EmailSendingEvent.class)
@@ -61,14 +59,14 @@ public class EmailSenderEventHandlerImpl implements EmailSenderEventHandler {
 			helper.setText(writer.toString(), true);
 
 			mailSender.send(mimeMessage);
-			logger.info("Email send to user {} with the template {}", event.getTo(),
+			log.info("Email send to user {} with the template {}", event.getTo(),
 					event.getEventType().getTemplateName());
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		} catch (TemplateException e) {
-			logger.error("The template {} is invalid", template.getName());
+			log.error("The template {} is invalid", template.getName());
 		}
 	}
 
