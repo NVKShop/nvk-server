@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -16,6 +17,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.support.SharedEntityManagerBean;
 import org.springframework.orm.jpa.vendor.AbstractJpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -76,7 +78,7 @@ public class DatabaseConfig {
 		Properties jpaProperties = new Properties();
 		jpaProperties.put(PROPERTY_NAME_HIBERNATE_DIALECT, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_DIALECT));
 		jpaProperties.put(PROPERTY_NAME_HIBERNATE_FORMAT_SQL, "true");
-		jpaProperties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, "true");
+		jpaProperties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, "false");
 		jpaProperties.put(PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO,
 				env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO));
 		entityManagerFactoryBean.setJpaProperties(jpaProperties);
@@ -96,17 +98,17 @@ public class DatabaseConfig {
 		AbstractJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
 
 		jpaVendorAdapter.setDatabasePlatform(env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_DIALECT));
-		jpaVendorAdapter.setShowSql(true);
+		jpaVendorAdapter.setShowSql(false);
 
 		return jpaVendorAdapter;
 	}
 
-	// @Override
-	// public PlatformTransactionManager annotationDrivenTransactionManager() {
-	// try {
-	// return transactionManager();
-	// } catch (ClassNotFoundException e) {
-	// return null;
-	// }
-	// }
+	@Bean
+	public SchedulerFactoryBean schedulerFactoryBean() {
+		SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
+		schedulerFactoryBean.setConfigLocation(new ClassPathResource("quartz.properties"));
+		schedulerFactoryBean.setDataSource(dataSource());
+		return schedulerFactoryBean;
+	}
+
 }
