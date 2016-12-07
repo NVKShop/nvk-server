@@ -3,7 +3,7 @@ package hu.unideb.inf.nvkshop.web;
 import lombok.Data;
 
 @Data
-public class LoginForm {
+public class LoginForm extends AbstractUserForm {
 
 	private String userName, password;
 

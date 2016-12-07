@@ -8,4 +8,6 @@ public interface UserPasswordRecoveryService {
 
 	void createUserPasswordRecoveryByEmail(String email);
 
+	void resetPassword(String activationCode, String password);
+
 }

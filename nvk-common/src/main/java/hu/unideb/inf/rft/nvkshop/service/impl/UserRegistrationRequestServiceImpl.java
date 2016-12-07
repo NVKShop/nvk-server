@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -55,23 +54,18 @@ public class UserRegistrationRequestServiceImpl implements UserRegistrationReque
 
 		String activationCode = request.getActivationCode();
 		String locale = settings.getDefaultLanguage();
-		String url = settings.getBaseUrl() + "/registration/activation.html?activationCode=" + activationCode
-				+ "&locale=" + locale;
+		String url = settings.getBaseUrl() + "/registration/activation.html?activationCode=" + activationCode + "&locale=" + locale;
 
 		Map<String, Object> emailParameters = new HashMap<>();
 		emailParameters.put("url", url);
 		emailParameters.put("userName", request.getUserName());
 		String email = request.getEmail();
 
-		EmailSendingEvent activationEmailSenderEvent = new EmailSendingEvent(EventType.REGISTRATION_ACTIVATION,
-				emailParameters, email);
+		EmailSendingEvent activationEmailSenderEvent = new EmailSendingEvent(EventType.REGISTRATION_ACTIVATION, emailParameters, email);
 
 		eventPublisher.publishEvent(activationEmailSenderEvent);
-		log.info("The user {} was successfully registrated with activation code: {}", request.getUserName(),
-				request.getActivationCode());
+		log.info("The user {} was successfully registrated with activation code: {}", request.getUserName(), request.getActivationCode());
 	}
-
-	
 
 	@Override
 	public void remove(UserRegistrationRequest request) {

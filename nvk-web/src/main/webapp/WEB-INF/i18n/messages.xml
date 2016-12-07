@@ -2,14 +2,15 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 
-<!-- Application -->
+	<!-- Application -->
 	<entry key="application.title">NVK-Shop</entry>
 
 	<!-- Titles -->
 	<entry key="titles.registration"> NVK-Shop : Registration </entry>
 	<entry key="titles.passwordReset"> NVK-Shop : Reset password</entry>
+	<entry key="titles.login"> NVK-Shop : Login</entry>
 	<entry key="titles.passwordRecover"> NVK-Shop : New password</entry>
-	
+	<entry key="titles.lostPassword">NVK-Shop : Lost password</entry>
 	<!-- Login -->
 	<entry key="login.failure">Wrong username or password!</entry>
 	<entry key="login.password">Password</entry>
@@ -17,17 +18,43 @@
 	<entry key="login.submit">Login</entry>
 	<entry key="login.title">Login</entry>
 
+	<entry key="outerBar.account">Account</entry>
+	<entry key="outerBar.cart">Cart</entry>
+	<entry key="outerBar.totalAmount">Total items</entry>
+	<entry key="outerBar.logout">Logout</entry>
+	<entry key="outerBar.cartAll">See all items</entry>
+	<entry key="outerBar.orders">My orders</entry>
+
+	<entry key="cart.totalPrice">Total price</entry>
+	<entry key="amount.HUF">HUF</entry>
+
+	<entry key="language.english">English</entry>
+	<entry key="language.hungarian">Magyar</entry>
+
+	<entry key="lostPassword.typeEmail">Type your already registered email, to send a password
+		recovery request.</entry>
+	<entry key="lostPassword.sendEmail">Send recovery</entry>
+
+	<entry key="validation.invalidOrExpiredToken">Sorry, but your token invalid, or expired. Please try
+		password recovery again!</entry>
+	<entry key="validation.passwordsNotMatch">Password aren't much!</entry>
+	<entry key="passwordRecover.resetPassword">Reset password</entry>
+	
 	<!-- Registration -->
 	<entry key="registration.passwordConfirm">Type your password again</entry>
 	<entry key="registration.passwordsNotMatch">Password do not match!</entry>
 	<entry key="registration.passwordMatch">Password match!</entry>
 	<entry key="registration.registration">Registration</entry>
 	<entry key="registration.submit">Submit registration</entry>
-	<entry key="registration.success">You successfully registered in the system. We will send you a message with the activation link soon. </entry>
- 	<entry key="registration.invalidActivationCode">The registration activation was failed, because the given activation code is invalid.</entry>
+	<entry key="registration.success">You successfully registered in the system. We will
+		send you a message with the activation link soon.
+	</entry>
+	<entry key="registration.invalidActivationCode">The registration activation was failed, because the
+		given activation code is invalid.</entry>
 	<entry key="registration.activationSuccess">Activation succeeded. Now you can log in. </entry>
 	<entry key="registration.sendRecovery">Send recovery email</entry>
-	<entry key="registration.lostPasswordInfo">To send a password recovery email type your already registered email addres here!</entry>
+	<entry key="registration.lostPasswordInfo">To send a password recovery email type your already
+		registered email addres here!</entry>
 	<entry key="registration.passwordRecoverySent">Password recovery sent to your e-mail address!</entry>
 	<entry key="registration.lostPassword">Recover password</entry>
 	<entry key="registration.passwordReseted">Your password was reseted. Now you can log in.</entry>
@@ -37,10 +64,14 @@
 	<entry key="registration.userName">User name</entry>
 	<entry key="registration.firstName">First name</entry>
 	<entry key="registration.lastName">Last name</entry>
-	<entry key="registration.emailAlreadyRegistered">This email already registered! Try to reset your password.</entry>
+	<entry key="registration.emailAlreadyRegistered">This email already registered! Try to reset your
+		password.</entry>
 	<entry key="registration.emailNotValid">Please type a valid email address!</entry>
-	<entry key="registration.userNameAlreadyRegistered">This username is already registered in  our webshop! Please choose an another one!</entry>
+	<entry key="registration.userNameAlreadyRegistered">This username is already registered in our webshop!
+		Please choose an another one!</entry>
 
 	<entry key="validation.required">Required field!</entry>
+
+
 
 </properties>

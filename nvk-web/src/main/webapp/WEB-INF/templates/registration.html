@@ -8,48 +8,83 @@
 <link data-th-href="@{/resources/images/favicon.png}" href="../../images/favicon.png" type="image/png" rel="shortcut icon" />
 <link data-th-href="@{/resources/css/bootstrap.min.css}" href="../../css/bootstrap.min.css" rel="stylesheet"></link>
 <link data-th-href="@{/resources/css/bootstrap-theme.min.css}" href="../../css/bootstrap-theme.min.css" rel="stylesheet"></link>
-<link data-th-href="@{/resources/css/theme.css}" href="../../css/theme.css" rel="stylesheet"></link>
+<link data-th-href="@{/resources/css/bootstrap-responsive.min.css}" href="../../css/bootstrap-responsive.min.css" rel="stylesheet" />
+<link data-th-href="@{/resources/themes/css/bootstrappage.css}" href="../../themes/css/bootstraprappage.css" rel="stylesheet" />
+<link data-th-href="@{/resources/themes/css/flexslider.css}" href="../../themes/css/flexslider.css" rel="stylesheet" />
+<link data-th-href="@{/resources/themes/css/main.css}" href="../../themes/css/main.css" rel="stylesheet" />
+<link data-th-href="@{/resources/css/toastr.min.css}" href="../../css/toastr.min.css" rel="stylesheet"></link>
 <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
 </head>
 <body>
+	<form th:action="@{/registration.html}" data-th-object="${registrationRequestForm}" class="form-stacked"  method="post">
+		<div
+			th:replace="fragments/navbar :: top-bar(userId= '${registrationRequestForm.userId}', userName='${registrationRequestForm.userName}', totalPrice=${registrationRequestForm.totalValueOfItems}, items='${registrationRequestForm.items}' )"></div>
+		<div id="wrapper" class="container">
 
-	<h1 class="page-header" data-th-text="#{titles.registration}">Registration</h1>
-	<form data-th-action="@{/registration.html}" data-th-object="${registrationRequestForm}" class="form-horizontal" action="#" method="post">
-		<fieldset>
-			<div th:replace="fragments/inputs :: sized-input(field='userName',  fieldSize='col-sm-3', label=#{registration.userName}, labelSize='col-sm-2', required=true)"></div>
-			<div th:replace="fragments/inputs :: sized-input(field='firstName',  fieldSize='col-sm-3', label=#{registration.firstName}, labelSize='col-sm-2', required=true)"></div>
-			<div th:replace="fragments/inputs :: sized-input(field='lastName',  fieldSize='col-sm-3', label=#{registration.lastName}, labelSize='col-sm-2', required=true)"></div>
-			<div th:replace="fragments/inputs :: sized-input(field='phoneNumber',  fieldSize='col-sm-3', label=#{registration.phoneNumber}, labelSize='col-sm-2', required=false)"></div>
-					
-				<div class="form-group" th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
-				<label class="col-sm-2 control-label">
-					<span th:text="#{general.password}">Password</span>
-					<sup class="text-danger">*</sup>
-				</label> 
-				<div class="col-sm-3">
-						<input th:field="*{password}" type="password" class="form-control" id="psw" /> 
-						<span data-th-if="${#fields.hasErrors('password')}" class="help-block" data-th-errors="*{password}">Error message</span>
+
+			<!-- 			<section class="header_text sub"> -->
+			<!-- 				<br /> -->
+			<!-- 			<img class="pageBanner" src="themes/images/pageBanner.png" alt="New products" /> -->
+			<!-- 				<h4> -->
+			<!-- 					<span data-th-text="#{titles.registration}">Regsiter</span> -->
+			<!-- 				</h4> -->
+			<!-- 			</section> -->
+			<section class="main-content">
+				<div class="row">
+					<div class="span12">
+						<h4 class="title">
+							<span class="text"><strong>Register</strong> Form</span>
+						</h4>
+						<fieldset>
+							<div
+								th:replace="fragments/inputs :: sized-input(field='userName',  fieldSize='col-sm-3', label=#{registration.userName}, labelSize='col-sm-2', required=true)"></div>
+							<!-- 									<div class="row"> -->
+							<div
+								th:replace="fragments/inputs :: sized-input(field='firstName',  fieldSize='col-sm-3', label=#{registration.firstName}, labelSize='col-sm-2', required=true)"></div>
+							<div
+								th:replace="fragments/inputs :: sized-input(field='lastName',  fieldSize='col-sm-3', label=#{registration.lastName}, labelSize='col-sm-2', required=true)"></div>
+							<!-- 									</div> -->
+							<div
+								th:replace="fragments/inputs :: sized-input(field='phoneNumber',  fieldSize='col-sm-3', label=#{registration.phoneNumber}, labelSize='col-sm-2', required=false)"></div>
+
+							<div
+								th:replace="fragments/inputs :: sized-input(field='email',  fieldSize='col-sm-3', label=#{general.email}, labelSize='col-sm-2', required=true)"></div>
+
+							<div class="control-group" th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
+								<label class="control-label"> <span th:text="#{general.password}">Password</span> <sup class="text-danger">*</sup>
+								</label>
+								<div class="controls">
+									<input th:field="*{password}" type="password" class="form-control" id="psw" /> <span data-th-if="${#fields.hasErrors('password')}"
+										class="help-block" data-th-errors="*{password}">Error message</span>
+								</div>
+							</div>
+							<div class="control-group" th:classappend="${#fields.hasErrors('passwordConfirm')} ? 'has-error'">
+								<label class=" control-label"> <span th:text="#{registration.passwordConfirm}">Password Comfirm</span> <sup
+									class="text-danger">*</sup>
+								</label>
+								<div class="controls">
+									<input th:field="*{passwordConfirm}" type="password" class="form-control" id="pswAgain" onChange="checkPasswordMatch();" /> <span
+										data-th-if="${#fields.hasErrors('passwordConfirm')}" class="help-block" data-th-errors="*{passwordConfirm}">Error message</span>
+								</div>
+							</div>
+							<div class="actions">
+								<button tabindex="9" class="btn btn-inverse large" type="submit" th:text="#{registration.submit}"></button>
+							</div>
+							
+						</fieldset>
+					</div>
 				</div>
-			</div>
-			<div class="form-group" th:classappend="${#fields.hasErrors('passwordConfirm')} ? 'has-error'">
-				<label class="col-sm-2 control-label">
-					<span th:text="#{registration.passwordConfirm}">Password Comfirm</span>
-					<sup class="text-danger">*</sup>
-				</label> 
-				<div class="col-sm-3">
-						<input th:field="*{passwordConfirm}" type="password" class="form-control" id="pswAgain" onChange="checkPasswordMatch();"/> 
-						<span data-th-if="${#fields.hasErrors('passwordConfirm')}" class="help-block" data-th-errors="*{passwordConfirm}">Error message</span>
-				</div>
-			</div>
-			<div th:replace="fragments/inputs :: sized-input(field='email',  fieldSize='col-sm-3', label=#{general.email}, labelSize='col-sm-2', required=true)"></div>
-			<button type="submit" class="btn btn-default col-sm-offset-2" data-th-text="#{registration.submit}">Register</button>
-		</fieldset>
-	</form>
-	<script type="text/javascript" data-th-src="@{/resources/js/jquery.min.js}" src="js/jquery.min.js"></script>
-	<script type="text/javascript" data-th-src="@{/resources/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" data-th-src="@{/resources/js/toastr.min.js}" src="js/toastr.min.js"></script>
-	<script type="text/javascript" data-th-src="@{/resources/js/popovers.js}" src="../../js/popovers.js"></script>
-	
-	
+			</section>
+		</div>
+		
+	</form>	
+
 </body>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/jquery-1.7.2.min.js}" src="themes/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/superfish.js}" src="themes/js/superfish.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/jquery.scrolltotop.js}" src="themes/js/jquery.scrolltotop.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/js/toastr.min.js}" src="js/toastr.min.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/common.js}" src="themes/js/common.js"></script>
+
 </html>

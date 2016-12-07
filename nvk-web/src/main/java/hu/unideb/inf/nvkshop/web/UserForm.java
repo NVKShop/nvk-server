@@ -4,7 +4,7 @@ import hu.unideb.inf.rft.nvkshop.entities.security.Language;
 import lombok.Data;
 
 @Data
-public class UserForm {
+public class UserForm extends AbstractUserForm {
 	private long id;
 	private String fistName;
 	private String lastName;

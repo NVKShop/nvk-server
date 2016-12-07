@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div id="top-bar" class="container" th:fragment="outer_bar" >
+			<div class="row">
+				<div class="span4">
+					<form method="POST" class="search_form">
+						<input type="text" class="input-block-level search-query" Placeholder="">
+					</form>
+				</div>
+				<div class="span8">
+					<div class="account pull-right">
+						<ul class="user-menu">			
+							
+							<li th:if="${userId != null}"><a th:ref="@{'/users/edit?id=' + ${userId}}" th:text="#{navbar.myAccount}" href="#">My Account</a></li>
+							<li><a href="cart.html">Your Cart</a></li>
+							<li><a href="checkout.html">Checkout</a></li>					
+							<li>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span><img
+								th:src="@{/resources/images/flags/__${#locale.language}__.png}" /></span> <b class="caret"></b>
+								</a> 
+									<ul class="dropdown-menu" role="menu">
+										<li><a th:href="@{/(locale=en)}" href="#"><img src="../../resources/images/flags/en.png"
+												th:src="@{/resources/images/flags/en.png}"></img> <span th:text="#{language.english}">EN</span></a></li>
+										<li><a th:href="@{/(locale=hu)}" href="#"><img src="../../resources/images/flags/hu.png"
+												th:src="@{/resources/images/flags/hu.png}"></img> <span th:text="#{language.hungarian}">HU</span></a></li>
+									</ul>
+							</li>
+										
+							<li><a href="register.html">Login</a></li>			
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+</body>
+</html>

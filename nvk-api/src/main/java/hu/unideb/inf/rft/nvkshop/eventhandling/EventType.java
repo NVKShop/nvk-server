@@ -1,8 +1,8 @@
 package hu.unideb.inf.rft.nvkshop.eventhandling;
 
 public enum EventType implements EventTypeDescriptor {
-	REGISTRATION_ACTIVATION("user-registration-activation-message.html", "mail.subjectRegistrationActivation");
-
+	REGISTRATION_ACTIVATION("user-registration-activation-message.html",
+			"mail.subjectRegistrationActivation"), PASSWORD_RECOVERY("user-password-recovery-message.html", "mail.subjectPasswordRecovery");
 	private String templateName;
 
 	private String messageSource;

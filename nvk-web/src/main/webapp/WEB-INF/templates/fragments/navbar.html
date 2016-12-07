@@ -17,7 +17,7 @@
 				<ul class="nav navbar-nav navbar-left">
 					<li><a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span><img
 								th:src="@{/resources/images/flags/__${#locale.language}__.png}" /></span> <b class="caret"></b>
-					</a> 
+					</a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a th:href="@{/(locale=en)}" href="#"><img src="../../resources/images/flags/en.png"
 									th:src="@{/resources/images/flags/en.png}"></img> <span th:text="#{language.english}">EN</span></a></li>
@@ -25,19 +25,19 @@
 									th:src="@{/resources/images/flags/hu.png}"></img> <span th:text="#{language.hungarian}">HU</span></a></li>
 						</ul></li>
 				</ul>
-				
+
 				<ul>
-<!-- 					<li> -->
-<!-- 						<span th:text="#{basket.basket}">Basket </span> <span th:text="#{basket.totalItems}"> Total items </span><span th:text=${totalItems}></span><br/> -->
-<!-- 						<span th:text="#{basket.totalPrize}">Total price:</span><span th:text="#{titalPrice}"> 300E</span> -->
-<!-- 					<ul class="dropdown-menu" role="menu"> -->
-<!-- 		TODO:			set item view href -->
-<!-- 							<li th:each= " item: *{basketItems}"><a th:href="" href="#"><span th:text="${item.name} : "></span><span th:text="${item.price}"></span></a></li> -->
-<!-- 					</ul> -->
-<!-- 					</li> -->
+					<!-- 					<li> -->
+					<!-- 						<span th:text="#{basket.basket}">Basket </span> <span th:text="#{basket.totalItems}"> Total items </span><span th:text=${totalItems}></span><br/> -->
+					<!-- 						<span th:text="#{basket.totalPrize}">Total price:</span><span th:text="#{titalPrice}"> 300E</span> -->
+					<!-- 					<ul class="dropdown-menu" role="menu"> -->
+					<!-- 		TODO:			set item view href -->
+					<!-- 							<li th:each= " item: *{basketItems}"><a th:href="" href="#"><span th:text="${item.name} : "></span><span th:text="${item.price}"></span></a></li> -->
+					<!-- 					</ul> -->
+					<!-- 					</li> -->
 				</ul>
-				
-<!-- 		TODO: set user profile href -->
+
+				<!-- 		TODO: set user profile href -->
 				<!-- 				Use just after authentiucation created!  -->
 				<!-- 				<ul class="nav navbar-nav navbar-right"> -->
 				<!-- 					<li data-sec-authorize="isAuthenticated()"> -->
@@ -50,8 +50,85 @@
 
 			</div>
 		</div>
-
 	</nav>
+	<div id="top-bar" class="container" th:fragment="top-bar (userId, userName, totalPrice, items)">
+		<div class="row">
+			<div class="span4">
+<!-- 				<form method="POST" class="search_form"> -->
+<!-- 					<input type="text" class="input-block-level search-query" Placeholder="eg. T-sirt" /> -->
+<!-- 				</form> -->
+			</div>
+			<div class="span8">
+				<div class="account pull-right">
+					<ul th:if="*{userId == null}" class="user-menu">
+						<li th:text="#{outerBar.account}"><a href="#" th:href="@{/login.html}"> My Account</a></li>
+						<li  class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span><img
+									th:src="@{/resources/images/flags/__${#locale.language}__.png}" /></span> <b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a th:href="@{/(locale=en)}" href="#"><img src="../../resources/images/flags/en.png"
+										th:src="@{/resources/images/flags/en.png}"></img> <span th:text="#{language.english}">EN</span></a></li>
+								<li><a th:href="@{/(locale=hu)}" href="#"><img src="../../resources/images/flags/hu.png"
+										th:src="@{/resources/images/flags/hu.png}"></img> <span th:text="#{language.hungarian}">HU</span></a></li>
+							</ul></li>
+						<li><a href="register.html" th:href="@{/registration.html}" th:text="#{registration.registration}">Registration</a></li>
+					</ul>
+					<ul th:if="*{userId != null}" class="user-menu">
+						<li><a href="#"> <span th:text="#{outerBar.account} + ' (' ">My Account </span><span th:text="*{userName} + ' )' "></span>
+						</a></li>
+						<li  class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<span th:text="#{outerBar.cart} + '('">Cart ( </span><span th:text="#{cart.totalPrice} + ':' ">Total price</span><span th:text="${totalPrice}  + #{amount.HUF} + '  ' "> 300E</span><span th:text="#{outerBar.totalAmount} + ' : '  + ${items.length() + ' )'}"> Total items: 300 ) </span>
+							</a>				
+							<ul class="dropdown-menu" role="menu">
+<!-- 							TODO:set item names and views -->
+								<li  th:each= " item: *{items}"><a href="#"><span th:text="${item.name} + ' : ' "></span><span th:text="${item.price} + #{amount.HUF}"></span></a></li>
+								<li> <a th:href="@{/cart.html}" href="#" th:text="#{outerBar.cartAll}"> See my cart</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="#" th:href="@{/orders}" th:text="#{outerBar.orders}">Orders</a>
+						</li>
+						<li  class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span><img
+									th:src="@{/resources/images/flags/__${#locale.language}__.png}" /></span> <b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a th:href="@{/(locale=en)}" href="#"><img src="../../resources/images/flags/en.png"
+										th:src="@{/resources/images/flags/en.png}"></img> <span th:text="#{language.english}">EN</span></a></li>
+								<li><a th:href="@{/(locale=hu)}" href="#"><img src="../../resources/images/flags/hu.png"
+										th:src="@{/resources/images/flags/hu.png}"></img> <span th:text="#{language.hungarian}">HU</span></a></li>
+							</ul>
+						</li>
+						<li><a href="" th:text="#{outerBar.logout}">Log out</a></li>
+					</ul>
+					
+				</div>
+			</div>
+		</div>
+		<br />
+	</div>
+	
+	<section class="navbar main-menu">
+				<div class="navbar-inner main-menu">				
+<!-- 					<a href="index.html" class="logo pull-left"><img src="themes/images//logo.png" class="site_logo" alt=""></a> -->
+					<nav id="menu" class="pull-right">
+					th:text="${navbar.}"
+						<ul>
+							<li th:each="category : *{categories}" ><a href="#" th:text="#{#{navbar.productsByCategory} + category.name}">Main category</a>			
+								<ul th:if="${category.subCategory.size() > 0}" th:each = "subCategory : *{category.subCategories}">
+									<li><a href="#" th:text="#{#{navbar.productsByCategory} + category.name}" th:href="@{'/products/category?id=' + ${subCategory.id}}">Subcategory multiple</a></li>									
+								</ul>
+								<ul th:if="${category.subCategory.size() = 0}">
+									<li><a href="#" th:text="#{#{navbar.productsByCategory} + category.name}" th:href="@{'/products/category?id=' + ${category.id}}">No subcategory</a></li>									
+								</ul>
+							</li>															
+							<li><a href="#"  th:href="@{/products}" th:text="${navbar.allProducts}">All products</a></li>							
+							<li><a href="#" th:href="@{/search}">Search</a><span class="glyphicon glyphicon-search"></span></li>
+						</ul>
+					</nav>
+				</div>
+			</section>			
 </body>
 
 </html>

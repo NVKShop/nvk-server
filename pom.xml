@@ -259,7 +259,7 @@
 	<!-- <artifactId>nvk-api</artifactId> -->
 	<!-- <version>${project.version}</version> -->
 	<!-- </dependency> -->
-	<!-- <dependency> -->
+	<!-- <dependency> -->	 
 	<!-- <groupId>hu.unideb.inf.nvk</groupId> -->
 	<!-- <artifactId>nvk-common</artifactId> -->
 	<!-- <version>${project.version}</version> -->
@@ -280,7 +280,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<app.location>localhost/nvk-web</app.location>
+				<app.location>localhost:8080/nvk-web</app.location>
 			</properties>
 		</profile>
 	</profiles>

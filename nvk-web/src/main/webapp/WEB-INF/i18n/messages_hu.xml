@@ -6,9 +6,10 @@
 	<entry key="application.title">NVK-Webshop</entry>
 
 	<!-- Titles -->
-	<entry key="titles.registration"> NVK-Shop : Registration </entry>
-	<entry key="titles.passwordReset"> NVK-Shop : Reset password</entry>
-	<entry key="titles.passwordRecover"> NVK-Shop : New password</entry>
+	<entry key="titles.registration"> NVK-Shop : Regisztráció </entry>
+	<entry key="titles.login"> NVK-shop : Bejelentkezés</entry>
+	<entry key="titles.passwordReset"> NVK-Shop : Jelszó helyreállítás</entry>
+	<entry key="titles.passwordRecover"> NVK-Shop :Új jelszó</entry>
 	
 	<!-- Login -->
 	<entry key="login.failure">Hibás felhasználónév vagy jelszó!</entry>

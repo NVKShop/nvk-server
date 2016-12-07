@@ -40,7 +40,7 @@ public class RegistrationController extends AbstractNvkController {
 
 	@Autowired
 	private UserPasswordRecoveryService userPasswordRecoveryService;
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -57,6 +57,7 @@ public class RegistrationController extends AbstractNvkController {
 	public String registration(Model model) {
 
 		RegistrationRequestForm form = new RegistrationRequestForm();
+		addTestDatasForUser(form);
 		model.addAttribute("registrationRequestForm", form);
 		log.info("Registration request handling.");
 		return "registration";
@@ -74,6 +75,7 @@ public class RegistrationController extends AbstractNvkController {
 	@RequestMapping(value = "/registration", method = RequestMethod.POST, produces = "text/html")
 	public String registrationSubmit(RegistrationRequestForm form, Errors errors, Model model, RedirectAttributes redirectAttrs) {
 
+		System.out.println("reg-step2");
 		log.info("Registration request submit.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "validation.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "validation.required");
@@ -100,7 +102,7 @@ public class RegistrationController extends AbstractNvkController {
 					case EMAIL_NOT_VALID:
 						errors.rejectValue("email", "registration.emailNotValid");
 					case USERNAME_EXISTS:
-						errors.rejectValue("username", "registration.userNameAlreadyRegistered");
+						errors.rejectValue("userName", "registration.userNameAlreadyRegistered");
 					case PASSWORD_MISMATCH:
 						errors.rejectValue("password", "registration.passwordsNotMatch");
 						errors.rejectValue("passwordConfirm", "registration.passwordsNotMatch");
@@ -133,7 +135,7 @@ public class RegistrationController extends AbstractNvkController {
 				userService.activateRegistration(activationCode);
 				redirectAttrs.addFlashAttribute("successMsg", "registration.activationSuccess");
 			} catch (Exception e) {
-				redirectAttrs.addFlashAttribute("errorMsg", "registration.invaliActivationCode");
+				redirectAttrs.addFlashAttribute("errorMsg", "registration.invalidActivationCode");
 			}
 		}
 		return "redirect:/login.html";
@@ -148,10 +150,9 @@ public class RegistrationController extends AbstractNvkController {
 	 */
 	@RequestMapping(value = "/lostpassword", method = RequestMethod.GET, produces = "text/html")
 	public String lostPassword(Model model) {
-
-		log.info("Password recovery step 1.");
 		RegistrationRequestForm form = new RegistrationRequestForm();
-		model.addAttribute("registrationForm", form);
+		log.info("Password recovery step 1.");
+		model.addAttribute("registrationRequestForm", form);
 		return "lostpassword";
 
 	}
@@ -167,7 +168,7 @@ public class RegistrationController extends AbstractNvkController {
 
 		try {
 			log.info("Try recover user password. Email = {}", form.getEmail());
-			// userService.recoverUserPassword(form.getEmail());
+			userPasswordRecoveryService.createUserPasswordRecoveryByEmail(form.getEmail());
 		} catch (DeletedEntityException ex) {
 			errors.rejectValue("email", "validation.notARegisteredEmail");
 		}
@@ -189,37 +190,39 @@ public class RegistrationController extends AbstractNvkController {
 		try {
 			passwordRecovery = userPasswordRecoveryService.findUserPasswordRecoveryByActivationCode(activationCode);
 		} catch (DeletedEntityException ex) {
-			redirectAttrs.addFlashAttribute("errorMsg", "registration.invalidOrExpiredToken");
+			redirectAttrs.addFlashAttribute("errorMsg", "validation.invalidOrExpiredToken");
 			return "redirect:/login.html";
 		}
 
 		PasswordRecoveryForm form = new PasswordRecoveryForm();
-		form.setId(passwordRecovery.getUser().getId());
-		model.addAttribute("registrationForm", form);
+		form.setActivationCode(activationCode);
+		model.addAttribute("passwordRecoveryForm", form);
 		return "passwordrecover";
 
 	}
 
 	@RequestMapping(value = "/passwordrecover", method = RequestMethod.POST, produces = "text/html")
 	public String passwordRecoverSubmit(PasswordRecoveryForm form, Errors errors, Model model, RedirectAttributes redirectAttrs) {
-		log.info("Password recovery step 2.");
+		log.info("Password recovery step 3.");
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "validation.required");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passwordAgain", "validation.required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passwordConfirm", "validation.required");
 
 		if (errors.hasErrors()) {
 			return "passwordrecover";
 		}
-		if (!form.getPassword().equals(form.getPasswordAgain()))
+		if (!form.getPassword().equals(form.getPasswordConfirm()))
+
 			errors.rejectValue("passwordConfirm", "validation.passwordsNotMatch");
 
 		if (errors.hasErrors()) {
 			return "passwordrecover";
 		}
 		try {
-			log.info("Set new password for user. Id = {}", form.getId());
+			userPasswordRecoveryService.resetPassword(form.getActivationCode(), form.getPassword());
+			// log.info("Set new password for user. Id = {}", form.getId());
+
 		} catch (DeletedEntityException ex) {
-			errors.rejectValue("email", "validation.notARegisteredEmail");
 			redirectAttrs.addFlashAttribute("errorMsg", "registration.permamentlyDeletedUser");
 			return "redirect:/login.html";
 		}

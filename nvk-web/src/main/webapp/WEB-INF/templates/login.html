@@ -1,65 +1,83 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head data-th-fragment="head">
-<title data-th-text="#{application.title}">CV Factory</title>
+<title data-th-text="#{application.title}">NVK shop</title>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
 <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 <link data-th-href="@{/resources/images/favicon.png}" href="../../images/favicon.png" type="image/png" rel="shortcut icon" />
 <link data-th-href="@{/resources/css/bootstrap.min.css}" href="../../css/bootstrap.min.css" rel="stylesheet"></link>
 <link data-th-href="@{/resources/css/bootstrap-theme.min.css}" href="../../css/bootstrap-theme.min.css" rel="stylesheet"></link>
-<link data-th-href="@{/resources/css/theme.css}" href="../../css/theme.css" rel="stylesheet"></link>
+<link data-th-href="@{/resources/css/bootstrap-responsive.min.css}" href="../../css/bootstrap-responsive.min.css" rel="stylesheet" />
+<link data-th-href="@{/resources/themes/css/bootstrappage.css}" href="../../themes/css/bootstraprappage.css" rel="stylesheet" />
+<link data-th-href="@{/resources/themes/css/flexslider.css}" href="../../themes/css/flexslider.css" rel="stylesheet" />
+<link data-th-href="@{/resources/themes/css/main.css}" href="../../themes/css/main.css" rel="stylesheet" />
 <link data-th-href="@{/resources/css/toastr.min.css}" href="../../css/toastr.min.css" rel="stylesheet"></link>
-
 <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
 </head>
 <body>
-	<div class="container">
-		<div class="col-xs-offset-2 col-xs-8">
-				<div class="jumbotron">
-					<div class="text-center">
-						<div>
-							<h3><strong>NVK-SHOP </strong></h3>									
+
+	<form th:action="@{/login}" action="#" method="post" data-th-object="${loginForm}">
+		<div
+			th:replace="fragments/navbar :: top-bar(userId= '${registrationRequestForm.userId}', userName='${registrationRequestForm.userName}', totalPrice='${registrationRequestForm.totalValueOfItems}', items='${registrationRequestForm.items}' )"></div>
+		<div id="wrapper" class="container">
+
+<!-- 			<section class="header_text sub"> -->
+<!-- 							<img class="pageBanner" src="themes/images/pageBanner.png" alt="New products" /> -->
+<!-- 				<h4> -->
+<!-- 					<span data-th-text="#{titles.login}">Login</span> -->
+<!-- 				</h4> -->
+<!-- 			</section> -->
+			<section class="main-content">
+				<div class="span7">
+					<fieldset>
+
+						<!-- 		TODO: Wire this:  -->
+						<!-- 		data-th-action="@{/j_spring_security_check}"  -->
+						<div class="row">
+						<h4 class="title"><span class="text"><strong th:text="#{titles.login}">Login Form</strong></span></h4>
+							<label class="control-label" data-th-text="#{login.userName}">User name</label>
+							<div class="controls">
+								<input type="text" class="input-xlarge" data-th-field="*{userName}"></input>
+							</div>
+							<label class="control-label" data-th-text="#{login.password}">Password</label>
+							<div class="controls">
+								<input type="password" class="input-xlarge" data-th-field="*{password}"></input>
+							</div>
+
+							<div class="actions">
+								<div class="col-xs-offset-4 col-xs-4">
+									<button type="submit" tabindex="8" class="btn btn-inverse large" data-th-text="#{login.submit}">Login</button>
+								</div>
+								<br />
+								<hr />
+								<div class="col-xs-offset-4 col-xs-4">
+									<a href="#" data-th-href="@{/registration.html}" data-th-text="#{registration.registration}" tabindex="9"
+										class="btn btn-inverse large" role="button">Cancel</a> <a href="#" data-th-href="@{/lostpassword.html}"
+										data-th-text="#{registration.lostPassword}" tabindex="9" class="btn btn-inverse large" role="button">Cancel</a>
+
+								</div>
+								<div data-th-if="${failure}" class="form-group col-xs-offset-4 col-xs-4 has-error">
+									<strong class="help-block" data-th-text="#{login.failure}">Login failure</strong>
+								</div>
+								<br/>
+								<br/>
+							</div>
 						</div>
-					</div>
+
+
+					</fieldset>
 				</div>
-			</div>		
-		<div class="loginForm">
-<!-- 		TODO: Wire this:  -->
-<!-- 		data-th-action="@{/j_spring_security_check}"  -->
-			<form th:action="@{/login}" action="#" method="post" data-th-object="${loginForm}" >
-			<div class="row">
-				<div class="form-group col-xs-offset-4 col-xs-4">
-					<label data-th-text="#{login.userName}">User name</label>
-					<input type="text" class="form-control" data-th-field="*{userName}"></input>
-				</div>
-				<div class="form-group col-xs-offset-4 col-xs-4">
-					<label data-th-text="#{login.password}">Password</label>
-					<input type="password" class="form-control" data-th-field="*{password}"></input>
-				</div>
-				<div class="col-xs-offset-4 col-xs-4">
-					<button type="submit" class="btn btn-default" data-th-text="#{login.submit}">Login</button>
-				 	<a href="#" data-th-href="@{/registration.html}"  data-th-text="#{registration.registration}" class="btn btn-default col-xs-offset-4" role="button">Cancel</a>
-				</div>
-				<br/> 
-				<div class="col-xs-offset-4 col-xs-4">
-					<a href="#" data-th-href="@{/lostpassword.html}"  data-th-text="#{registration.lostPassword}" class="btn btn-default" role="button">Cancel</a>
-				
-				</div>
-				 <div>
-				 </div>
-				<div data-th-if="${failure}" class="form-group col-xs-offset-4 col-xs-4 has-error">
-					<strong class="help-block" data-th-text="#{login.failure}">Login failure</strong>
-				</div>
-			</div>
-			</form>
+			</section>
 		</div>
-	</div>
-	<script type="text/javascript" data-th-src="@{/resources/js/jquery.min.js}" src="js/jquery.min.js"></script>
+	</form>
+	<script type="text/javascript" data-th-src="@{/resources/themes/js/jquery-1.7.2.min.js}" src="themes/js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" data-th-src="@{/resources/themes/js/superfish.js}" src="themes/js/superfish.js"></script>
+	<script type="text/javascript" data-th-src="@{/resources/themes/js/jquery.scrolltotop.js}" src="themes/js/jquery.scrolltotop.js"></script>
 	<script type="text/javascript" data-th-src="@{/resources/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" data-th-src="@{/resources/js/toastr.min.js}" src="js/toastr.min.js"></script>
 
-<script data-th-if="${successMsg}" data-th-inline="javascript" type="text/javascript">
+	<script data-th-if="${successMsg}" data-th-inline="javascript" type="text/javascript">
 	/*<![CDATA[*/
 		toastr.success([[#{${successMsg}}]], [[#{general.toastrSuccess}]]);
 	/*]]>*/
