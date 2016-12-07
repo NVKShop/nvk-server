@@ -61,7 +61,7 @@ public class UserPasswordRecoveryServiceImpl extends AbstrackNvkService implemen
 		emailParameters.put("userName", user.getUserName());
 		recovery.setDueDate(dateOf(now().plusDays(30)));
 		recovery.setUser(user);
-		passwordRecoveryDao.save(recovery);
+		passwordRecoveryDao.saveAndFlush(recovery);
 
 		EmailSendingEvent event = new EmailSendingEvent(EventType.PASSWORD_RECOVERY, emailParameters, email);
 		publisher.publishEvent(event);
@@ -85,13 +85,19 @@ public class UserPasswordRecoveryServiceImpl extends AbstrackNvkService implemen
 	public void resetPassword(String activationCode, String password) {
 		UserPasswordRecovery passwordRecovery = passwordRecoveryDao.findByActivationCode(activationCode);
 
+		System.out.println(activationCode);
+		System.out.println(password);
 		if (passwordRecovery == null || passwordRecovery.getDueDate().before(new Date())) {
+			System.out.println(passwordRecovery.getDueDate());
+			System.out.println(new Date());
 			throw new DeletedEntityException();
 		}
 
 		User user = userDao.findOne(passwordRecovery.getUser().getId());
-
+		System.out.println(passwordRecovery.getUser());
+		System.out.println(user);
 		if (user == null) {
+
 			throw new DeletedEntityException();
 		}
 

@@ -219,6 +219,7 @@ public class RegistrationController extends AbstractNvkController {
 			return "passwordrecover";
 		}
 		try {
+			System.out.println(form.getActivationCode());
 			userPasswordRecoveryService.resetPassword(form.getActivationCode(), form.getPassword());
 			// log.info("Set new password for user. Id = {}", form.getId());
 

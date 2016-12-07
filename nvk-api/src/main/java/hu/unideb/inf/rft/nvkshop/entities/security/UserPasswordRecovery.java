@@ -12,7 +12,7 @@ import javax.persistence.TemporalType;
 import hu.unideb.inf.rft.nvkshop.entities.base.BaseEntity;
 
 @Entity
-@Table(name="password_recovery")
+@Table(name = "password_recovery")
 public class UserPasswordRecovery extends BaseEntity {
 
 	@OneToOne
