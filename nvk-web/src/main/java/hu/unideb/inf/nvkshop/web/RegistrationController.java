@@ -167,6 +167,8 @@ public class RegistrationController extends AbstractNvkController {
 		}
 
 		try {
+			log.info("Check and delete old recoveries. Email = {}", form.getEmail());
+			userPasswordRecoveryService.findAndDeleteOldRecoveries(form.getEmail());
 			log.info("Try recover user password. Email = {}", form.getEmail());
 			userPasswordRecoveryService.createUserPasswordRecoveryByEmail(form.getEmail());
 		} catch (DeletedEntityException ex) {

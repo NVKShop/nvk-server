@@ -2,6 +2,7 @@ package hu.unideb.inf.rft.nvkshop.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -41,6 +42,23 @@ public class UserPasswordRecoveryServiceImpl extends AbstrackNvkService implemen
 	private UserDao userDao;
 
 	@Override
+	@Transactional
+	public void findAndDeleteOldRecoveries(String email) {
+		User user = userService.findByEmail(email);
+
+		if (user == null) {
+			throw new DeletedEntityException();
+		}
+
+		List<UserPasswordRecovery> oldRecoveries = passwordRecoveryDao.findAllByUser(user);
+		if (!oldRecoveries.isEmpty()) {
+
+			passwordRecoveryDao.delete(oldRecoveries);
+
+		}
+	}
+
+	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void createUserPasswordRecoveryByEmail(String email) {
 		UserPasswordRecovery recovery = new UserPasswordRecovery();
@@ -51,6 +69,13 @@ public class UserPasswordRecoveryServiceImpl extends AbstrackNvkService implemen
 
 		if (user == null) {
 			throw new DeletedEntityException();
+		}
+
+		UserPasswordRecovery oldRecovery = passwordRecoveryDao.findByUser(user);
+		if (oldRecovery != null) {
+
+			passwordRecoveryDao.delete(oldRecovery);
+
 		}
 		String activationCode = recovery.getActivationCode();
 		String locale = settings.getDefaultLanguage();
@@ -97,6 +122,10 @@ public class UserPasswordRecoveryServiceImpl extends AbstrackNvkService implemen
 
 		user.setPassword(password);
 		userDao.saveAndFlush(user);
+
+		passwordRecovery.setDateOfModification(dateOf(now()));
+		passwordRecovery.setDueDate(dateOf(now()));
+		passwordRecoveryDao.saveAndFlush(passwordRecovery);
 
 	}
 

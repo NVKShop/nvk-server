@@ -10,4 +10,6 @@ public interface UserPasswordRecoveryService {
 
 	void resetPassword(String activationCode, String password);
 
+	void findAndDeleteOldRecoveries(String email);
+
 }
