@@ -31,11 +31,22 @@ public class AbstractNvkController {
 
 	}
 
+	/**
+	 * Get a date by a zoned date time.
+	 * 
+	 * @param time the time
+	 * @return the tima instant
+	 */
 	protected Date dateOf(ZonedDateTime time) {
 		Assert.notNull(time);
 		return Date.from(time.toInstant());
 	}
 
+	/**
+	 * Return the actual local date tame based by system default
+	 * 
+	 * @return the actual time
+	 */
 	protected ZonedDateTime now() {
 		return LocalDateTime.now().atZone(ZoneId.systemDefault());
 	}
