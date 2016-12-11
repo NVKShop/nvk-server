@@ -19,7 +19,7 @@
 <!-- data-th-action="@{/j_spring_security_check}" -->
 	<form th:action="@{/login}" action="#"  method="post" data-th-object="${loginForm}">
 		<div
-			th:replace="fragments/navbar :: top-bar(userId= '${registrationRequestForm.userId}', userName='${registrationRequestForm.userName}', totalPrice='${registrationRequestForm.totalValueOfItems}', items='${registrationRequestForm.items}' )"></div>
+			th:replace="fragments/navbar :: top-bar"></div>
 		<div id="wrapper" class="container">
 
 <!-- 			<section class="header_text sub"> -->

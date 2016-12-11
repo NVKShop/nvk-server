@@ -86,6 +86,7 @@ public class AbstractNvkController {
 		CustomUserDetails principal = null;
 		if (authentication == null) {
 			// TODO : Log or smtgh
+			System.out.println("nincs auth");
 		} else {
 			principal = (CustomUserDetails) authentication.getPrincipal();
 			User user = principal.getUser();

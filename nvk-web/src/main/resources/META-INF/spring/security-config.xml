@@ -9,9 +9,10 @@
 
 	<!-- TODO kitölteni és kikommentelni ha lesz bejelentkező form, addig bekötök 
 		egy basicet -->
-<bean id="authenticationSuccessHandler" class="hu.unideb.inf.rft.nvkshop.security.NvkAuthenticationSuccessHandler"  p:targetUrlParameter="/test.html" />
+<bean id="authenticationSuccessHandler" class="hu.unideb.inf.rft.nvkshop.security.NvkAuthenticationSuccessHandler"  p:defaultTargetUrl="/main.html"  />
 
-	<security:http auto-config="true" use-expressions="true">
+	<security:http pattern="/resources/**" security="none" />
+	<security:http disable-url-rewriting="true" use-expressions="true">
 		<security:csrf disabled="true" />
 		<security:headers disabled="true" />
 		<security:intercept-url pattern="/secured/**"
@@ -24,6 +25,7 @@
 			logout-success-url="/login.html" />
 <!-- 		<security:remember-me key="key" -->
 <!-- 			remember-me-parameter="remember_me" token-validity-seconds="86400" /> -->
+		<security:access-denied-handler error-page="/403.html" />
 	</security:http>
 	
 	<context:component-scan base-package="hu.unideb.inf.rft.nvkshop"></context:component-scan>
