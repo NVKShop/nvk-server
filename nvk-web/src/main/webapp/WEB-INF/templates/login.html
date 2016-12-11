@@ -16,8 +16,8 @@
 <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
 </head>
 <body>
-
-	<form th:action="@{/login}" action="#" method="post" data-th-object="${loginForm}">
+<!-- data-th-action="@{/j_spring_security_check}" -->
+	<form th:action="@{/login}" action="#"  method="post" data-th-object="${loginForm}">
 		<div
 			th:replace="fragments/navbar :: top-bar(userId= '${registrationRequestForm.userId}', userName='${registrationRequestForm.userName}', totalPrice='${registrationRequestForm.totalValueOfItems}', items='${registrationRequestForm.items}' )"></div>
 		<div id="wrapper" class="container">
@@ -38,11 +38,11 @@
 						<h4 class="title"><span class="text"><strong th:text="#{titles.login}">Login Form</strong></span></h4>
 							<label class="control-label" data-th-text="#{login.userName}">User name</label>
 							<div class="controls">
-								<input type="text" class="input-xlarge" data-th-field="*{userName}"></input>
+								<input type="text" class="input-xlarge" data-th-field="*{j_username}"></input>
 							</div>
 							<label class="control-label" data-th-text="#{login.password}">Password</label>
 							<div class="controls">
-								<input type="password" class="input-xlarge" data-th-field="*{password}"></input>
+								<input type="password" class="input-xlarge" data-th-field="*{j_password}"></input>
 							</div>
 
 							<div class="actions">

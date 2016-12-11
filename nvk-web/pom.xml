@@ -72,7 +72,7 @@
 		<hibernate.showsql>true</hibernate.showsql>
 		<hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect>
 		<db.driver>com.mysql.jdbc.Driver</db.driver>
-		
+
 		<smtp.host>smtp.gmail.com</smtp.host>
 		<smtp.port>587</smtp.port>
 	</properties>
@@ -159,7 +159,6 @@
 			<artifactId>spring-security-core</artifactId>
 			<version>4.1.3.RELEASE</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>

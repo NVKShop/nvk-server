@@ -57,7 +57,8 @@ public class RegistrationController extends AbstractNvkController {
 	public String registration(Model model) {
 
 		RegistrationRequestForm form = new RegistrationRequestForm();
-		addTestDatasForUser(form);
+		// addTestDatasForUser(form);
+		addDatasForUser(form);
 		model.addAttribute("registrationRequestForm", form);
 		log.info("Registration request handling.");
 		return "registration";
@@ -75,7 +76,6 @@ public class RegistrationController extends AbstractNvkController {
 	@RequestMapping(value = "/registration", method = RequestMethod.POST, produces = "text/html")
 	public String registrationSubmit(RegistrationRequestForm form, Errors errors, Model model, RedirectAttributes redirectAttrs) {
 
-		System.out.println("reg-step2");
 		log.info("Registration request submit.");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "validation.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "validation.required");
@@ -232,6 +232,12 @@ public class RegistrationController extends AbstractNvkController {
 		redirectAttrs.addFlashAttribute("successMsg", "registration.passwordReseted");
 		return "redirect:/login.html";
 
+	}
+
+	@RequestMapping(value = "/test", method = RequestMethod.GET, produces = "text/html")
+	public String loginTest(Model model) {
+		model.addAttribute("UserId", authenticationUserId());
+		return "test";
 	}
 
 }

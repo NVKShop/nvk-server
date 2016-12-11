@@ -18,7 +18,7 @@
 <body>
 	<form th:action="@{/registration.html}" data-th-object="${registrationRequestForm}" class="form-stacked"  method="post">
 		<div
-			th:replace="fragments/navbar :: top-bar(userId= '${registrationRequestForm.userId}', userName='${registrationRequestForm.userName}', totalPrice=${registrationRequestForm.totalValueOfItems}, items='${registrationRequestForm.items}' )"></div>
+			th:replace="fragments/navbar :: top-bar"></div>
 		<div id="wrapper" class="container">
 
 

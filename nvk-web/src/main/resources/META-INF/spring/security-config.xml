@@ -1,10 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- TODO kitölteni és kikommentelni ha lesz bejelentkező form, addig bekötök 
 		egy basicet -->
+<bean id="authenticationSuccessHandler" class="hu.unideb.inf.rft.nvkshop.security.NvkAuthenticationSuccessHandler"  p:targetUrlParameter="/test.html" />
 
 	<security:http auto-config="true" use-expressions="true">
 		<security:csrf disabled="true" />
@@ -12,23 +17,24 @@
 		<security:intercept-url pattern="/secured/**"
 			access="hasAnyRole('USER','ADMIN')" />
 		<security:form-login login-page="/login.xhtml"
-			login-processing-url="/login" default-target-url="/index.xhtml"
-			authentication-failure-url="/public/login.xhtml?error=1"
-			username-parameter="j_username" password-parameter="j_password" />
+			login-processing-url="/login" default-target-url="/main.html"
+			authentication-failure-url="/login.html?error=1"
+			username-parameter="j_username" password-parameter="j_password" authentication-success-handler-ref="authenticationSuccessHandler"  />
 		<security:logout logout-url="/logout"
-			logout-success-url="/index.xhtml" />
-		<security:remember-me key="key"
-			remember-me-parameter="remember_me" token-validity-seconds="86400" />
+			logout-success-url="/login.html" />
+<!-- 		<security:remember-me key="key" -->
+<!-- 			remember-me-parameter="remember_me" token-validity-seconds="86400" /> -->
 	</security:http>
-
+	
 	<context:component-scan base-package="hu.unideb.inf.rft.nvkshop"></context:component-scan>
 
 
-	<!-- <security:http> -->
-	<!-- <security:http-basic /> -->
-	<!-- <security:intercept-url pattern="/secured/**" -->
-	<!-- access="hasAnyRole('USER','ADMIN')" /> -->
-	<!-- </security:http> -->
+<!-- 	<security:http> -->
+<!-- 	<security:http-basic /> -->
+<!-- 	<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" /> -->
+<!-- 	<security:intercept-url pattern="/" access="permitAll" /> -->
+<!-- 	<security:intercept-url pattern="/secured/**" access="hasAnyRole('USER','ADMIN')" /> -->
+<!-- 	</security:http> -->
 
 	<security:authentication-manager>
 		<security:authentication-provider
@@ -37,7 +43,6 @@
 		</security:authentication-provider>
 	</security:authentication-manager>
 
-	<!-- <bean id="customUserDetailsService" class="hu.unideb.inf.rft.nvkshop.CustomUserDetailsService"> -->
-	<!-- <property name="userService" ref="userService"></property> -->
-	<!-- </bean> -->
+	<bean id="customUserDetailsService" class="hu.unideb.inf.rft.nvkshop.security.CustomUserDetailsService">
+	</bean>
 </beans>

@@ -1,4 +1,4 @@
-package hu.unideb.inf.rft.nvkshop;
+package hu.unideb.inf.rft.nvkshop.security;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		User user = userService.findByUserName(username);
+		UserDetails userDetails = null;
 
 		if (user == null) {
 			throw new UsernameNotFoundException("No such user found: " + username);
@@ -34,10 +35,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("The user " + username + " is banned");
 		}
 
-		UserDetails details = new org.springframework.security.core.userdetails.User(user.getUserName(),
-				user.getPassword(), mapRoles(user.getRoles()));
+		userDetails = new CustomUserDetails(user, true, true, true, true, mapRoles(user.getRoles()));
 
-		return details;
+		return userDetails;
 	}
 
 	private List<GrantedAuthority> mapRoles(List<Role> roles) {

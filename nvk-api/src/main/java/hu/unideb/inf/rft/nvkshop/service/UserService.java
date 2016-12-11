@@ -35,4 +35,12 @@ public interface UserService {
 	 * @param language the user selected language of the system
 	 */
 	void editUserBasicDatas(Long id, String firstName, String lastName, String phoneNumber, Language language);
+
+	/**
+	 * Find user by name.
+	 * 
+	 * @param userName the user name
+	 * @return the user or <code>null</code>
+	 */
+	User findByName(String userName);
 }

@@ -21,14 +21,13 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Setter
-@Service
+@Service("userService")
 @Slf4j
 public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
 
-	
 	@Autowired
 	private UserRegistrationRequestService userRegistrationRequestSerivce;
 
@@ -66,18 +65,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void editUserBasicDatas(Long id, String firstName, String lastName, String phoneNumber,
-			Language selectedLanguage) {
+	public void editUserBasicDatas(Long id, String firstName, String lastName, String phoneNumber, Language selectedLanguage) {
 
 		User user = findById(id);
 		if (user == null) {
 			throw new DeletedEntityException();
 		}
-		//if he is banned, login must be denied
+		// if he is banned, login must be denied
 		// FIXME: not important
-//		if (user.getBanned()) {
-//			throw new BannedUserException();
-//		}
+		// if (user.getBanned()) {
+		// throw new BannedUserException();
+		// }
 
 		if (!(selectedLanguage instanceof Language)) {
 			throw new InvalidAccessException();
@@ -95,6 +93,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findByEmail(String email) {
 		return userDao.findByEmail(email);
+	}
+
+	@Override
+	public User findByName(String userName) {
+		return userDao.findByUserName(userName);
 	}
 
 }
