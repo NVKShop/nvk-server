@@ -5,6 +5,20 @@
 	<!-- Application -->
 	<entry key="application.title">NVK-Shop</entry>
 
+	<!-- Address messages -->
+	<entry key="address.zipCode">Zip code</entry>
+	<entry key="address.country">Country</entry>
+	<entry key="address.street">Street</entry>
+	<entry key="address.city">City</entry>
+	<entry key="address.recipient">Recipient</entry>
+	<entry key="address."></entry>
+	<entry key="address.setAsPrimary">Set as primary address</entry>
+
+	<entry key="general.phoneNumber">Phone number</entry>
+	<entry key="general.description">Description</entry>
+	<entry key="general.edit">Edit</entry>
+	<entry key="general.view">View</entry>
+
 	<!-- Titles -->
 	<entry key="titles.registration"> NVK-Shop : Registration </entry>
 	<entry key="titles.passwordReset"> NVK-Shop : Reset password</entry>
@@ -39,7 +53,7 @@
 		password recovery again!</entry>
 	<entry key="validation.passwordsNotMatch">Password aren't much!</entry>
 	<entry key="passwordRecover.resetPassword">Reset password</entry>
-	
+
 	<!-- Registration -->
 	<entry key="registration.passwordConfirm">Type your password again</entry>
 	<entry key="registration.passwordsNotMatch">Password do not match!</entry>

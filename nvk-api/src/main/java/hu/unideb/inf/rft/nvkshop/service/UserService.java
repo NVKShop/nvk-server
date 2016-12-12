@@ -1,5 +1,6 @@
 package hu.unideb.inf.rft.nvkshop.service;
 
+import hu.unideb.inf.rft.nvkshop.entities.security.Address;
 import hu.unideb.inf.rft.nvkshop.entities.security.Language;
 import hu.unideb.inf.rft.nvkshop.entities.security.User;
 
@@ -43,4 +44,12 @@ public interface UserService {
 	 * @return the user or <code>null</code>
 	 */
 	User findByName(String userName);
+
+	/**
+	 * Add new address to a user.
+	 * 
+	 * @param id the usre id
+	 * @param newAddress the new address
+	 */
+	void addUserAddress(long id, Address newAddress);
 }

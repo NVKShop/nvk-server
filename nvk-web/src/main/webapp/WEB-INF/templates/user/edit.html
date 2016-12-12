@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head data-th-fragment="head">
+<title data-th-text="#{application.title}">NVK-shop</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<link data-th-href="@{/resources/images/favicon.png}" href="../../images/favicon.png" type="image/png" rel="shortcut icon" />
+<link data-th-href="@{/resources/css/bootstrap.min.css}" href="../../css/bootstrap.min.css" rel="stylesheet"></link>
+<link data-th-href="@{/resources/css/bootstrap-theme.min.css}" href="../../css/bootstrap-theme.min.css" rel="stylesheet"></link>
+<link data-th-href="@{/resources/css/bootstrap-responsive.min.css}" href="../../css/bootstrap-responsive.min.css" rel="stylesheet" />
+<link data-th-href="@{/resources/themes/css/bootstrappage.css}" href="../../themes/css/bootstraprappage.css" rel="stylesheet" />
+<link data-th-href="@{/resources/themes/css/flexslider.css}" href="../../themes/css/flexslider.css" rel="stylesheet" />
+<link data-th-href="@{/resources/themes/css/main.css}" href="../../themes/css/main.css" rel="stylesheet" />
+<link data-th-href="@{/resources/css/toastr.min.css}" href="../../css/toastr.min.css" rel="stylesheet"></link>
+<link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
+</head>
+<body>
+	<form th:action="@{/user/edit.html}" data-th-object="${userForm}" class="form-stacked" method="post">
+		<div th:replace="fragments/navbar :: top-bar"></div>
+		<div id="wrapper" class="container">
+			<section class="main-content">
+				<div class="row">
+					<div class="span12">
+						<h4 class="title">
+							<span class="text"><strong>Register</strong> Form</span>
+						</h4>
+						<fieldset>
+							<div
+								th:replace="fragments/inputs :: sized-readonly-input(field='userName',  fieldSize='col-sm-3', label=#{registration.userName}, labelSize='col-sm-2')"></div>
+							<!-- 									<div class="row"> -->
+							<div
+								th:replace="fragments/inputs :: sized-readonly-input(field='email',  fieldSize='col-sm-3', label=#{general.email}, labelSize='col-sm-2')"></div>
+							<div
+								th:replace="fragments/inputs :: sized-input(field='firstName',  fieldSize='col-sm-3', label=#{registration.firstName}, labelSize='col-sm-2', required=true)"></div>
+							<div
+								th:replace="fragments/inputs :: sized-input(field='lastName',  fieldSize='col-sm-3', label=#{registration.lastName}, labelSize='col-sm-2', required=true)"></div>
+							<div
+								th:replace="fragments/inputs :: sized-input(field='phoneNumber',  fieldSize='col-sm-3', label=#{registration.phoneNumber}, labelSize='col-sm-2', required=false)"></div>
+
+
+							<div>
+
+								<table class="table table-hover table-condensed">
+									<thead>
+										<tr>
+											<th class="col-xs-1" th:text="#{address.primary}">Primary</th>
+											<th class="col-xs-3" th:text="#{address.zipCode}">Zip</th>
+											<th class="col-xs-4" th:text="#{address.country}">Country</th>
+											<th class="col-xs-1" th:text="#{address.street}">Street</th>
+											<th class="col-xs-3" th:text="#{general.operations}">Operations</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="address : ${addresses}">
+											<td th:text="${address.zipCode}">Zip</td>
+											<td th:text="${address.country}">Contry</td>
+											<td th:text="${address.street}">Operations</td>
+											<td><a tabindex="0" role="button" class="btn btn-default btn-xs" data-trigger="focus" data-toggle="popover"
+												th:attr="data-entity=${address.id}"><span class="glyphicon glyphicon-trash"></span> <span th:text="#{general.delete}">Delete</span></a>
+												<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#addressModal"
+													data-th-text="#{general.edit}" role="button">Edit</button></td>
+										</tr>
+
+									</tbody>
+								</table>
+
+							</div>
+							<div class="actions">
+								<button tabindex="9" class="btn btn-inverse large" type="submit" th:text="#{registration.submit}"></button>
+							</div>
+
+						</fieldset>
+					</div>
+				</div>
+			</section>
+		</div>
+
+	</form>
+
+	<div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="relatedEvaluations">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" data-th-attr="aria-label=#{general.close}">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="" data-th-text="#{evaluation.relatedEvaluations}">Related Evaluations</h4>
+				</div>
+				<div class="modal-body">
+					<form th:action="@{/user/addresses.html}" data-th-object="${userForm.newAddress}" class="form-stacked" method="post">
+
+						<div
+							th:replace="fragments/inputs :: sized-input(field='zipCode',  fieldSize='col-sm-3', label=#{address.zipCode}, labelSize='col-sm-2', required=true)"></div>
+						<div
+							th:replace="fragments/inputs :: sized-input(field='country',  fieldSize='col-sm-3', label=#{address.country}, labelSize='col-sm-2', required=true)"></div>
+						<div
+							th:replace="fragments/inputs :: sized-input(field='city',  fieldSize='col-sm-3', label=#{address.city}, labelSize='col-sm-2', required=true)"></div>
+						<div
+							th:replace="fragments/inputs :: sized-input(field='street',  fieldSize='col-sm-3', label=#{address.street}, labelSize='col-sm-2', required=true)"></div>
+
+						<div
+							th:replace="fragments/inputs :: sized-input(field='recipient',  fieldSize='col-sm-3', label=#{address.recipient}, labelSize='col-sm-2', required=false)"></div>
+						<div
+							th:replace="fragments/inputs :: sized-input(field='phoneNumber',  fieldSize='col-sm-3', label=#{general.phoneNumber}, labelSize='col-sm-2', required=false)"></div>
+
+						<div th:replace="fragments/forminput :: textarea(field='description',  label='general.description', rows=5 , readonly='false' )"></div>
+
+						<br />
+						 <label for="primary" class="control-label  col-xs-offset-3" th:text="#{addres.setAsPrimary}">Set as primary</label> <input
+							class="middle-align" th:field="*{primary}" type="checkbox" name="primary" />
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning" id="reset" data-th-text="#{general.reset}" data-dismiss="modal">Reset</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/jquery-1.7.2.min.js}" src="themes/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/superfish.js}" src="themes/js/superfish.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/jquery.scrolltotop.js}" src="themes/js/jquery.scrolltotop.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/js/toastr.min.js}" src="js/toastr.min.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/common.js}" src="themes/js/common.js"></script>
+<script type="text/javascript" th:inline="javascript">
+	$(function(){
+		var openPopover = null;
+		
+		$('body').on('click', function(e) {
+		    if (openPopover!=null){
+		    	$('[data-toggle="popover"]').popover('hide');
+		    	openPopover=null;
+		    }
+		});
+		
+		$('[data-toggle="popover"]').popover({
+			title: [[#{general.warning}]],
+		  	content: '<p>' + [[#{address.deleteConfirm}]] + '</p><div class="text-center"><div class="btn-group"><button id="confirmYesButton" type="button" class="btn btn-danger btn-xs">' + [[#{general.yes}]] + '</button><button id="confirmNoButton" type="button" class="btn btn-default btn-xs">' + [[#{general.no}]] + '</button></div></div>',
+		  	container: 'body',
+		  	placement: 'top',
+		  	trigger: 'manual',
+		  	selector: 'data-role="popover"',
+			html: true
+		}).on('click',function(e) {
+			popover = $(this).attr('data-entity');
+			
+			$entity = $(this).attr('data-entity');
+		    if (openPopover==$entity){
+		    	// close
+		    	openPopover=null;
+		    } else {
+		    	if (openPopover==null) {
+		    		// open
+			    	openPopover=$entity;
+			    	$(this).popover('toggle');		    	
+		    	} else {
+		    		// close others, but open a new one
+			    	$('[data-toggle="popover"]').popover('hide');
+			    	openPopover=$entity;
+			    	$(this).popover('toggle');
+			    	
+			    	
+		    	}
+		       	$('#confirmYesButton').click(function() {
+					location.assign([[@{/user/edit/delete-address.html(id)}]]+'='+$entity); });	
+					$('#confirmNoButton').click(function() { 	$('[data-toggle="popover"]').popover('hide'); });	
+		    	
+		    	// a new popover has surely been created
+		    	$('.popover').on('click', function(e) {
+		    		if (!$(e.target).hasClass('btn')) {
+		    			e.stopPropagation();
+		    		}
+				});
+		    }
+	    	e.stopPropagation();
+	    });
+	});
+	</script>
+</html>

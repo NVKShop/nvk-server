@@ -1,4 +1,4 @@
-package hu.unideb.inf.nvkshop.web;
+package hu.unideb.inf.nvkshop.web.user;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
@@ -12,14 +12,14 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import hu.unideb.inf.nvkshop.web.AbstractNvkController;
 import hu.unideb.inf.rft.nvkshop.entities.security.User;
 import hu.unideb.inf.rft.nvkshop.service.UserService;
 
 @Controller("userController")
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController extends AbstractNvkController {
 
 	@Autowired
@@ -36,9 +36,9 @@ public class UserController extends AbstractNvkController {
 	 * @return the view name
 	 */
 	@RequestMapping(value = "/edit", produces = "text/html")
-	public String editForm(@RequestParam("id") long id, Model model, RedirectAttributes redAttrs) {
+	public String editForm(Model model, RedirectAttributes redAttrs) {
 
-		User user = userService.findById(id);
+		User user = userService.findById(authenticationUserId());
 
 		if (user == null) {
 			redAttrs.addAttribute("errorMsg", "user.notValidUser");
@@ -69,10 +69,34 @@ public class UserController extends AbstractNvkController {
 			return "users/edit";
 		}
 
-		userService.editUserBasicDatas(form.getId(), form.getFistName(), form.getLastName(), form.getPhoneNumber(), form.getLanguage());
+		userService.editUserBasicDatas(form.getUserId(), form.getFistName(), form.getLastName(), form.getPhoneNumber(), form.getLanguage());
 
-		log.info("Submitting edit user form: id={}", form.getId());
+		log.info("Submitting edit user form: id={}", form.getUserId());
 		flashAttributes.addFlashAttribute("successMsg", "users.saved");
 		return "redirect:/users/list.html";
 	}
+
+	@RequestMapping(value = "/edit/address", params = "addAddress", method = RequestMethod.POST, produces = "text/html")
+	public String editForm(@ModelAttribute("form") UserForm form, Errors errors, Model model, RedirectAttributes redAttrs) {
+
+		Long id = authenticationUserId();
+
+		if (id == null) {
+			redAttrs.addAttribute("errorMsg", "user.notValidUser");
+			return " redirect:/login";
+		}
+
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newAddress.country", "validation.required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newAddress.zipCode", "validation.required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newAddress.street", "validation.required");
+
+		if (errors.hasErrors()) {
+			return "user/edit";
+		}
+
+		userService.addUserAddress(id, form.getNewAddress());
+
+		return "users/edit";
+	}
+
 }

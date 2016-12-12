@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import hu.unideb.inf.rft.nvkshop.entities.security.Address;
 import hu.unideb.inf.rft.nvkshop.entities.security.Language;
 import hu.unideb.inf.rft.nvkshop.entities.security.User;
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
+import hu.unideb.inf.rft.nvkshop.repositories.AddressDao;
 import hu.unideb.inf.rft.nvkshop.repositories.UserDao;
 import hu.unideb.inf.rft.nvkshop.service.DeletedEntityException;
 import hu.unideb.inf.rft.nvkshop.service.InvalidAccessException;
@@ -23,10 +25,13 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @Service("userService")
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends AbstrackNvkService implements UserService {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private AddressDao addressDao;
 
 	@Autowired
 	private UserRegistrationRequestService userRegistrationRequestSerivce;
@@ -85,8 +90,31 @@ public class UserServiceImpl implements UserService {
 		user.setPhoneNumber(phoneNumber);
 		user.setDateOfModification(new Date());
 		user.setLanguage(selectedLanguage);
+
 		log.info("User modification saved id: {} ", id);
 		userDao.saveAndFlush(user);
+
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void addUserAddress(long id, Address newAddress) {
+
+		User user = findById(id);
+		if (user == null) {
+			throw new DeletedEntityException();
+		}
+
+		Address address = new Address();
+		address.setCountry(newAddress.getCountry());
+		address.setDateOfCreation(dateOf(now()));
+		address.setPrimary(false);
+		address.setRecipient(newAddress.getRecipient());
+		address.setStreet(newAddress.getStreet());
+		address.setUser(user);
+		log.info("New address uploaded by user id = {}", user.getId());
+
+		addressDao.saveAndFlush(address);
 
 	}
 
