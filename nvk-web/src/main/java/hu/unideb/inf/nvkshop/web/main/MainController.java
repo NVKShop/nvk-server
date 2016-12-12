@@ -15,7 +15,6 @@ public class MainController extends AbstractNvkController {
 
 		RegistrationRequestForm form = new RegistrationRequestForm();
 		addDatasForUser(form);
-		System.out.println("main controller");
 		model.addAttribute("form", form);
 		// log.info("Registration request handling.");
 		return "main";

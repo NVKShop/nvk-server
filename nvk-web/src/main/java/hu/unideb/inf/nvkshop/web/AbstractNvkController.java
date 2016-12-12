@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.Assert;
 
 import hu.unideb.inf.rft.nvkshop.entities.product.Product;
+import hu.unideb.inf.rft.nvkshop.entities.security.Language;
 import hu.unideb.inf.rft.nvkshop.entities.security.User;
 import hu.unideb.inf.rft.nvkshop.security.CustomUserDetails;
 import hu.unideb.inf.rft.nvkshop.security.CustomUserDetailsService;
@@ -86,12 +87,13 @@ public class AbstractNvkController {
 		CustomUserDetails principal = null;
 		if (authentication == null) {
 			// TODO : Log or smtgh
-			System.out.println("nincs auth");
 		} else {
 			principal = (CustomUserDetails) authentication.getPrincipal();
 			User user = principal.getUser();
 			form.setUserName(user.getUserName());
 			form.setUserId(user.getId());
+			form.setLanguage(user.getLanguage() == null ? Language.EN : user.getLanguage());
+
 			// FIXME: this is just for test cases!
 			Product prod1 = new Product();
 			prod1.setName("Product1");

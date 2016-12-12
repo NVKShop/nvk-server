@@ -23,7 +23,7 @@
 				<div class="row">
 					<div class="span12">
 						<h4 class="title">
-							<span class="text"><strong>Register</strong> Form</span>
+							<span class="text"><strong th:text="#{user.form}"></strong></span>
 						</h4>
 						<fieldset>
 							<div
@@ -38,10 +38,13 @@
 							<div
 								th:replace="fragments/inputs :: sized-input(field='phoneNumber',  fieldSize='col-sm-3', label=#{registration.phoneNumber}, labelSize='col-sm-2', required=false)"></div>
 
+							<div
+								th:replace="fragments/inputs :: sized-languageselector(baseSize='col-xs-5', labelSize='col-xs-3', field='language', innerSize='col-xs-9')"></div>
+
 
 							<div>
 
-								<table class="table table-hover table-condensed">
+								<table th:if="${addresses != null}" class="table table-hover table-condensed">
 									<thead>
 										<tr>
 											<th class="col-xs-1" th:text="#{address.primary}">Primary</th>
@@ -64,10 +67,12 @@
 
 									</tbody>
 								</table>
+								<button tabindex="7" class="btn btn-inverse large left" data-toggle="modal" data-target="#newAddressModal"
+									th:text="#{address.addNew}"></button>
 
 							</div>
 							<div class="actions">
-								<button tabindex="9" class="btn btn-inverse large" type="submit" th:text="#{registration.submit}"></button>
+								<button tabindex="9" class="btn btn-inverse large" type="submit" th:text="#{general.save}"></button>
 							</div>
 
 						</fieldset>
@@ -78,14 +83,14 @@
 
 	</form>
 
-	<div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="relatedEvaluations">
+	<div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="newAddress">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close" data-th-attr="aria-label=#{general.close}">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="" data-th-text="#{evaluation.relatedEvaluations}">Related Evaluations</h4>
+					<h4 class="modal-title" id="" data-th-text="#{address.addAddres}">Add new address</h4>
 				</div>
 				<div class="modal-body">
 					<form th:action="@{/user/addresses.html}" data-th-object="${userForm.newAddress}" class="form-stacked" method="post">
@@ -104,11 +109,63 @@
 						<div
 							th:replace="fragments/inputs :: sized-input(field='phoneNumber',  fieldSize='col-sm-3', label=#{general.phoneNumber}, labelSize='col-sm-2', required=false)"></div>
 
-						<div th:replace="fragments/forminput :: textarea(field='description',  label='general.description', rows=5 , readonly='false' )"></div>
+						<div th:replace="fragments/inputs :: textarea(field='description',  label='general.description', rows=5 , readonly='false' )"></div>
 
-						<br />
-						 <label for="primary" class="control-label  col-xs-offset-3" th:text="#{addres.setAsPrimary}">Set as primary</label> <input
+
+						<br /> <label for="primary" class="control-label  col-xs-offset-3" th:text="#{addres.setAsPrimary}">Set as primary</label> <input
 							class="middle-align" th:field="*{primary}" type="checkbox" name="primary" />
+
+						<button type="button" class="btn btn-info" id="submit" value="newAddress" data-th-text="#{general.add}">Add</button>
+
+
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning" id="reset" data-th-text="#{general.reset}" data-dismiss="modal">Reset</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="newAddressModal" tabindex="-1" role="dialog" aria-labelledby="newAddressModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" data-th-attr="aria-label=#{general.close}">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="" data-th-text="#{address.NewAddres}">Add new address</h4>
+				</div>
+				<div class="modal-body">
+					<form th:action="@{/user/addresses.html}" data-th-object="${userForm.newAddress}" class="form-stacked" method="post">
+
+							<div class="col-sm-6">
+								<div
+									th:replace="fragments/inputs :: sized-input(field='zipCode',  fieldSize='col-sm-3', label=#{address.zipCode}, labelSize='col-sm-2', required=true)"></div>
+								<div
+									th:replace="fragments/inputs :: sized-input(field='country',  fieldSize='col-sm-3', label=#{address.country}, labelSize='col-sm-2', required=true)"></div>
+							</div>
+							<div class="col-sm-6">
+
+								<div
+									th:replace="fragments/inputs :: sized-input(field='city',  fieldSize='col-sm-3', label=#{address.city}, labelSize='col-sm-2', required=true)"></div>
+								<div
+									th:replace="fragments/inputs :: sized-input(field='street',  fieldSize='col-sm-3', label=#{address.street}, labelSize='col-sm-2', required=true)"></div>
+							</div>
+						<div
+							th:replace="fragments/inputs :: sized-input(field='recipient',  fieldSize='col-sm-6', label=#{address.recipient}, labelSize='col-sm-4', required=false)"></div>
+						<div
+							th:replace="fragments/inputs :: sized-input(field='phoneNumber',  fieldSize='col-sm-3', label=#{general.phoneNumber}, labelSize='col-sm-2', required=false)"></div>
+
+						<div th:replace="fragments/inputs :: textarea(field='description',  label='general.description', rows=5 , readonly='false' )"></div>
+
+
+						<br /> <label for="primary" class="control-label  col-xs-offset-3" th:text="#{addres.setAsPrimary}">Set as primary</label> <input
+							class="middle-align" th:field="*{primary}" type="checkbox" name="primary" />
+
+						<button type="button" class="btn btn-info" id="submit" value="newAddress" data-th-text="#{general.add}">Add</button>
+
+
 					</form>
 				</div>
 				<div class="modal-footer">

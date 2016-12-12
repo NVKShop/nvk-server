@@ -2,6 +2,9 @@ package hu.unideb.inf.rft.nvkshop.config;
 
 import java.util.Properties;
 
+import javax.persistence.EntityManagerFactory;
+
+import org.hibernate.SessionFactory;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -51,13 +54,13 @@ public class DatabaseConfig {
 		config.setJdbcUrl(env.getRequiredProperty(JDBC_URL));
 		config.setUsername(env.getRequiredProperty(JDBC_USERNAME));
 		config.setPassword(env.getRequiredProperty(JDBC_PASSWORD));
-//		config.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
+		// config.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
 		HikariDataSource ds = new HikariDataSource(config);
 		ds.addDataSourceProperty("cachePrepStmts", true);
 		ds.addDataSourceProperty("prepStmtCacheSize", 250);
 		ds.addDataSourceProperty("prepStmtCacheSqlLimit", 2048);
 		ds.addDataSourceProperty("useServerPrepStmts", true);
-//		ds.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
+		// ds.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
 		return ds;
 	}
 
@@ -79,11 +82,17 @@ public class DatabaseConfig {
 		jpaProperties.put(PROPERTY_NAME_HIBERNATE_DIALECT, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_DIALECT));
 		jpaProperties.put(PROPERTY_NAME_HIBERNATE_FORMAT_SQL, "true");
 		jpaProperties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, "false");
-		jpaProperties.put(PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO,
-				env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO));
+		jpaProperties.put(PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO));
 		entityManagerFactoryBean.setJpaProperties(jpaProperties);
 		entityManagerFactoryBean.afterPropertiesSet();
 		return entityManagerFactoryBean;
+	}
+
+	@Bean
+	public SessionFactory sessionFactory() throws ClassNotFoundException {
+		EntityManagerFactory em = entityManagerFactory().getObject();
+		SessionFactory sessionFactory = em.unwrap(SessionFactory.class);
+		return sessionFactory;
 	}
 
 	@Bean

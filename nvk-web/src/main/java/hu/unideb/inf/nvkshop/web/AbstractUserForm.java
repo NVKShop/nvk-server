@@ -3,6 +3,7 @@ package hu.unideb.inf.nvkshop.web;
 import java.util.List;
 
 import hu.unideb.inf.rft.nvkshop.entities.product.Product;
+import hu.unideb.inf.rft.nvkshop.entities.security.Language;
 
 /**
  * Abstract user form for outer (user) navbar of views.
@@ -16,6 +17,15 @@ public class AbstractUserForm {
 	private String userName;
 	private Integer totalValueOfItems;
 	private List<Product> items;
+	private Language language;
+
+	public Language getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(Language language) {
+		this.language = language;
+	}
 
 	public Long getUserId() {
 		return userId;

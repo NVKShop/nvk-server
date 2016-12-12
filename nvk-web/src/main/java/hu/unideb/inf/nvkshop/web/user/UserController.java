@@ -1,7 +1,5 @@
 package hu.unideb.inf.nvkshop.web.user;
 
-import org.dozer.DozerBeanMapper;
-import org.dozer.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hu.unideb.inf.nvkshop.web.AbstractNvkController;
-import hu.unideb.inf.rft.nvkshop.entities.security.User;
 import hu.unideb.inf.rft.nvkshop.service.UserService;
 
 @Controller("userController")
@@ -38,17 +35,24 @@ public class UserController extends AbstractNvkController {
 	@RequestMapping(value = "/edit", produces = "text/html")
 	public String editForm(Model model, RedirectAttributes redAttrs) {
 
-		User user = userService.findById(authenticationUserId());
+		// User user = userService.findById(authenticationUserId());
 
-		if (user == null) {
-			redAttrs.addAttribute("errorMsg", "user.notValidUser");
-			return " redirect:/login";
-		}
-		Mapper dz = new DozerBeanMapper();
+		UserForm form = new UserForm();
+		addDatasForUser(form);
+		// User user = userService.findById(form.getUserId());
+		// if (user == null) {
+		// redAttrs.addAttribute("errorMsg", "user.notValidUser");
+		// return " redirect:/login";
+		// }
+		//
+		// form.setFistName(user.getFirstName());
+		// form.setLastName(user.getLastName());
+		// form.setPhoneNumber(user.getPhoneNumber());
+		// form.setEmail(user.getEmail());
+		// form.setAddresses(user.getAddresses());
 
-		UserForm form = dz.map(user, UserForm.class);
-		model.addAttribute("form", form);
-		return "users/edit";
+		model.addAttribute("userForm", form);
+		return "user/edit";
 	}
 
 	/**
@@ -69,7 +73,8 @@ public class UserController extends AbstractNvkController {
 			return "users/edit";
 		}
 
-		userService.editUserBasicDatas(form.getUserId(), form.getFistName(), form.getLastName(), form.getPhoneNumber(), form.getLanguage());
+		userService.editUserBasicDatas(form.getUserId(), form.getFirstName(), form.getLastName(), form.getPhoneNumber(),
+				form.getLanguage());
 
 		log.info("Submitting edit user form: id={}", form.getUserId());
 		flashAttributes.addFlashAttribute("successMsg", "users.saved");

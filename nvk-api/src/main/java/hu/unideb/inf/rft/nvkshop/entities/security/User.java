@@ -5,14 +5,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
@@ -20,7 +18,7 @@ import hu.unideb.inf.rft.nvkshop.entities.base.BaseEntity;
 
 @Entity
 @Table(name = "users")
-@EntityListeners(value = { UserEntityListener.class })
+// @EntityListeners(value = { UserEntityListener.class })
 public class User extends BaseEntity {
 
 	@Column(name = "passwd", nullable = false)
@@ -53,9 +51,9 @@ public class User extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	protected Language language;
 	//
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private List<Address> addresses;
+	// @OneToMany(fetch = FetchType.EAGER)
+	// @JoinColumn(name = "user_id")
+	// private List<Address> addresses;
 
 	public User() {
 		super();
@@ -191,7 +189,7 @@ public class User extends BaseEntity {
 	public void setLanguage(Language language) {
 		this.language = language;
 	}
-	//
+
 	// public List<Address> getAddresses() {
 	// return addresses;
 	// }

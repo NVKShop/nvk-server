@@ -11,8 +11,11 @@
 	<entry key="address.street">Street</entry>
 	<entry key="address.city">City</entry>
 	<entry key="address.recipient">Recipient</entry>
-	<entry key="address."></entry>
+	<entry key="address.newAddress">New address</entry>
+	<entry key="address.addNew">Add new address</entry>
+
 	<entry key="address.setAsPrimary">Set as primary address</entry>
+	<entry key="address.primary">Primary address</entry>
 
 	<entry key="general.phoneNumber">Phone number</entry>
 	<entry key="general.description">Description</entry>
@@ -86,6 +89,8 @@
 
 	<entry key="validation.required">Required field!</entry>
 
-
-
+	<entry key="general.operations">Operations</entry>
+	<entry key="general.language">Language</entry>
+	<entry key="general.save">Save</entry>
+	<entry key="user.form">User form</entry>
 </properties>

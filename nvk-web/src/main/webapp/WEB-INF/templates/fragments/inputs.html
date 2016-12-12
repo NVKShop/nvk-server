@@ -36,5 +36,15 @@
 		</div>
 	
 	</div>
+	
+		<div th:class="${'__${baseSize}__'} +' form-group'"  th:fragment="sized-languageselector (baseSize, labelSize, innerSize, field)">
+		<label th:class="${'__${labelSize}__'} +' control-label'" th:text="#{general.language}">Language</label>
+		<div th:class="${'__${innerSize}__'}">
+		<select data-th-field="*{__${field}__}" class="form-control" id="filter">
+			<option data-th-value="*{T(hu.unideb.inf.rft.nvkshop.entities.security.Language).EN}" data-th-text="#{language.english}">English</option>
+			<option data-th-value="*{T(hu.unideb.inf.rft.nvkshop.entities.security.Language).HU}" data-th-text="#{language.hungarian}">Hungarian</option>
+		</select>
+		</div>
+	</div>
 </body>
 </html>

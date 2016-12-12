@@ -128,7 +128,7 @@
 						<li><a href="register.html" th:href="@{/registration.html}" th:text="#{registration.registration}">Registration</a></li>
 					</ul>
 					<ul data-sec-authorize="isAuthenticated()" class="user-menu">
-						<li><a href="#"> <span th:text="#{outerBar.account} + ' (' ">My Account </span><span th:text="*{userName} + ' )' "></span>
+						<li><a href="#" th:href="@{user/edit.html}"> <span th:text="#{outerBar.account} + ' (' ">My Account </span><span th:text="*{userName} + ' )' "></span>
 						</a></li>
 						<li  class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">

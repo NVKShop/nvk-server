@@ -57,8 +57,6 @@ public class RegistrationController extends AbstractNvkController {
 	public String registration(Model model) {
 
 		RegistrationRequestForm form = new RegistrationRequestForm();
-		// addTestDatasForUser(form);
-		addDatasForUser(form);
 		model.addAttribute("registrationRequestForm", form);
 		log.info("Registration request handling.");
 		return "registration";
