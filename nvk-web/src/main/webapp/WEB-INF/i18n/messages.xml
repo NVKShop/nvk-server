@@ -98,4 +98,8 @@
 	<entry key="general.cancel">Cancel</entry>
 	<entry key="general.reset">Reset</entry>
 	<entry key="user.form">User form</entry>
+	<entry key="userEdit.changePassword">Change password</entry>
+	<entry key="userEdit.password">Type your old password:</entry>
+	<entry key="user.wrongPassword">Wrong password! Please write your valid password!</entry>
+<entry key="user.passwordChanged">Your password</entry>
 </properties>

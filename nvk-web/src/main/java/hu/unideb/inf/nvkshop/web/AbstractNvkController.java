@@ -104,6 +104,7 @@ public class AbstractNvkController {
 			List<Product> testProducts = new LinkedList<Product>();
 			testProducts.add(prod1);
 			testProducts.add(prod2);
+			form.setTotalValueOfItems(615);
 
 			form.setItems(testProducts);
 		}

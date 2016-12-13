@@ -5,6 +5,7 @@ import java.util.Date;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -116,6 +117,34 @@ public class UserServiceImpl extends AbstrackNvkService implements UserService {
 
 		addressDao.saveAndFlush(address);
 
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public boolean isMatchesForUserPassword(Long userId, String oldPassword) {
+		// Assert.assertNotNull(userId);
+		// Assert.assertNotNull(oldPassword);
+
+		User user = userDao.findOne(userId);
+		if (user == null) {
+			throw new DeletedEntityException();
+		}
+
+		return BCrypt.checkpw(oldPassword, user.getPassword());
+
+	}
+
+	@Override
+	@Transactional
+	public void resetPassword(Long id, String password) {
+
+		User user = userDao.findOne(id);
+		if (user == null) {
+			throw new DeletedEntityException();
+		}
+
+		user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
+		userDao.saveAndFlush(user);
 	}
 
 	@Override

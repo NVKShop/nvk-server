@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hu.unideb.inf.nvkshop.web.AbstractNvkController;
+import hu.unideb.inf.nvkshop.web.PasswordRecoveryForm;
+import hu.unideb.inf.rft.nvkshop.service.DeletedEntityException;
 import hu.unideb.inf.rft.nvkshop.service.UserService;
 
 @Controller("userController")
@@ -64,7 +66,7 @@ public class UserController extends AbstractNvkController {
 	 * @param flashAttributes the flash attributes
 	 * @return the view name
 	 */
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, produces = "text/html")
+	@RequestMapping(value = "/edit", params = "save", method = RequestMethod.POST, produces = "text/html")
 	public String editFormSubmit(@ModelAttribute("form") UserForm form, Errors errors, RedirectAttributes flashAttributes) {
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "validation.required");
@@ -102,21 +104,60 @@ public class UserController extends AbstractNvkController {
 	}
 
 	@RequestMapping(value = "/edit", params = "newPassword", method = RequestMethod.POST, produces = "text/html")
-	public String changePassword(@ModelAttribute("psw") String psw, Errors errors, Model model, RedirectAttributes redAttrs) {
+	public String changePassword(@ModelAttribute("userForm") UserForm userForm, Errors errors, Model model, RedirectAttributes redAttrs) {
 
 		Long id = authenticationUserId();
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "psw", "validation.required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "validation.required");
 
 		if (errors.hasErrors()) {
-			return "user/edit";
+			redAttrs.addFlashAttribute("errorMsg", "user.wrongPassword");
+			return "redirect:/user/edit.html";
 		}
 
-		// userService.
+		userForm.getPassword();
+		if (!userService.isMatchesForUserPassword(id, userForm.getPassword())) {
+			redAttrs.addFlashAttribute("errorMsg", "user.wrongPassword");
+			return "redirect:/user/edit.html";
 
-		// userService.addUserAddress(id, newAddress);
+		}
+		PasswordRecoveryForm form = new PasswordRecoveryForm();
+		addDatasForUser(form);
 
-		return "users/edit";
+		model.addAttribute("passwordRecoveryForm", form);
+
+		return "user/passwordrecover";
+	}
+
+	@RequestMapping(value = "/passwordrecover", params = "in", method = RequestMethod.POST, produces = "text/html")
+	public String changePasswordSubmit(@ModelAttribute("passwordRecoveryForm") PasswordRecoveryForm form, Errors errors, Model model,
+			RedirectAttributes redAttrs) {
+
+		Long id = authenticationUserId();
+
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "validation.required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passwordConfirm", "validation.required");
+
+		if (errors.hasErrors()) {
+			return "passwordrecover";
+		}
+		if (!form.getPassword().equals(form.getPasswordConfirm()))
+
+			errors.rejectValue("passwordConfirm", "validation.passwordsNotMatch");
+
+		if (errors.hasErrors()) {
+			return "passwordrecover";
+		}
+		try {
+			userService.resetPassword(id, form.getPassword());
+			// log.info("Set new password for user. Id = {}", form.getId());
+
+		} catch (DeletedEntityException ex) {
+			redAttrs.addFlashAttribute("errorMsg", "registration.permamentlyDeletedUser");
+			return "redirect:/login.html";
+		}
+		redAttrs.addFlashAttribute("successMsg", "registration.passwordReseted");
+		return "redirect:/logout";
 	}
 
 }

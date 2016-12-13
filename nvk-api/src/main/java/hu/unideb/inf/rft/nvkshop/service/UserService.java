@@ -52,4 +52,21 @@ public interface UserService {
 	 * @param newAddress the new address
 	 */
 	void addUserAddress(long id, Address newAddress);
+
+	/**
+	 * Check if a user password is the saved password.
+	 * 
+	 * @param userId the user id <code>not null</code>
+	 * @param oldPassword the users's old password <code>not null</code>
+	 * @return true if the password matches otherwise false
+	 */
+	boolean isMatchesForUserPassword(Long userId, String oldPassword);
+
+	/**
+	 * Reset an authenticated user password.
+	 * 
+	 * @param id the user id
+	 * @param password the new password
+	 */
+	void resetPassword(Long id, String password);
 }

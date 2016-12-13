@@ -201,7 +201,7 @@ public class RegistrationController extends AbstractNvkController {
 
 	}
 
-	@RequestMapping(value = "/passwordrecover", method = RequestMethod.POST, produces = "text/html")
+	@RequestMapping(value = "/passwordrecover", params = "out", method = RequestMethod.POST, produces = "text/html")
 	public String passwordRecoverSubmit(PasswordRecoveryForm form, Errors errors, Model model, RedirectAttributes redirectAttrs) {
 		log.info("Password recovery step 3.");
 

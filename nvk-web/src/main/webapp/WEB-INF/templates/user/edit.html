@@ -70,9 +70,12 @@
 								<button tabindex="7" class="btn btn-inverse large left" data-toggle="modal" data-target="#newAddressModal"
 									th:text="#{address.addNew}"></button>
 
+								<button tabindex="7" class="btn btn-inverse large left" data-toggle="modal" data-target="#newPasswordModal"
+									th:text="#{userEdit.changePassword}"></button>
+
 							</div>
 							<div class="actions">
-								<button tabindex="9" class="btn btn-inverse large" type="submit" th:text="#{general.save}"></button>
+								<button tabindex="9" class="btn btn-inverse large" type="submit" name="save" th:text="#{general.save}"></button>
 							</div>
 
 						</fieldset>
@@ -157,17 +160,18 @@
 						<div
 							th:replace="fragments/inputs :: sized-input(field='newAddress.phoneNumber',  fieldSize='col-sm-3', label=#{general.phoneNumber}, labelSize='col-sm-2', required=false)"></div>
 
-						<div th:replace="fragments/inputs :: textarea(field='newAddress.description',  label=#{general.description}, rows=5 , readonly='false' )"></div>
-	
-<!-- 	<input type="hidden" th:field="*{userId}"> -->
+						<div
+							th:replace="fragments/inputs :: textarea(field='newAddress.description',  label=#{general.description}, rows=5 , readonly='false' )"></div>
+
+						<!-- 	<input type="hidden" th:field="*{userId}"> -->
 
 						<br />
-						<div>  <input
-							class="middle-align col-xs-2" th:field="*{newAddress.primary}" type="checkbox" name="primary" /><span class="control-label  col-xs-offset-3" th:text="#{address.setAsPrimary}">Set as primary </span> <br />
-						<button type="submit" class="btn btn-info" id="submit" name="newAddress" data-th-text="#{general.add}">Add</button>
-</div>
-<br/>
-<br/>
+						<div>
+							<input class="middle-align col-xs-2" th:field="*{newAddress.primary}" type="checkbox" name="primary" /><span
+								class="control-label  col-xs-offset-3" th:text="#{address.setAsPrimary}">Set as primary </span> <br />
+							<button type="submit" class="btn btn-info" id="submit" name="addAddress" data-th-text="#{general.add}">Add</button>
+						</div>
+						<br /> <br />
 
 					</form>
 				</div>
@@ -177,6 +181,38 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade" id="newPasswordModal" tabindex="-1" role="dialog" aria-labelledby="newPasswordModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close" data-th-attr="aria-label=#{general.close}">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="" data-th-text="#{userEdit.changePassword}">Change password</h4>
+				</div>
+				<div class="modal-body">
+					<form id="form1" data-th-object="${userForm}" class="form-stacked" method="post">
+						<div class="control-group" th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
+							<label class="control-label"> <span th:text="#{userEdit.password}">Password</span> <sup class="text-danger">*</sup>
+							</label>
+							<div class="controls">
+								<input th:field="*{password}" type="password" class="form-control" id="psw" /> <span data-th-if="${#fields.hasErrors('password')}"
+									class="help-block" data-th-errors="*{password}">Error message</span>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-info" id="submit" name="newPassword" data-th-text="#{general.add}">Add</button>
+						<br /> <br />
+
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning" id="cancel" data-th-text="#{general.cancel}" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 </body>
 <script type="text/javascript" data-th-src="@{/resources/themes/js/jquery-1.7.2.min.js}" src="themes/js/jquery-1.7.2.min.js"></script>
@@ -238,5 +274,15 @@
 	    	e.stopPropagation();
 	    });
 	});
+	</script>
+		<script data-th-if="${successMsg}" data-th-inline="javascript" type="text/javascript">
+	/*<![CDATA[*/
+		toastr.success([[#{${successMsg}}]], [[#{general.toastrSuccess}]]);
+	/*]]>*/
+	</script>
+	<script data-th-if="${errorMsg}" data-th-inline="javascript" type="text/javascript">
+	/*<![CDATA[*/
+		toastr.error([[#{${errorMsg}}]], [[#{general.toastrError}]]);
+	/*]]>*/
 	</script>
 </html>

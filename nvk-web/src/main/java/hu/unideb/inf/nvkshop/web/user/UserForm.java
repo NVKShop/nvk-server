@@ -12,6 +12,7 @@ public class UserForm extends AbstractUserForm {
 	private String lastName;
 	private String phoneNumber;
 	private String email;
+	private String password;
 
 	private List<Address> addresses;
 	private Address newAddress;

@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -120,7 +121,7 @@ public class UserPasswordRecoveryServiceImpl extends AbstrackNvkService implemen
 			throw new DeletedEntityException();
 		}
 
-		user.setPassword(password);
+		user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
 		userDao.saveAndFlush(user);
 
 		passwordRecovery.setDateOfModification(dateOf(now()));
