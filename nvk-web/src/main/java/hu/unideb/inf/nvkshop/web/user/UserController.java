@@ -52,6 +52,7 @@ public class UserController extends AbstractNvkController {
 		// form.setAddresses(user.getAddresses());
 
 		model.addAttribute("userForm", form);
+		model.addAttribute("addressForm", new AddressForm());
 		return "user/edit";
 	}
 
@@ -70,7 +71,7 @@ public class UserController extends AbstractNvkController {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "validation.required");
 
 		if (errors.hasErrors()) {
-			return "users/edit";
+			return "user/edit";
 		}
 
 		userService.editUserBasicDatas(form.getUserId(), form.getFirstName(), form.getLastName(), form.getPhoneNumber(),
@@ -81,25 +82,39 @@ public class UserController extends AbstractNvkController {
 		return "redirect:/users/list.html";
 	}
 
-	@RequestMapping(value = "/edit/address", params = "addAddress", method = RequestMethod.POST, produces = "text/html")
-	public String editForm(@ModelAttribute("form") UserForm form, Errors errors, Model model, RedirectAttributes redAttrs) {
+	@RequestMapping(value = "/edit", params = "addAddress", method = RequestMethod.POST, produces = "text/html")
+	public String editForm(@ModelAttribute("userForm") UserForm form, Errors errors, Model model, RedirectAttributes redAttrs) {
 
+		System.out.println("Here");
 		Long id = authenticationUserId();
-
-		if (id == null) {
-			redAttrs.addAttribute("errorMsg", "user.notValidUser");
-			return " redirect:/login";
-		}
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newAddress.country", "validation.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newAddress.zipCode", "validation.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newAddress.street", "validation.required");
 
 		if (errors.hasErrors()) {
+			return "redirect:/user/edit";
+		}
+
+		// userService.addUserAddress(id, newAddress);
+
+		return "user/edit";
+	}
+
+	@RequestMapping(value = "/edit", params = "newPassword", method = RequestMethod.POST, produces = "text/html")
+	public String changePassword(@ModelAttribute("psw") String psw, Errors errors, Model model, RedirectAttributes redAttrs) {
+
+		Long id = authenticationUserId();
+
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "psw", "validation.required");
+
+		if (errors.hasErrors()) {
 			return "user/edit";
 		}
 
-		userService.addUserAddress(id, form.getNewAddress());
+		// userService.
+
+		// userService.addUserAddress(id, newAddress);
 
 		return "users/edit";
 	}

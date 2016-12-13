@@ -92,5 +92,10 @@
 	<entry key="general.operations">Operations</entry>
 	<entry key="general.language">Language</entry>
 	<entry key="general.save">Save</entry>
+	<entry key="general.add">Add</entry>
+	<entry key="general.cancel">Cancel</entry>
+	<entry key="general.description">Description</entry>
+	<entry key="general.cancel">Cancel</entry>
+	<entry key="general.reset">Reset</entry>
 	<entry key="user.form">User form</entry>
 </properties>

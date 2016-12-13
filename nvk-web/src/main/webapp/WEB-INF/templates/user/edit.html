@@ -16,7 +16,7 @@
 <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
 </head>
 <body>
-	<form th:action="@{/user/edit.html}" data-th-object="${userForm}" class="form-stacked" method="post">
+	<form id="form1" th:action="@{/user/edit.html}" data-th-object="${userForm}" class="form-stacked" method="post">
 		<div th:replace="fragments/navbar :: top-bar"></div>
 		<div id="wrapper" class="container">
 			<section class="main-content">
@@ -109,7 +109,7 @@
 						<div
 							th:replace="fragments/inputs :: sized-input(field='phoneNumber',  fieldSize='col-sm-3', label=#{general.phoneNumber}, labelSize='col-sm-2', required=false)"></div>
 
-						<div th:replace="fragments/inputs :: textarea(field='description',  label='general.description', rows=5 , readonly='false' )"></div>
+						<div th:replace="fragments/inputs :: textarea(field='description',  label=#{general.description}, rows=5 , readonly='false' )"></div>
 
 
 						<br /> <label for="primary" class="control-label  col-xs-offset-3" th:text="#{addres.setAsPrimary}">Set as primary</label> <input
@@ -134,42 +134,45 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close" data-th-attr="aria-label=#{general.close}">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="" data-th-text="#{address.NewAddres}">Add new address</h4>
+					<h4 class="modal-title" id="" data-th-text="#{address.newAddress}">Add new address</h4>
 				</div>
 				<div class="modal-body">
-					<form th:action="@{/user/addresses.html}" data-th-object="${userForm.newAddress}" class="form-stacked" method="post">
+					<form id="form1" data-th-object="${userForm}" class="form-stacked" method="post">
 
-							<div class="col-sm-6">
-								<div
-									th:replace="fragments/inputs :: sized-input(field='zipCode',  fieldSize='col-sm-3', label=#{address.zipCode}, labelSize='col-sm-2', required=true)"></div>
-								<div
-									th:replace="fragments/inputs :: sized-input(field='country',  fieldSize='col-sm-3', label=#{address.country}, labelSize='col-sm-2', required=true)"></div>
-							</div>
-							<div class="col-sm-6">
+						<div class="col-sm-6">
+							<div
+								th:replace="fragments/inputs :: sized-input(field='newAddress.zipCode',  fieldSize='col-sm-3', label=#{address.zipCode}, labelSize='col-sm-2', required=true)"></div>
+							<div
+								th:replace="fragments/inputs :: sized-input(field='newAddress.country',  fieldSize='col-sm-3', label=#{address.country}, labelSize='col-sm-2', required=true)"></div>
+						</div>
+						<div class="col-sm-6">
 
-								<div
-									th:replace="fragments/inputs :: sized-input(field='city',  fieldSize='col-sm-3', label=#{address.city}, labelSize='col-sm-2', required=true)"></div>
-								<div
-									th:replace="fragments/inputs :: sized-input(field='street',  fieldSize='col-sm-3', label=#{address.street}, labelSize='col-sm-2', required=true)"></div>
-							</div>
+							<div
+								th:replace="fragments/inputs :: sized-input(field='newAddress.city',  fieldSize='col-sm-3', label=#{address.city}, labelSize='col-sm-2', required=true)"></div>
+							<div
+								th:replace="fragments/inputs :: sized-input(field='newAddress.street',  fieldSize='col-sm-3', label=#{address.street}, labelSize='col-sm-2', required=true)"></div>
+						</div>
 						<div
-							th:replace="fragments/inputs :: sized-input(field='recipient',  fieldSize='col-sm-6', label=#{address.recipient}, labelSize='col-sm-4', required=false)"></div>
+							th:replace="fragments/inputs :: sized-input(field='newAddress.recipient',  fieldSize='col-sm-6', label=#{address.recipient}, labelSize='col-sm-4', required=false)"></div>
 						<div
-							th:replace="fragments/inputs :: sized-input(field='phoneNumber',  fieldSize='col-sm-3', label=#{general.phoneNumber}, labelSize='col-sm-2', required=false)"></div>
+							th:replace="fragments/inputs :: sized-input(field='newAddress.phoneNumber',  fieldSize='col-sm-3', label=#{general.phoneNumber}, labelSize='col-sm-2', required=false)"></div>
 
-						<div th:replace="fragments/inputs :: textarea(field='description',  label='general.description', rows=5 , readonly='false' )"></div>
+						<div th:replace="fragments/inputs :: textarea(field='newAddress.description',  label=#{general.description}, rows=5 , readonly='false' )"></div>
+	
+<!-- 	<input type="hidden" th:field="*{userId}"> -->
 
-
-						<br /> <label for="primary" class="control-label  col-xs-offset-3" th:text="#{addres.setAsPrimary}">Set as primary</label> <input
-							class="middle-align" th:field="*{primary}" type="checkbox" name="primary" />
-
-						<button type="button" class="btn btn-info" id="submit" value="newAddress" data-th-text="#{general.add}">Add</button>
-
+						<br />
+						<div>  <input
+							class="middle-align col-xs-2" th:field="*{newAddress.primary}" type="checkbox" name="primary" /><span class="control-label  col-xs-offset-3" th:text="#{address.setAsPrimary}">Set as primary </span> <br />
+						<button type="submit" class="btn btn-info" id="submit" name="newAddress" data-th-text="#{general.add}">Add</button>
+</div>
+<br/>
+<br/>
 
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-warning" id="reset" data-th-text="#{general.reset}" data-dismiss="modal">Reset</button>
+					<button type="button" class="btn btn-warning" id="cancel" data-th-text="#{general.cancel}" data-dismiss="modal">Cancel</button>
 				</div>
 			</div>
 		</div>
