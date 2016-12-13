@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hu.unideb.inf.nvkshop.web.AbstractNvkController;
 import hu.unideb.inf.nvkshop.web.PasswordRecoveryForm;
+import hu.unideb.inf.rft.nvkshop.entities.security.User;
 import hu.unideb.inf.rft.nvkshop.service.DeletedEntityException;
 import hu.unideb.inf.rft.nvkshop.service.UserService;
 
@@ -37,21 +38,22 @@ public class UserController extends AbstractNvkController {
 	@RequestMapping(value = "/edit", produces = "text/html")
 	public String editForm(Model model, RedirectAttributes redAttrs) {
 
-		// User user = userService.findById(authenticationUserId());
+		User user = userService.findById(authenticationUserId());
 
 		UserForm form = new UserForm();
 		addDatasForUser(form);
+
 		// User user = userService.findById(form.getUserId());
-		// if (user == null) {
-		// redAttrs.addAttribute("errorMsg", "user.notValidUser");
-		// return " redirect:/login";
-		// }
-		//
-		// form.setFistName(user.getFirstName());
-		// form.setLastName(user.getLastName());
-		// form.setPhoneNumber(user.getPhoneNumber());
-		// form.setEmail(user.getEmail());
-		// form.setAddresses(user.getAddresses());
+		if (user == null) {
+			redAttrs.addAttribute("errorMsg", "user.notValidUser");
+			return " redirect:/login";
+		}
+
+		form.setFirstName(user.getFirstName());
+		form.setLastName(user.getLastName());
+		form.setPhoneNumber(user.getPhoneNumber());
+		form.setEmail(user.getEmail());
+		form.setAddresses(user.getAddresses());
 
 		model.addAttribute("userForm", form);
 		model.addAttribute("addressForm", new AddressForm());
@@ -87,7 +89,6 @@ public class UserController extends AbstractNvkController {
 	@RequestMapping(value = "/edit", params = "addAddress", method = RequestMethod.POST, produces = "text/html")
 	public String editForm(@ModelAttribute("userForm") UserForm form, Errors errors, Model model, RedirectAttributes redAttrs) {
 
-		System.out.println("Here");
 		Long id = authenticationUserId();
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newAddress.country", "validation.required");
@@ -98,9 +99,9 @@ public class UserController extends AbstractNvkController {
 			return "redirect:/user/edit";
 		}
 
-		// userService.addUserAddress(id, newAddress);
+		userService.addUserAddress(id, form.getNewAddress());
 
-		return "user/edit";
+		return "redirect:/user/edit";
 	}
 
 	@RequestMapping(value = "/edit", params = "newPassword", method = RequestMethod.POST, produces = "text/html")

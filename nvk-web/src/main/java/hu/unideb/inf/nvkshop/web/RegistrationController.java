@@ -189,6 +189,8 @@ public class RegistrationController extends AbstractNvkController {
 		log.info("Password recovery step 2.");
 		try {
 			passwordRecovery = userPasswordRecoveryService.findUserPasswordRecoveryByActivationCode(activationCode);
+			System.out.println(passwordRecovery.getActivationCode());
+			System.out.println(passwordRecovery.getDueDate());
 		} catch (DeletedEntityException ex) {
 			redirectAttrs.addFlashAttribute("errorMsg", "validation.invalidOrExpiredToken");
 			return "redirect:/login.html";

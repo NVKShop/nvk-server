@@ -46,9 +46,10 @@ public class UserServiceImpl extends AbstrackNvkService implements UserService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
+
 	public User findById(Long id) {
-		User user = userDao.getOne(id);
+		User user = userDao.findOne(id);
 		return user;
 	}
 
@@ -64,7 +65,7 @@ public class UserServiceImpl extends AbstrackNvkService implements UserService {
 		Mapper dozerMapper = new DozerBeanMapper();
 
 		User u = dozerMapper.map(request, User.class);
-
+		u.setBanned(false);
 		userDao.save(u);
 		userRegistrationRequestSerivce.remove(request);
 	}
