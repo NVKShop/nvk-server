@@ -52,7 +52,7 @@ public class User extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	protected Language language;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Address> addresses;
 
 	public User() {
@@ -197,6 +197,5 @@ public class User extends BaseEntity {
 	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
 	}
-
 
 }
