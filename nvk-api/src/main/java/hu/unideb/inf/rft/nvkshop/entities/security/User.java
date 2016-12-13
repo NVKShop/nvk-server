@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
@@ -50,10 +51,9 @@ public class User extends BaseEntity {
 	@Column(name = "language")
 	@Enumerated(EnumType.STRING)
 	protected Language language;
-	//
-	// @OneToMany(fetch = FetchType.EAGER)
-	// @JoinColumn(name = "user_id")
-	// private List<Address> addresses;
+
+	@OneToMany(mappedBy = "user")
+	private List<Address> addresses;
 
 	public User() {
 		super();
@@ -190,12 +190,13 @@ public class User extends BaseEntity {
 		this.language = language;
 	}
 
-	// public List<Address> getAddresses() {
-	// return addresses;
-	// }
-	//
-	// public void setAddresses(List<Address> addresses) {
-	// this.addresses = addresses;
-	// }
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
+
 
 }
