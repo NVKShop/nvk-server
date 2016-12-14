@@ -1,10 +1,12 @@
 package hu.unideb.inf.rft.nvkshop.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -114,10 +116,34 @@ public class UserServiceImpl extends AbstrackNvkService implements UserService {
 		address.setRecipient(newAddress.getRecipient());
 		address.setStreet(newAddress.getStreet());
 		address.setUser(user);
+		address.setZipCode(newAddress.getZipCode());
+		Address savedAddress = addressDao.saveAndFlush(address);
 		log.info("New address uploaded by user id = {}", user.getId());
 
-		addressDao.saveAndFlush(address);
+		if (newAddress.getIsPrimary()) {
+			savePrimaryAddress(id, savedAddress.getId());
+		}
 
+	}
+
+	@Override
+	@Transactional
+	public void deleteAddress(Long id, Long userId) {
+		Address address = addressDao.findOne(id);
+		User user = findById(userId);
+		if (user == null) {
+			throw new DeletedEntityException();
+		}
+		if (address == null) {
+			// TODO : log
+			return;
+		}
+
+		if (user.getAddresses().contains(address)) {
+			addressDao.delete(address);
+		} else {
+			throw new DataIntegrityViolationException("Wrong user or address combination");
+		}
 	}
 
 	@Override
@@ -146,6 +172,43 @@ public class UserServiceImpl extends AbstrackNvkService implements UserService {
 
 		user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
 		userDao.saveAndFlush(user);
+	}
+
+	@Override
+	@Transactional
+	public void savePrimaryAddress(Long userId, Long addressId) {
+
+		User user = userDao.findOne(userId);
+		if (user == null) {
+			throw new DeletedEntityException();
+		}
+		Address address = addressDao.findOne(addressId);
+		if (address == null) {
+			throw new DeletedEntityException();
+		}
+
+		Address oldPrimary = addressDao.findByUserAndIsPrimary(user, true);
+		if (oldPrimary == null) {
+			address.setPrimary(true);
+			return;
+		} else {
+			if (oldPrimary.getId() == address.getId()) {
+				return;
+			} else {
+				oldPrimary.setPrimary(false);
+				address.setPrimary(true);
+				addressDao.saveAndFlush(address);
+				addressDao.saveAndFlush(oldPrimary);
+			}
+		}
+
+	}
+
+	@Override
+	@Transactional
+	public List<Address> addressesByUser(User user) {
+		return addressDao.findAllByUser(user);
+
 	}
 
 	@Override

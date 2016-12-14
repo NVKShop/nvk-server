@@ -13,8 +13,11 @@
 	<entry key="address.recipient">Recipient</entry>
 	<entry key="address.newAddress">New address</entry>
 	<entry key="address.addNew">Add new address</entry>
+	<entry key="address.editAddress">Edit address</entry>
+	<entry key="address.deleteConfirm">Are you really want to delete this address?</entry>
 
 	<entry key="address.setAsPrimary">Set as primary address</entry>
+	<entry key="address.setPrimary">Set primary</entry>
 	<entry key="address.primary">Primary address</entry>
 
 	<entry key="general.phoneNumber">Phone number</entry>
@@ -89,17 +92,11 @@
 
 	<entry key="validation.required">Required field!</entry>
 
-	<entry key="general.operations">Operations</entry>
-	<entry key="general.language">Language</entry>
-	<entry key="general.save">Save</entry>
-	<entry key="general.add">Add</entry>
-	<entry key="general.cancel">Cancel</entry>
-	<entry key="general.description">Description</entry>
-	<entry key="general.cancel">Cancel</entry>
-	<entry key="general.reset">Reset</entry>
 	<entry key="user.form">User form</entry>
 	<entry key="userEdit.changePassword">Change password</entry>
 	<entry key="userEdit.password">Type your old password:</entry>
 	<entry key="user.wrongPassword">Wrong password! Please write your valid password!</entry>
-<entry key="user.passwordChanged">Your password</entry>
+	<entry key="user.passwordChanged">Your password</entry>
+	
+	<entry key="warning.alreadyLoggedIn">You are already logged in!Please log out first.</entry>
 </properties>

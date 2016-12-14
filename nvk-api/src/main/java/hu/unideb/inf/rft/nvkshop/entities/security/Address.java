@@ -80,6 +80,10 @@ public class Address extends BaseEntity {
 		return isPrimary;
 	}
 
+	public boolean getIsPrimary() {
+		return isPrimary;
+	}
+
 	public void setPrimary(boolean isPrimary) {
 		this.isPrimary = isPrimary;
 	}

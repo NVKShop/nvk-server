@@ -42,5 +42,19 @@
 <script type="text/javascript" data-th-src="@{/resources/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" data-th-src="@{/resources/js/toastr.min.js}" src="js/toastr.min.js"></script>
 <script type="text/javascript" data-th-src="@{/resources/themes/js/common.js}" src="themes/js/common.js"></script>
-
+		<script data-th-if="${successMsg}" data-th-inline="javascript" type="text/javascript">
+	/*<![CDATA[*/
+		toastr.success([[#{${successMsg}}]], [[#{general.toastrSuccess}]]);
+	/*]]>*/
+	</script>
+	<script data-th-if="${errorMsg}" data-th-inline="javascript" type="text/javascript">
+	/*<![CDATA[*/
+		toastr.error([[#{${errorMsg}}]], [[#{general.toastrError}]]);
+	/*]]>*/
+	</script>
+		<script data-th-if="${warningMsg}" data-th-inline="javascript" type="text/javascript">
+	/*<![CDATA[*/
+		toastr.warning([[#{${warningMsg}}]], [[#{general.toastrWarning}]]);
+	/*]]>*/
+	</script>
 </html>

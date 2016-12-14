@@ -10,6 +10,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hu.unideb.inf.nvkshop.web.AbstractNvkController;
@@ -53,8 +54,9 @@ public class UserController extends AbstractNvkController {
 		form.setLastName(user.getLastName());
 		form.setPhoneNumber(user.getPhoneNumber());
 		form.setEmail(user.getEmail());
-		form.setAddresses(user.getAddresses());
+		// form.setAddresses(userService.addressesByUser(user));
 
+		model.addAttribute("addresses", user.getAddresses());
 		model.addAttribute("userForm", form);
 		model.addAttribute("addressForm", new AddressForm());
 		return "user/edit";
@@ -87,7 +89,7 @@ public class UserController extends AbstractNvkController {
 	}
 
 	@RequestMapping(value = "/edit", params = "addAddress", method = RequestMethod.POST, produces = "text/html")
-	public String editForm(@ModelAttribute("userForm") UserForm form, Errors errors, Model model, RedirectAttributes redAttrs) {
+	public String editFormAddAddress(@ModelAttribute("userForm") UserForm form, Errors errors, Model model, RedirectAttributes redAttrs) {
 
 		Long id = authenticationUserId();
 
@@ -128,6 +130,31 @@ public class UserController extends AbstractNvkController {
 		model.addAttribute("passwordRecoveryForm", form);
 
 		return "user/passwordrecover";
+	}
+
+	@RequestMapping(value = "/setprimaryaddress", method = RequestMethod.GET, produces = "text/html")
+	public String savePrimaryAddress(@ModelAttribute("userForm") UserForm userForm, @RequestParam("id") long addressId, Errors errors,
+			Model model, RedirectAttributes redAttrs) {
+
+		Long id = authenticationUserId();
+		try {
+			userService.savePrimaryAddress(id, addressId);
+
+		} catch (Exception e) {
+
+		}
+
+		return "redirect:/user/edit";
+	}
+
+	@RequestMapping(value = "/deleteaddress", method = RequestMethod.GET, produces = "text/html")
+	public String deleteAddress(@ModelAttribute("userForm") UserForm userForm, @RequestParam("id") long addressId, Errors errors,
+			Model model, RedirectAttributes redAttrs) {
+
+		Long id = authenticationUserId();
+		userService.deleteAddress(addressId, id);
+
+		return "redirect:/user/edit";
 	}
 
 	@RequestMapping(value = "/passwordrecover", params = "in", method = RequestMethod.POST, produces = "text/html")

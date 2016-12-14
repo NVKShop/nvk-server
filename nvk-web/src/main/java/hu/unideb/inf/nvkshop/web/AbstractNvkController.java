@@ -18,6 +18,7 @@ import hu.unideb.inf.rft.nvkshop.entities.security.Language;
 import hu.unideb.inf.rft.nvkshop.entities.security.User;
 import hu.unideb.inf.rft.nvkshop.security.CustomUserDetails;
 import hu.unideb.inf.rft.nvkshop.security.CustomUserDetailsService;
+import hu.unideb.inf.rft.nvkshop.service.AlreadyLoggedInException;
 
 public class AbstractNvkController {
 
@@ -107,6 +108,17 @@ public class AbstractNvkController {
 			form.setTotalValueOfItems(615);
 
 			form.setItems(testProducts);
+		}
+	}
+
+	protected <T extends AbstractUserForm> void addDatasForUserInLogin(T form) {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		if (authentication.getCredentials() == null) {
+			throw new AlreadyLoggedInException();
+		} else {
+			return;
 		}
 	}
 

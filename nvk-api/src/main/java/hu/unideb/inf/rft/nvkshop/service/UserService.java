@@ -1,5 +1,7 @@
 package hu.unideb.inf.rft.nvkshop.service;
 
+import java.util.List;
+
 import hu.unideb.inf.rft.nvkshop.entities.security.Address;
 import hu.unideb.inf.rft.nvkshop.entities.security.Language;
 import hu.unideb.inf.rft.nvkshop.entities.security.User;
@@ -69,4 +71,28 @@ public interface UserService {
 	 * @param password the new password
 	 */
 	void resetPassword(Long id, String password);
+
+	/**
+	 * Return all addresses by user.
+	 * 
+	 * @param user the user
+	 * @return the <code>list</code> of addresses
+	 */
+	List<Address> addressesByUser(User user);
+
+	/**
+	 * Set an user address as primary address. Also set the another addreses primary flag to false.
+	 * 
+	 * @param userId the userID
+	 * @param addressId the addressID
+	 */
+	void savePrimaryAddress(Long userId, Long addressId);
+
+	/**
+	 * Delete a users address.
+	 * 
+	 * @param id the addres id
+	 * @param userId the user id
+	 */
+	void deleteAddress(Long id, Long userId);
 }

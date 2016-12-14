@@ -44,25 +44,41 @@
 
 							<div>
 
-								<table th:if="${addresses != null}" class="table table-hover table-condensed">
+								<table class="table table-hover table-condensed">
 									<thead>
 										<tr>
-											<th class="col-xs-1" th:text="#{address.primary}">Primary</th>
-											<th class="col-xs-3" th:text="#{address.zipCode}">Zip</th>
-											<th class="col-xs-4" th:text="#{address.country}">Country</th>
-											<th class="col-xs-1" th:text="#{address.street}">Street</th>
-											<th class="col-xs-3" th:text="#{general.operations}">Operations</th>
+											<th class="col-xs-2" th:text="#{address.zipCode}">Zip</th>
+											<th class="col-xs-3" th:text="#{address.country}">Country</th>
+											<th class="col-xs-3" th:text="#{address.street}">Street</th>
+											<th class="col-xs-2" th:text="#{general.operations}">Operations</th>
 										</tr>
 									</thead>
 									<tbody>
+										<tr th:each="address : ${addresses}" class="tbl">
+											<th:block th:if="${address.isPrimary} == true">
+												<td th:text="${address.zipCode}">Zip</td>
+												<td th:text="${address.country}">Contry</td>
+												<td th:text="${address.street}">Operations</td>
+												<td ><a tabindex="0" role="button" class="btn btn-default btn-xs" data-trigger="focus" data-toggle="popover"
+													th:attr="data-entity=${address.id}"><span class="glyphicon glyphicon-trash"></span> <span th:text="#{general.delete}">Delete</span></a>
+													<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#addressModal"
+														data-th-text="#{general.edit}" role="button">Edit</button></td>
+											</th:block>
+										
+										</tr>
 										<tr th:each="address : ${addresses}">
+										<th:block th:if="${address.isPrimary} == false">
 											<td th:text="${address.zipCode}">Zip</td>
-											<td th:text="${address.country}">Contry</td>
-											<td th:text="${address.street}">Operations</td>
-											<td><a tabindex="0" role="button" class="btn btn-default btn-xs" data-trigger="focus" data-toggle="popover"
+											<td  th:text="${address.country}">Contry</td>
+											<td  th:text="${address.street}">Operations</td>
+											<td ><a tabindex="0" role="button" class="btn btn-default btn-xs" data-trigger="focus" data-toggle="popover"
 												th:attr="data-entity=${address.id}"><span class="glyphicon glyphicon-trash"></span> <span th:text="#{general.delete}">Delete</span></a>
 												<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#addressModal"
-													data-th-text="#{general.edit}" role="button">Edit</button></td>
+													data-th-text="#{general.edit}" role="button">Edit</button>
+											<a class="btn btn-success" href="#" th:href="@{'/user/setprimaryaddress.html?id=' + ${address.id}}" th:text="#{address.setPrimary}">
+											</a>
+											</td>
+											</th:block>
 										</tr>
 
 									</tbody>
@@ -215,6 +231,11 @@
 
 
 </body>
+<style type="text/css">
+    .tbl {width: 640px;}
+    .tbl tr {background-color: Blue; height: 24px}
+    .tbl tr:hover {background-color: Red;}
+</style>
 <script type="text/javascript" data-th-src="@{/resources/themes/js/jquery-1.7.2.min.js}" src="themes/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" data-th-src="@{/resources/themes/js/superfish.js}" src="themes/js/superfish.js"></script>
 <script type="text/javascript" data-th-src="@{/resources/themes/js/jquery.scrolltotop.js}" src="themes/js/jquery.scrolltotop.js"></script>
@@ -261,7 +282,7 @@
 			    	
 		    	}
 		       	$('#confirmYesButton').click(function() {
-					location.assign([[@{/user/edit/delete-address.html(id)}]]+'='+$entity); });	
+					location.assign([[@{/user/deleteaddress.html(id)}]]+'='+$entity); });	
 					$('#confirmNoButton').click(function() { 	$('[data-toggle="popover"]').popover('hide'); });	
 		    	
 		    	// a new popover has surely been created
@@ -275,7 +296,7 @@
 	    });
 	});
 	</script>
-		<script data-th-if="${successMsg}" data-th-inline="javascript" type="text/javascript">
+	<script data-th-if="${successMsg}" data-th-inline="javascript" type="text/javascript">
 	/*<![CDATA[*/
 		toastr.success([[#{${successMsg}}]], [[#{general.toastrSuccess}]]);
 	/*]]>*/

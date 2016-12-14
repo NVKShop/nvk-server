@@ -9,4 +9,18 @@
 	
 	<entry key="general.toastrSuccess">Success!</entry>
 	<entry key="general.toastrError">Error!</entry>
+	<entry key="general.toastrWarning">Warning!</entry>
+	
+	<entry key="general.operations">Operations</entry>
+	<entry key="general.language">Language</entry>
+	<entry key="general.save">Save</entry>
+	<entry key="general.add">Add</entry>
+	<entry key="general.cancel">Cancel</entry>
+	<entry key="general.description">Description</entry>
+	<entry key="general.cancel">Cancel</entry>
+	<entry key="general.reset">Reset</entry>
+	<entry key="general.delete">Delete</entry>
+	<entry key="general.yes">Yes</entry>
+	<entry key="general.no">No</entry>
+	<entry key="general.warning">Warning</entry>
 </properties>
