@@ -1,15 +1,37 @@
 package hu.unideb.inf.nvkshop.web.user;
 
-public class AddressForm {
+import hu.unideb.inf.nvkshop.web.AbstractUserForm;
+import hu.unideb.inf.rft.nvkshop.entities.security.Address;
+
+public class AddressForm extends AbstractUserForm {
+
+	private Address address;
 
 	private String zipCode;
 	private String country;
 	private String city;
 	private String street;
-	// private boolean isPrimary;
+	private boolean isPrimary;
 	private String phoneNumber;
 	private String recipient;
 	private String description;
+
+	public AddressForm(Address address) {
+		super();
+		this.address = address;
+	}
+
+	public AddressForm() {
+		super();
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
 	public String getZipCode() {
 		return zipCode;
@@ -43,13 +65,13 @@ public class AddressForm {
 		this.street = street;
 	}
 
-	// public boolean isPrimary() {
-	// return isPrimary;
-	// }
-	//
-	// public void setPrimary(boolean isPrimary) {
-	// this.isPrimary = isPrimary;
-	// }
+	public boolean isPrimary() {
+		return isPrimary;
+	}
+
+	public void setPrimary(boolean isPrimary) {
+		this.isPrimary = isPrimary;
+	}
 
 	public String getPhoneNumber() {
 		return phoneNumber;

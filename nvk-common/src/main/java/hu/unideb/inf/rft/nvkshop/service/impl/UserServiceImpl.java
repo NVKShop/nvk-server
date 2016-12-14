@@ -19,7 +19,6 @@ import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
 import hu.unideb.inf.rft.nvkshop.repositories.AddressDao;
 import hu.unideb.inf.rft.nvkshop.repositories.UserDao;
 import hu.unideb.inf.rft.nvkshop.service.DeletedEntityException;
-import hu.unideb.inf.rft.nvkshop.service.InvalidAccessException;
 import hu.unideb.inf.rft.nvkshop.service.UserRegistrationRequestService;
 import hu.unideb.inf.rft.nvkshop.service.UserService;
 import lombok.Setter;
@@ -73,7 +72,7 @@ public class UserServiceImpl extends AbstrackNvkService implements UserService {
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@Transactional()
 	public void editUserBasicDatas(Long id, String firstName, String lastName, String phoneNumber, Language selectedLanguage) {
 
 		User user = findById(id);
@@ -85,10 +84,6 @@ public class UserServiceImpl extends AbstrackNvkService implements UserService {
 		// if (user.getBanned()) {
 		// throw new BannedUserException();
 		// }
-
-		if (!(selectedLanguage instanceof Language)) {
-			throw new InvalidAccessException();
-		}
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
 		user.setPhoneNumber(phoneNumber);
@@ -117,6 +112,7 @@ public class UserServiceImpl extends AbstrackNvkService implements UserService {
 		address.setStreet(newAddress.getStreet());
 		address.setUser(user);
 		address.setZipCode(newAddress.getZipCode());
+		address.setDateOfCreation(dateOf(now()));
 		Address savedAddress = addressDao.saveAndFlush(address);
 		log.info("New address uploaded by user id = {}", user.getId());
 
@@ -196,7 +192,9 @@ public class UserServiceImpl extends AbstrackNvkService implements UserService {
 				return;
 			} else {
 				oldPrimary.setPrimary(false);
+				oldPrimary.setDateOfModification(dateOf(now()));
 				address.setPrimary(true);
+				address.setDateOfModification(dateOf(now()));
 				addressDao.saveAndFlush(address);
 				addressDao.saveAndFlush(oldPrimary);
 			}
@@ -219,6 +217,37 @@ public class UserServiceImpl extends AbstrackNvkService implements UserService {
 	@Override
 	public User findByName(String userName) {
 		return userDao.findByUserName(userName);
+	}
+
+	@Override
+	@Transactional
+	public void updateAddress(Long userId, Long addressId, Address prototype) {
+		Address address = addressDao.findOne(addressId);
+		User user = userDao.findOne(userId);
+		if (user == null) {
+			throw new DeletedEntityException();
+		}
+		address.setDescription(prototype.getDescription());
+		address.setPhoneNumber(prototype.getPhoneNumber());
+		address.setRecipient(prototype.getRecipient());
+		address.setZipCode(prototype.getZipCode());
+		address.setCountry(prototype.getCountry());
+		address.setStreet(prototype.getStreet());
+		address.setCity(prototype.getCity());
+		address.setDateOfModification(dateOf(now()));
+		address = addressDao.saveAndFlush(address);
+
+		if (!prototype.getIsPrimary()) {
+			address.setPrimary(false);
+		} else {
+			savePrimaryAddress(userId, address.getId());
+		}
+
+	}
+
+	@Override
+	public Address findAddressById(Long id) {
+		return addressDao.findOne(id);
 	}
 
 }

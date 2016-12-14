@@ -1,5 +1,7 @@
 package hu.unideb.inf.nvkshop.web.user;
 
+import javax.validation.ConstraintViolationException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hu.unideb.inf.nvkshop.web.AbstractNvkController;
 import hu.unideb.inf.nvkshop.web.PasswordRecoveryForm;
+import hu.unideb.inf.rft.nvkshop.entities.security.Address;
 import hu.unideb.inf.rft.nvkshop.entities.security.User;
 import hu.unideb.inf.rft.nvkshop.service.DeletedEntityException;
 import hu.unideb.inf.rft.nvkshop.service.UserService;
@@ -54,7 +57,6 @@ public class UserController extends AbstractNvkController {
 		form.setLastName(user.getLastName());
 		form.setPhoneNumber(user.getPhoneNumber());
 		form.setEmail(user.getEmail());
-		// form.setAddresses(userService.addressesByUser(user));
 
 		model.addAttribute("addresses", user.getAddresses());
 		model.addAttribute("userForm", form);
@@ -76,16 +78,22 @@ public class UserController extends AbstractNvkController {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "validation.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "validation.required");
 
-		if (errors.hasErrors()) {
-			return "user/edit";
-		}
+		// FIXME: conversion error with ENUM. Maybe occured with the different packages ?
+		//
+		// if (errors.hasErrors()) {
+		// return "user/edit";
+		// }
 
-		userService.editUserBasicDatas(form.getUserId(), form.getFirstName(), form.getLastName(), form.getPhoneNumber(),
-				form.getLanguage());
+		try {
+			userService.editUserBasicDatas(authenticationUserId(), form.getFirstName(), form.getLastName(), form.getPhoneNumber(),
+					form.getLanguage());
+		} catch (ConstraintViolationException ex) {
+			// TODO set this
+		}
 
 		log.info("Submitting edit user form: id={}", form.getUserId());
 		flashAttributes.addFlashAttribute("successMsg", "users.saved");
-		return "redirect:/users/list.html";
+		return "redirect:/user/edit.html";
 	}
 
 	@RequestMapping(value = "/edit", params = "addAddress", method = RequestMethod.POST, produces = "text/html")
@@ -144,6 +152,54 @@ public class UserController extends AbstractNvkController {
 
 		}
 
+		return "redirect:/user/edit";
+	}
+
+	@RequestMapping(value = "/address", method = RequestMethod.GET, produces = "text/html")
+	public String address(@ModelAttribute("userForm") UserForm userForm, @RequestParam("id") long addressId, Errors errors, Model model,
+			RedirectAttributes redAttrs) {
+
+		Long id = authenticationUserId();
+		Address address = new Address();
+
+		try {
+			address = userService.findAddressById(addressId);
+		} catch (Exception e) {
+
+		}
+		AddressForm form = new AddressForm(address);
+		addDatasForUser(form);
+		model.addAttribute("addressForm", form);
+
+		return "user/address";
+	}
+	//
+	// @RequestMapping(value = "/address", method = RequestMethod.GET, produces = "text/html")
+	// public String addressEdit(@RequestParam("id") long addressId, Errors errors, Model model, RedirectAttributes redAttrs) {
+	// Address address = new Address();
+	// authenticationUserId();
+	// try {
+	// address = userService.findAddressById(addressId);
+	// } catch (Exception e) {
+	//
+	// }
+	// AddressForm form = new AddressForm(address);
+	// model.addAttribute("addressForm", form);
+	//
+	// return "user/address";
+	// }
+
+	@RequestMapping(value = "/address", method = RequestMethod.POST, produces = "text/html")
+	public String addressEditSubmit(@ModelAttribute("addressForm") AddressForm form, Errors errors, Model model,
+			RedirectAttributes redAttrs) {
+		authenticationUserId();
+
+		try {
+			userService.updateAddress(authenticationUserId(), form.getAddress().getId(), form.getAddress());
+		} catch (DeletedEntityException ex) {
+
+		}
+		redAttrs.addFlashAttribute("successMsg", "address.saved");
 		return "redirect:/user/edit";
 	}
 

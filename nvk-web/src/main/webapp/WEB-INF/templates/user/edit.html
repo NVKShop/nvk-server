@@ -61,8 +61,8 @@
 												<td th:text="${address.street}">Operations</td>
 												<td ><a tabindex="0" role="button" class="btn btn-default btn-xs" data-trigger="focus" data-toggle="popover"
 													th:attr="data-entity=${address.id}"><span class="glyphicon glyphicon-trash"></span> <span th:text="#{general.delete}">Delete</span></a>
-													<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#addressModal"
-														data-th-text="#{general.edit}" role="button">Edit</button></td>
+													<a type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#addressModal"
+														data-th-text="#{general.edit}" role="button" th:classapend=".open-editAddressDialog" href="#editAddressModal">Edit</a></td>
 											</th:block>
 										
 										</tr>
@@ -73,14 +73,16 @@
 											<td  th:text="${address.street}">Operations</td>
 											<td ><a tabindex="0" role="button" class="btn btn-default btn-xs" data-trigger="focus" data-toggle="popover"
 												th:attr="data-entity=${address.id}"><span class="glyphicon glyphicon-trash"></span> <span th:text="#{general.delete}">Delete</span></a>
-												<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#addressModal"
-													data-th-text="#{general.edit}" role="button">Edit</button>
+											
+												<a type="button" class="btn btn-default btn-xs" href="#" th:href="@{'/user/address.html?id=' + ${address.id}}" data-th-text="#{general.edit}" role="button">Edit</a>
+											
+<!-- 												<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#addressModal" -->
+<!-- 													data-th-text="#{general.edit}" role="button">Edit</button> -->
 											<a class="btn btn-success" href="#" th:href="@{'/user/setprimaryaddress.html?id=' + ${address.id}}" th:text="#{address.setPrimary}">
 											</a>
 											</td>
 											</th:block>
-										</tr>
-
+											</tr>
 									</tbody>
 								</table>
 								<button tabindex="7" class="btn btn-inverse large left" data-toggle="modal" data-target="#newAddressModal"
@@ -109,7 +111,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close" data-th-attr="aria-label=#{general.close}">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="" data-th-text="#{address.addAddres}">Add new address</h4>
+					<h4 class="modal-title" id="" data-th-text="#{address.editAddress}">Edit address</h4>
 				</div>
 				<div class="modal-body">
 					<form th:action="@{/user/addresses.html}" data-th-object="${userForm.newAddress}" class="form-stacked" method="post">
@@ -179,7 +181,6 @@
 						<div
 							th:replace="fragments/inputs :: textarea(field='newAddress.description',  label=#{general.description}, rows=5 , readonly='false' )"></div>
 
-						<!-- 	<input type="hidden" th:field="*{userId}"> -->
 
 						<br />
 						<div>
@@ -305,5 +306,14 @@
 	/*<![CDATA[*/
 		toastr.error([[#{${errorMsg}}]], [[#{general.toastrError}]]);
 	/*]]>*/
+	</script>
+<script type="text/javascript" th:inline="javascript">
+	$(document).on("click", ".open-editAddressDialog", function () {
+	     var myAddress = $(this).data('address');
+	     $(".modal-body #address").val( myAddress );
+	});
+
+	    
+
 	</script>
 </html>

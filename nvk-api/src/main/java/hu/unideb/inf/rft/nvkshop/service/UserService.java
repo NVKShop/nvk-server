@@ -95,4 +95,21 @@ public interface UserService {
 	 * @param userId the user id
 	 */
 	void deleteAddress(Long id, Long userId);
+
+	/**
+	 * Find an addres by id.
+	 * 
+	 * @param id the ID of the address.
+	 * @return
+	 */
+	Address findAddressById(Long id);
+
+	/**
+	 * Update an existing address of an suer.
+	 * 
+	 * @param userId the user ID
+	 * @param addressId the ID of the updateable address
+	 * @param prototype the prototype address object
+	 */
+	void updateAddress(Long userId, Long addressId, Address prototype);
 }

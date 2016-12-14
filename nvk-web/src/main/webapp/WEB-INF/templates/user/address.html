@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head data-th-fragment="head">
+<title data-th-text="#{application.title}">NVK-shop</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<link data-th-href="@{/resources/images/favicon.png}" href="../../images/favicon.png" type="image/png" rel="shortcut icon" />
+<link data-th-href="@{/resources/css/bootstrap.min.css}" href="../../css/bootstrap.min.css" rel="stylesheet"></link>
+<link data-th-href="@{/resources/css/bootstrap-theme.min.css}" href="../../css/bootstrap-theme.min.css" rel="stylesheet"></link>
+<link data-th-href="@{/resources/css/bootstrap-responsive.min.css}" href="../../css/bootstrap-responsive.min.css" rel="stylesheet" />
+<link data-th-href="@{/resources/themes/css/bootstrappage.css}" href="../../themes/css/bootstraprappage.css" rel="stylesheet" />
+<link data-th-href="@{/resources/themes/css/flexslider.css}" href="../../themes/css/flexslider.css" rel="stylesheet" />
+<link data-th-href="@{/resources/themes/css/main.css}" href="../../themes/css/main.css" rel="stylesheet" />
+<link data-th-href="@{/resources/css/toastr.min.css}" href="../../css/toastr.min.css" rel="stylesheet"></link>
+<link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
+</head>
+<body>
+	<form th:action="@{/user/address.html}" data-th-object="${addressForm}" class="form-stacked" method="post">
+
+		<div th:replace="fragments/navbar :: top-bar"></div>
+		<div id="wrapper" class="container">
+			<h4 class="title">
+				<span class="text"><strong th:text="#{titles.editAddress}">Edit Address</strong></span>
+			</h4>
+
+
+			<!-- 			<section class="header_text sub"> -->
+			<!-- 				<br /> -->
+			<!-- 			<img class="pageBanner" src="themes/images/pageBanner.png" alt="New products" /> -->
+			<!-- 				<h4> -->
+			<!-- 					<span data-th-text="#{titles.registration}">Regsiter</span> -->
+			<!-- 				</h4> -->
+			<!-- 			</section> -->
+			<section class="main-content" th:object="${addressForm.address}">
+
+				<div
+					th:replace="fragments/inputs :: sized-input(field='zipCode',  fieldSize='col-sm-3', label=#{address.zipCode}, labelSize='col-sm-2', required=true)"></div>
+				<div
+					th:replace="fragments/inputs :: sized-input(field='country',  fieldSize='col-sm-3', label=#{address.country}, labelSize='col-sm-2', required=true)"></div>
+				<div
+					th:replace="fragments/inputs :: sized-input(field='city',  fieldSize='col-sm-3', label=#{address.city}, labelSize='col-sm-2', required=true)"></div>
+				<div
+					th:replace="fragments/inputs :: sized-input(field='street',  fieldSize='col-sm-3', label=#{address.street}, labelSize='col-sm-2', required=true)"></div>
+
+				<div
+					th:replace="fragments/inputs :: sized-input(field='recipient',  fieldSize='col-sm-3', label=#{address.recipient}, labelSize='col-sm-2', required=false)"></div>
+				<div
+					th:replace="fragments/inputs :: sized-input(field='phoneNumber',  fieldSize='col-sm-3', label=#{general.phoneNumber}, labelSize='col-sm-2', required=false)"></div>
+
+				<div th:replace="fragments/inputs :: textarea(field='description',  label=#{general.description}, rows=5 , readonly='false' )"></div>
+				<div>
+					<input class="middle-align col-xs-2" th:field="*{primary}" type="checkbox" name="primary" /><span
+						class="control-label  col-xs-offset-3" th:text="#{address.setAsPrimary}">Set as primary </span> <br />
+					<button class="btn btn-info" type="submit" data-th-text="#{general.save}">Save</button>
+				</div>
+				<input type="hidden" th:field="*{id}"></input>
+
+
+			</section>
+		</div>
+	</form>
+
+</body>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/jquery-1.7.2.min.js}" src="themes/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/superfish.js}" src="themes/js/superfish.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/jquery.scrolltotop.js}" src="themes/js/jquery.scrolltotop.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/js/toastr.min.js}" src="js/toastr.min.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/common.js}" src="themes/js/common.js"></script>
+<script data-th-if="${successMsg}" data-th-inline="javascript" type="text/javascript">
+	/*<![CDATA[*/
+		toastr.success([[#{${successMsg}}]], [[#{general.toastrSuccess}]]);
+	/*]]>*/
+	</script>
+<script data-th-if="${errorMsg}" data-th-inline="javascript" type="text/javascript">
+	/*<![CDATA[*/
+		toastr.error([[#{${errorMsg}}]], [[#{general.toastrError}]]);
+	/*]]>*/
+	</script>
+<script data-th-if="${warningMsg}" data-th-inline="javascript" type="text/javascript">
+	/*<![CDATA[*/
+		toastr.warning([[#{${warningMsg}}]], [[#{general.toastrWarning}]]);
+	/*]]>*/
+	</script>
+</html>
