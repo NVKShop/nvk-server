@@ -18,10 +18,12 @@ public class CategoryNameMustBeUnique implements ValidationRule<Category> {
 
 	@Override
 	public List<ValidationViolation> validate(Category entity) {
-		List<Category> siblings = entity.getParent().getSubCategories();
-		for (Category sibling : siblings) {
-			if (sibling.getName().equals(entity.getName()) && sibling != entity) {
-				return Arrays.asList(CategoryCreationViolations.NAME_MUST_NOT_BE_UNIQUE);
+		if (entity.getParent() != null) {
+			List<Category> siblings = entity.getParent().getSubCategories();
+			for (Category sibling : siblings) {
+				if (sibling.getName().equals(entity.getName()) && sibling != entity) {
+					return Arrays.asList(CategoryCreationViolations.NAME_MUST_NOT_BE_UNIQUE);
+				}
 			}
 		}
 		return Collections.EMPTY_LIST;

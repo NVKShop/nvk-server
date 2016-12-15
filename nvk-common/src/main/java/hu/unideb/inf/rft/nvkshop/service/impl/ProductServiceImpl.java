@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import hu.unideb.inf.rft.nvkshop.entities.product.Category;
 import hu.unideb.inf.rft.nvkshop.entities.product.Product;
+import hu.unideb.inf.rft.nvkshop.repositories.ActiveDiscountDao;
 import hu.unideb.inf.rft.nvkshop.repositories.ProductDao;
 import hu.unideb.inf.rft.nvkshop.service.ProductService;
 import hu.unideb.inf.rft.nvkshop.util.PriceSearchTag;
@@ -26,7 +27,10 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductValidator validator;
-	
+
+	@Autowired
+	private ActiveDiscountDao activeDiscountDao;
+
 	@Override
 	public Page<Product> search(ProductSearch search) {
 
@@ -42,10 +46,14 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void addProduct(Product product) throws ValidationException {
+	public Product addProduct(Product product) throws ValidationException {
 		validator.validate(product);
-		productDao.save(product);
+		return productDao.save(product);
 	}
 
-	
+	@Override
+	public List<Product> getDiscountedProducts() {
+		return activeDiscountDao.findDiscountedProducts();
+	}
+
 }

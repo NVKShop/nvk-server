@@ -1,11 +1,15 @@
 package hu.unideb.inf.rft.nvkshop.service;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 /**
  * Deleted entity exception.
  * 
  * @author FV
  *
  */
+@ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "The requested user cannot be found")
 public class DeletedEntityException extends NvkException {
 
 	/** Serial number */

@@ -12,9 +12,10 @@ import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationException;
 public interface ProductService {
 
 	Page<Product> search(ProductSearch search);
-	
+
 	List<Product> findByCategory(Category category);
 
-	void addProduct(Product p) throws ValidationException;
-	
+	Product addProduct(Product p) throws ValidationException;
+
+	List<Product> getDiscountedProducts();
 }

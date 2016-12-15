@@ -11,6 +11,6 @@ public interface CategoryService {
 	
 	List<Category> findByParent(Category category);
 
-	void addCategory(Category category) throws ValidationException;
+	Category addCategory(Category category) throws ValidationException;
 	
 }

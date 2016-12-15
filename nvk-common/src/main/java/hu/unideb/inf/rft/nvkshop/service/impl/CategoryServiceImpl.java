@@ -31,10 +31,10 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public void addCategory(Category category) throws ValidationException {
+	public Category addCategory(Category category) throws ValidationException {
 		validator.validate(category);
 	
-		categoryDao.save(category);
+		return categoryDao.save(category);
 	}
 
 }
