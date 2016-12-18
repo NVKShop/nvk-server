@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
 import hu.unideb.inf.rft.nvkshop.entities.base.BaseEntity;
+import hu.unideb.inf.rft.nvkshop.entities.product.archive.ArchiveOrder;
 
 @Entity
 @Table(name = "users")
@@ -54,6 +55,9 @@ public class User extends BaseEntity {
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Address> addresses;
+
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private List<ArchiveOrder> orders;
 
 	public User() {
 		super();
@@ -196,6 +200,14 @@ public class User extends BaseEntity {
 
 	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
+	}
+
+	public List<ArchiveOrder> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<ArchiveOrder> orders) {
+		this.orders = orders;
 	}
 
 }

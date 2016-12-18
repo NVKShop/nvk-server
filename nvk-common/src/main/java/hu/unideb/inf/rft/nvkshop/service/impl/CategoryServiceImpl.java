@@ -33,8 +33,18 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public Category addCategory(Category category) throws ValidationException {
 		validator.validate(category);
-	
+
 		return categoryDao.save(category);
+	}
+
+	@Override
+	public List<Category> findAll() {
+		return categoryDao.findAll();
+	}
+
+	@Override
+	public Category findById(Long id) {
+		return categoryDao.findOne(id);
 	}
 
 }

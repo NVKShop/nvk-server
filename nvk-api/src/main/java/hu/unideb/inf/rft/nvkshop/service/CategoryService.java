@@ -12,5 +12,8 @@ public interface CategoryService {
 	List<Category> findByParent(Category category);
 
 	Category addCategory(Category category) throws ValidationException;
+	List<Category> findAll();
+
+	Category findById(Long id);
 	
 }
