@@ -15,7 +15,7 @@ public class LoginController extends AbstractNvkController {
 	public LoginController() {
 	}
 
-	@RequestMapping("/login")
+	@RequestMapping("/login.html")
 	public String login(@RequestParam(required = false) boolean failure, Model model, RedirectAttributes redirectAttributes) {
 		LoginForm form = new LoginForm();
 

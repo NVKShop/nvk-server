@@ -10,35 +10,24 @@
 	<!-- TODO kitölteni és kikommentelni ha lesz bejelentkező form, addig bekötök 
 		egy basicet -->
 <bean id="authenticationSuccessHandler" class="hu.unideb.inf.rft.nvkshop.security.NvkAuthenticationSuccessHandler"  p:defaultTargetUrl="/main.html"  />
-<bean id="authenticationSuccessHandlerForMobile" class="hu.unideb.inf.rft.nvkshop.security.NvkAuthenticationSuccessHandlerForMobile"  p:defaultTargetUrl="/mobile/main.html"  />
 
 	<security:http pattern="/resources/**" security="none" />
-	<security:http disable-url-rewriting="true" use-expressions="true"
-		authentication-manager-ref="authenticationManager">
-	<security:csrf disabled="true" />
-	
-	
-<!-- 	<security:intercept-url pattern="/**"  access="permitAll" /> -->
-
-<!-- 	<security:intercept-url pattern="/user/** "  access="hasRole('ROLE_USER')" /> -->
-<!-- 	<security:intercept-url pattern="/order/**"  access="hasRole('ROLE_USER')" /> -->
-	<security:form-login login-page="/login.xhtml"
+	<security:http disable-url-rewriting="true" use-expressions="true">
+		<security:csrf disabled="true" />
+		<security:headers disabled="true" />
+		<security:intercept-url pattern="/secured/**"
+			access="hasAnyRole('USER','ADMIN')" />
+		<security:form-login login-page="/login.xhtml"
 			login-processing-url="/login" default-target-url="/main.html"
 			authentication-failure-url="/login.html?error=1"
 			username-parameter="j_username" password-parameter="j_password" authentication-success-handler-ref="authenticationSuccessHandler"  />
 		<security:logout logout-url="/logout"
 			logout-success-url="/login.html" />
-	
-<!-- 	<security:intercept-url pattern="/mobile/user/** "  access="hasRole('ROLE_USER')" /> -->
-<!-- 	<security:intercept-url pattern="/mobile/order/**"  access="hasRole('ROLE_USER')" /> -->
-<!-- 	<security:form-login login-page="/mobile/login.xhtml" -->
-<!-- 			login-processing-url="/mobile/login" default-target-url="/mobile/main.html" -->
-<!-- 			authentication-failure-url="/mobile/login.html?error=1" -->
-<!-- 			username-parameter="j_username" password-parameter="j_password" authentication-success-handler-ref="authenticationSuccessHandlerForMobile"  /> -->
-<!-- 		<security:logout logout-url="/mobile/logout" -->
-<!-- 			logout-success-url="/mobile/login.html" /> -->
+<!-- 		<security:remember-me key="key" -->
+<!-- 			remember-me-parameter="remember_me" token-validity-seconds="86400" /> -->
+		<security:access-denied-handler error-page="/403.html" />
 	</security:http>
-
+	
 	<context:component-scan base-package="hu.unideb.inf.rft.nvkshop"></context:component-scan>
 
 
@@ -49,19 +38,13 @@
 <!-- 	<security:intercept-url pattern="/secured/**" access="hasAnyRole('USER','ADMIN')" /> -->
 <!-- 	</security:http> -->
 
-	<security:authentication-manager id="authenticationManager">
+	<security:authentication-manager>
 		<security:authentication-provider
 			user-service-ref="customUserDetailsService">
 			<security:password-encoder hash="bcrypt" />
-<!-- 		</security:authentication-provider> -->
-<!-- 			<security:authentication-provider -->
-<!-- 			user-service-ref="customUserDetailsServiceForMobile"> -->
-<!-- 			<security:password-encoder hash="bcrypt" /> -->
 		</security:authentication-provider>
 	</security:authentication-manager>
 
 	<bean id="customUserDetailsService" class="hu.unideb.inf.rft.nvkshop.security.CustomUserDetailsService">
-	</bean>
-	<bean id="customUserDetailsServiceForMobile" class="hu.unideb.inf.rft.nvkshop.security.CustomUserDetailsServiceForMobile">
 	</bean>
 </beans>
