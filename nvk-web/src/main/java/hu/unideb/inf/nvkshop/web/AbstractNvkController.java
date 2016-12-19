@@ -13,12 +13,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.Assert;
 
+import hu.unideb.inf.rft.nvkshop.entities.product.Category;
 import hu.unideb.inf.rft.nvkshop.entities.product.Product;
 import hu.unideb.inf.rft.nvkshop.entities.security.Language;
 import hu.unideb.inf.rft.nvkshop.entities.security.User;
 import hu.unideb.inf.rft.nvkshop.security.CustomUserDetails;
 import hu.unideb.inf.rft.nvkshop.security.CustomUserDetailsService;
 import hu.unideb.inf.rft.nvkshop.service.AlreadyLoggedInException;
+import hu.unideb.inf.rft.nvkshop.service.CategoryService;
 
 public class AbstractNvkController {
 
@@ -26,6 +28,8 @@ public class AbstractNvkController {
 	// Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	//
 	// }
+	@Autowired
+	CategoryService categoryService;
 
 	@Autowired
 	private CustomUserDetailsService costumUserDetailsService;
@@ -66,7 +70,6 @@ public class AbstractNvkController {
 
 	protected long authenticationUserId() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		// (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		CustomUserDetails principal = null;
 		if (authentication == null) {
 			// TODO : Log or smtgh
@@ -74,10 +77,6 @@ public class AbstractNvkController {
 			principal = (CustomUserDetails) authentication.getPrincipal();
 
 		}
-
-		// NvkAuth principal = (authentication == null) ? null : (NvkAuth) authentication.getPrincipal();
-		// Assert.notNull(principal);
-		System.out.println("LoginAbs: " + principal.getUser().getId());
 
 		return principal.getUser().getId();
 	}
@@ -109,6 +108,13 @@ public class AbstractNvkController {
 
 			form.setItems(testProducts);
 		}
+	}
+
+	protected void addItemsByCategory() {
+
+		List<Category> rootCategoryes = new LinkedList<Category>();
+		rootCategoryes.get(1).getSubCategories();
+
 	}
 
 	protected <T extends AbstractUserForm> void addDatasForUserInLogin(T form) {

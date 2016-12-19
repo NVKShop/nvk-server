@@ -19,7 +19,7 @@ public class Category extends BaseEntity {
 	@Column(name = "name")
 	private String name;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "parent_id")
 	private List<Category> subCategories;
 
@@ -27,7 +27,7 @@ public class Category extends BaseEntity {
 	@JoinColumn(name = "parent_id")
 	private Category parent;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "category_id")
 	private List<Product> products;
 

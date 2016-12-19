@@ -8,12 +8,15 @@ import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationException;
 public interface CategoryService {
 
 	List<Category> findRootCategories();
-	
+
 	List<Category> findByParent(Category category);
 
-	Category addCategory(Category category) throws ValidationException;
+	Category addCategory(String categoryName, Category category) throws ValidationException;
+
 	List<Category> findAll();
 
 	Category findById(Long id);
-	
+
+	void addSubCategory(long id, String newCategoryName) throws ValidationException;
+
 }

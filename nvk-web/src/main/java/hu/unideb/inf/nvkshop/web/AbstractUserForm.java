@@ -2,6 +2,7 @@ package hu.unideb.inf.nvkshop.web;
 
 import java.util.List;
 
+import hu.unideb.inf.rft.nvkshop.entities.product.Category;
 import hu.unideb.inf.rft.nvkshop.entities.product.Product;
 import hu.unideb.inf.rft.nvkshop.entities.security.Language;
 
@@ -18,6 +19,15 @@ public class AbstractUserForm {
 	private Integer totalValueOfItems;
 	private List<Product> items;
 	private Language language;
+	private List<Category> rootCategory;
+
+	public List<Category> getRootCategory() {
+		return rootCategory;
+	}
+
+	public void setRootCategory(List<Category> rootCategory) {
+		this.rootCategory = rootCategory;
+	}
 
 	public Language getLanguage() {
 		return language;

@@ -25,7 +25,7 @@ public class Address extends BaseEntity {
 	private String street;
 
 	@Column(name = "primary_address")
-	private Boolean isPrimary;
+	private boolean isPrimary;
 
 	@Column(name = "phone_number")
 	private String phoneNumber;

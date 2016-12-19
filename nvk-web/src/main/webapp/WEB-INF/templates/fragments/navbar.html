@@ -19,9 +19,9 @@
 								th:src="@{/resources/images/flags/__${#locale.language}__.png}" /></span> <b class="caret"></b>
 					</a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a th:href="@{/(locale=en)}" href="#"><img src="../../resources/images/flags/en.png"
+							<li><a th:href="@{/main.html(locale=en)}" href="#"><img src="../../resources/images/flags/en.png"
 									th:src="@{/resources/images/flags/en.png}"></img> <span th:text="#{language.english}">EN</span></a></li>
-							<li><a th:href="@{/(locale=hu)}" href="#"><img src="../../resources/images/flags/hu.png"
+							<li><a th:href="@{/main.html(locale=hu)}" href="#"><img src="../../resources/images/flags/hu.png"
 									th:src="@{/resources/images/flags/hu.png}"></img> <span th:text="#{language.hungarian}">HU</span></a></li>
 						</ul></li>
 				</ul>
@@ -167,9 +167,8 @@
 				<div class="navbar-inner main-menu">				
 <!-- 					<a href="index.html" class="logo pull-left"><img src="themes/images//logo.png" class="site_logo" alt=""></a> -->
 					<nav id="menu" class="pull-right">
-					th:text="${navbar.}"
 						<ul>
-							<li th:each="category : *{categories}" ><a href="#" th:text="#{#{navbar.productsByCategory} + category.name}">Main category</a>			
+							<li th:each="category : *{rootCategory}" ><a href="#" th:text="#{#{navbar.productsByCategory} + category.name}">Main category</a>			
 								<ul th:if="${category.subCategory.size() > 0}" th:each = "subCategory : *{category.subCategories}">
 									<li><a href="#" th:text="#{#{navbar.productsByCategory} + category.name}" th:href="@{'/products/category?id=' + ${subCategory.id}}">Subcategory multiple</a></li>									
 								</ul>

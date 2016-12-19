@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head data-th-fragment="head">
+<title data-th-text="#{application.title}">NVK-shop</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<link data-th-href="@{/resources/images/favicon.png}" href="../../images/favicon.png" type="image/png" rel="shortcut icon" />
+<link data-th-href="@{/resources/css/bootstrap.min.css}" href="../../css/bootstrap.min.css" rel="stylesheet"></link>
+<link data-th-href="@{/resources/css/bootstrap-theme.min.css}" href="../../css/bootstrap-theme.min.css" rel="stylesheet"></link>
+<link data-th-href="@{/resources/css/bootstrap-responsive.min.css}" href="../../css/bootstrap-responsive.min.css" rel="stylesheet" />
+<link data-th-href="@{/resources/themes/css/bootstrappage.css}" href="../../themes/css/bootstraprappage.css" rel="stylesheet" />
+<link data-th-href="@{/resources/themes/css/flexslider.css}" href="../../themes/css/flexslider.css" rel="stylesheet" />
+<link data-th-href="@{/resources/themes/css/main.css}" href="../../themes/css/main.css" rel="stylesheet" />
+<link data-th-href="@{/resources/css/toastr.min.css}" href="../../css/toastr.min.css" rel="stylesheet"></link>
+<link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
+</head>
+<body>
+	<form th:action="@{/admin/category.html}" data-th-object="${form}" class="form-stacked" method="post">
+
+<!-- 		<div th:replace="fragments/navbar :: top-bar"></div> -->
+		<div id="wrapper" class="container">
+		<h4 th:text="${category.name}"></h4>
+			<div class="span4">
+				<div class="control-group" th:classappend="${#fields.hasErrors('newCategoryName')} ? 'has-error'">
+					<label class="control-label"> <span th:text="#{general.name}">Name</span> <sup class="text-danger">*</sup>
+					</label>
+					<div class="controls">
+						<input th:field="*{newCategoryName}" type="text" class="form-control" /> <span data-th-if="${#fields.hasErrors('newCategoryName')}"
+							class="help-block" data-th-errors="*{newSubCategoryName}">Error message</span>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-info" id="submit" data-th-text="#{general.add}">Add</button>
+				<br /> <br />
+
+			</div>
+			<div class="span8">
+
+				<table class="table table-hover table-condensed">
+					<thead>
+						<tr>
+							<th class="col-xs-2" th:text="#{category.name}">name</th>
+							<th class="col-xs-3" th:text="#{category.subcategories}">Subcategories</th>
+							<th class="col-xs-3" th:text="#{category.items}">items</th>
+							<th class="col-xs-2" th:text="#{general.operations}">Operations</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr th:each="subCategory : *{category.subCategory}">
+							<th:block>
+								<td th:text="${subCategory.name}">Name</td>
+<!-- 								<td th:text="${category.su	bCategories.size()}">Subsize</td> -->
+								<td></td>
+								<td></td>
+								<td>Itemshere</td>
+<!-- 								<td th:text="${}">Operations</td> -->
+								<td><a tabindex="0" role="button" class="btn btn-default btn-xs" data-trigger="focus" data-toggle="popover"
+									th:attr="data-entity=${subCategory.id}"><span class="glyphicon glyphicon-trash"></span> <span th:text="#{general.delete}">Delete</span></a>
+
+									<a tabindex="0" type="button" class="btn btn-default" href="#" th:href="@{'/admin/category/'+${category.id}+'/subcategory/'+${subCategory.id}+'edit.html'}"
+									data-th-text="#{general.edit}" role="button">Edit</a> 
+									
+									</td>
+
+							</th:block>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<section class="main-content"></section>
+		</div>
+	</form>
+	
+</body>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/jquery-1.7.2.min.js}" src="themes/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/superfish.js}" src="themes/js/superfish.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/jquery.scrolltotop.js}" src="themes/js/jquery.scrolltotop.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/js/toastr.min.js}" src="js/toastr.min.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/common.js}" src="themes/js/common.js"></script>
+<script data-th-if="${successMsg}" data-th-inline="javascript" type="text/javascript">
+	/*<![CDATA[*/
+		toastr.success([[#{${successMsg}}]], [[#{general.toastrSuccess}]]);
+	/*]]>*/
+	</script>
+<script data-th-if="${errorMsg}" data-th-inline="javascript" type="text/javascript">
+	/*<![CDATA[*/
+		toastr.error([[#{${errorMsg}}]], [[#{general.toastrError}]]);
+	/*]]>*/
+	</script>
+<script data-th-if="${warningMsg}" data-th-inline="javascript" type="text/javascript">
+	/*<![CDATA[*/
+		toastr.warning([[#{${warningMsg}}]], [[#{general.toastrWarning}]]);
+	/*]]>*/
+	</script>
+</html>

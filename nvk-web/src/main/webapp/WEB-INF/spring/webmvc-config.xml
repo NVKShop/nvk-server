@@ -20,7 +20,7 @@
 	<mvc:resources location="/, classpath:/META-INF/web-resources/" mapping="/resources/**" />
 	<mvc:default-servlet-handler />
 
-	<mvc:view-controller path="/" view-name="redirect:/main.html" />
+	<mvc:view-controller path="/" view-name="redirect: main.html" />
 	<mvc:view-controller path="/main.html" view-name="main" />
 
 	<mvc:interceptors>
