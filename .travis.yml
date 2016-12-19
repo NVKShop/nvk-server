@@ -23,4 +23,5 @@ script:
     - mvn clean install -Ptest -Dsmtp.user=$EMAIL_USER -Dsmtp.password=$EMAIL_PASSWORD -Dnvkshop.dburl=$DB_URL -Dnvkshop.username=$DB_USER -Dnvkshop.password=$DB_PASS -Dapp.location=$SERVER
 
 after_success:
-    "curl -T nvk-web/target/nvkshop.war -u $FTP_USER:$FTP_PASS ftp://$SERVER_LOCATION"
+    - "curl -T nvk-web/target/nvkshop.war -u $FTP_USER:$FTP_PASS ftp://$SERVER_LOCATION" 
+    - "curl -T nvk-integration/target/integration.war -u $FTP_USER:$FTP_PASS ftp://$SERVER_LOCATION" 
