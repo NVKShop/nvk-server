@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/">
+<Context path="/nvkshop">
 
- <Resource name="NVKDS" auth="Container" type="javax.sql.DataSource"
-    maxActive="50" maxIdle="30" maxWait="10000" username="${nvkshop.username}"
-    password="${nvkshop.password}" driverClassName="com.mysql.jdbc.Driver"
-    url="${nvkshop.dburl}" />
+<!--  <Resource name="NVKDS" auth="Container" type="javax.sql.DataSource" -->
+<!--     maxActive="50" maxIdle="30" maxWait="10000" username="${nvkshop.username}" -->
+<!--     password="${nvkshop.password}" driverClassName="com.mysql.jdbc.Driver" -->
+<!--     url="${nvkshop.dburl}" /> -->
 		
-	<ResourceLink name="NVKDS" global="NVKDS"
-		type="javax.sql.DataSource" />
+<!-- 	<ResourceLink name="NVKDS" global="NVKDS" -->
+<!-- 		type="javax.sql.DataSource" /> -->
 </Context>	
