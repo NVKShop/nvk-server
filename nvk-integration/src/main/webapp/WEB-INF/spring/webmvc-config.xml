@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<context:annotation-config />
+	<context:property-placeholder />
+	<context:component-scan base-package="hu.unideb.inf.nvkshop" use-default-filters="false">
+		<context:include-filter expression="org.springframework.web.bind.annotation.RestController" type="annotation" />
+	</context:component-scan>
+ 
+	<mvc:annotation-driven />
+	<mvc:resources location="/, classpath:/META-INF/web-resources/" mapping="/resources/**" />
+	<mvc:default-servlet-handler />
+
+	<bean id="contentNegotiatorManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<property name="mediaTypes">
+			<props>
+				<prop key="json">application/json</prop>
+				<prop key="html">text/html</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="contentNegotiator" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" p:order="1">
+		<property name="contentNegotiationManager" ref="contentNegotiatorManager" />
+		<property name="defaultViews">
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" p:extractValueFromSingleKeyModel="true" />
+			</list>
+		</property>
+	</bean>
+	
+</beans>

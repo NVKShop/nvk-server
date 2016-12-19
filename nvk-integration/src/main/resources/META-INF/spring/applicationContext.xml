@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	<context:annotation-config />
+	<context:component-scan base-package="hu.unideb.inf.rft.nvkshop.*"></context:component-scan>
+
+	<!-- spring config for database connection -->
+	<import resource="classpath:spring-core.xml" />
+
+	<!-- spring sercurity config -->
+	<import resource="classpath:META-INF/spring/security-config.xml" />
+
+	<!-- messaging beans -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames"
+			value="/WEB-INF/i18n/generals,/WEB-INF/i18n/messages" />
+		<property name="fallbackToSystemLocale" value="false" />
+		<property name="cacheSeconds" value="0"/>
+	</bean>
+	<bean
+		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean"
+		p:defaultEncoding="UTF-8" p:templateLoaderPath="file:${project.basedir}/../templates" />
+
+	<bean class="org.springframework.mail.javamail.JavaMailSenderImpl"
+		p:host="${smtp.host}" p:port="${smtp.port}" p:username="${smtp.user}"
+		p:password="${smtp.password}">
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- Support beans -->
+	<bean class="hu.unideb.inf.rft.nvkshop.service.Settings"
+		p:baseUrl="${app.location}" p:fromAddress="${smtp.user}"
+		p:defaultLanguage="hu" />
+	
+<!-- 	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager" p:sessionFactory-ref="sessionFactory" /> -->
+
+</beans>

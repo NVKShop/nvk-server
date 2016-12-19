@@ -289,5 +289,6 @@
 		<module>nvk-web</module>
 		<module>nvk-common</module>
 		<module>nvk-api</module>
+		<module>nvk-integration</module>
 	</modules>
 </project>

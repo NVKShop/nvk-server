@@ -7,10 +7,13 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import hu.unideb.inf.rft.nvkshop.entities.base.BaseEntity;
 
 @Table(name = "products")
 @Entity
+@JsonIgnoreProperties({"category","dateOfCreation","dateOfModification","version"})
 public class Product extends BaseEntity {
 
 	@ManyToOne
