@@ -104,4 +104,18 @@
 	<entry key="user.saved">Your profile changes are successfully saved!</entry>
 
 	<entry key="warning.alreadyLoggedIn">You are already logged in!Please log out first.</entry>
+	
+	<entry key="category.name">Category name</entry>
+	<entry key="category.subcategories">Subcategories</entry>
+	<entry key="category.items">Items Count</entry>
+	<entry key="category.addNewCategory">Add new Category</entry>
+	<entry key="category.parent">Parent </entry>
+	<entry key="item.name">Product name</entry>
+	<entry key="item.onStrock">On stock</entry>
+	<entry key="item.value">Value</entry>
+	<entry key="product.add">New product</entry>
+	<entry key="product.onStock">On stock</entry>
+	<entry key="product.price">Price</entry>
+	<entry key="titles.product">Product handling</entry>
+	
 </properties>

@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hu.unideb.inf.nvkshop.web.AbstractNvkController;
 import hu.unideb.inf.rft.nvkshop.entities.product.Category;
+import hu.unideb.inf.rft.nvkshop.entities.product.Product;
 import hu.unideb.inf.rft.nvkshop.service.CategoryService;
+import hu.unideb.inf.rft.nvkshop.service.ProductService;
 import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationException;
 
 @Controller("adminController")
@@ -22,6 +25,9 @@ public class AdminController extends AbstractNvkController {
 
 	@Autowired
 	private CategoryService categoryService;
+
+	@Autowired
+	private ProductService productService;
 
 	@RequestMapping(value = "/categories", method = RequestMethod.GET, produces = "text/html")
 	public String categoryForm(Model model, RedirectAttributes redAttrs) {
@@ -86,6 +92,7 @@ public class AdminController extends AbstractNvkController {
 			// TODO: log or smtg
 			return "redirect:/admin/categories";
 		}
+		form.setCategory(cat);
 		model.addAttribute("form", form);
 		return "admin/subcategory";
 
@@ -105,5 +112,41 @@ public class AdminController extends AbstractNvkController {
 		}
 		return "admin/category";
 
+	}
+
+	@RequestMapping(value = "/newProduct", method = RequestMethod.GET, produces = "text/html")
+	public String productForm(@RequestParam(value = "id", required = false) Long id, Model model, RedirectAttributes redAttrs) {
+		ProductForm form = new ProductForm();
+		if (id != null) {
+			Category cat = categoryService.findById(id);
+			if (cat == null) {
+				// TODO: log or smtg
+				return "redirect:/admin/categories";
+			}
+			form.setSelectedCategory(cat);
+		}
+		model.addAttribute("isNew", true);
+		model.addAttribute("form", form);
+		return "admin/product";
+	}
+
+	@RequestMapping(value = "/product", method = RequestMethod.GET, produces = "text/html")
+	public String productEditForm(@RequestParam(value = "id", required = true) long id, Model model, RedirectAttributes redAttrs) {
+		ProductForm form = new ProductForm();
+		Product product = productService.findById(id);
+		if (product == null) {
+			return "redirect:/admin/products";
+		}
+		form.setName(product.getName());
+		form.setDescription(product.getDescription());
+		form.setPrice(product.getPrice());
+		// TODO:
+		form.setOnStock(100);
+		form.setCategory(product.getCategory());
+
+		model.addAttribute("isNew", false);
+		form.setId(product.getId());
+		model.addAttribute("form", form);
+		return "admin/product";
 	}
 }

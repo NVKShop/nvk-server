@@ -21,7 +21,8 @@
 <!-- 		<div th:replace="fragments/navbar :: top-bar"></div> -->
 		<div id="wrapper" class="container">
 			<div class="span4">
-				<div class="control-group" th:classappend="${#fields.hasErrors('newCategoryName')} ? 'has-error'">
+			<h4 th:text="#{category.addNewCategory}">Add new</h4>
+				<div  class="col-offset-sx-2 control-group" th:classappend="${#fields.hasErrors('newCategoryName')} ? 'has-error'">
 					<label class="control-label"> <span th:text="#{general.name}">Name</span> <sup class="text-danger">*</sup>
 					</label>
 					<div class="controls">

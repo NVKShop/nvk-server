@@ -20,7 +20,7 @@
 
 <!-- 		<div th:replace="fragments/navbar :: top-bar"></div> -->
 		<div id="wrapper" class="container">
-		<h4 th:text="*{category.name}"></h4>
+		<h4 th:text="#{category.name} + ' : ' + *{category.name}"></h4>
 			<div class="span4">
 				<div class="control-group" th:classappend="${#fields.hasErrors('newCategoryName')} ? 'has-error'">
 					<label class="control-label"> <span th:text="#{general.name}">Name</span> <sup class="text-danger">*</sup>
@@ -58,7 +58,7 @@
 								<td><a tabindex="0" role="button" class="btn btn-default btn-xs" data-trigger="focus" data-toggle="popover"
 									th:attr="data-entity=${subCategory.id}"><span class="glyphicon glyphicon-trash"></span> <span th:text="#{general.delete}">Delete</span></a>
 
-									<a tabindex="0" type="button" class="btn btn-default" href="#" th:href="@{'/admin/category/'+*{category.id}+'/subcategory/'+${subCategory.id}+'edit.html'}"
+									<a tabindex="0" type="button" class="btn btn-default" href="#" th:href="@{'/admin/category/'+*{category.id}+'/subcategory/'+${subCategory.id}+'/edit.html'}"
 									data-th-text="#{general.edit}" role="button">Edit</a> 
 									
 									</td>

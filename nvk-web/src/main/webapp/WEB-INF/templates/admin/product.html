@@ -16,44 +16,52 @@
 <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
 </head>
 <body>
-	<form th:action="@{/admin/category.html}" data-th-object="${form}" class="form-stacked" method="post">
+	<form th:action="@{/admin/product.html}" data-th-object="${form}" class="form-stacked" method="post">
 
-		<!-- 		<div th:replace="fragments/navbar :: top-bar"></div> -->
+		<!-- 		<div -->
+		<!-- 			th:replace="fragments/navbar :: top-bar"></div> -->
 		<div id="wrapper" class="container">
-			<h4 th:text="#{category.name} + ' : ' + *{category.name}"></h4>
-			<h5 th:text="'(' + #{category.parent} + ' : ' + *{category.parent.name} + ')'"></h5>
-			<div class="span8">
+			<h4 th:text="#{titles.product}">Product</h4>
 
-				<table class="table table-hover table-condensed">
-					<thead>
-						<tr>
-							<th class="col-xs-2" th:text="#{item.name}">name</th>
-							<th class="col-xs-3" th:text="#{item.onStrock}">onStock</th>
-							<th class="col-xs-3" th:text="#{item.value}">value</th>
-							<th class="col-xs-2" th:text="#{general.operations}">Operations</th>
-						</tr>
-					</thead>
-					<tbody>
 
-						<tr th:each="product : *{category.products}">
-							<th:block>
-								<td th:text="${product.name}">Name</td>
-								<td></td>
-								<td th:text="${product.value}">Value</td>
-								<td></td>
-								<td><a tabindex="0" type="button" class="btn btn-default" href="#" th:href="@{'/admin/item?id='+${product.id}"
-									data-th-text="#{general.edit}" role="button">Edit</a></td>
+			<section class="main-content">
+				<div class="row">
+					<div class="span6">
+						<fieldset>
+							<div
+								th:replace="fragments/inputs :: sized-input(field='name',  fieldSize='col-sm-6', label=#{general.name}, labelSize='col-sm-4', required=true)"></div>
+							<div
+								th:replace="fragments/inputs :: sized-input(field='price',  fieldSize='col-sm-6', label=#{product.price}, labelSize='col-sm-4', required=true)"></div>
+							<div
+								th:replace="fragments/inputs :: sized-input(field='onStock',  fieldSize='col-sm-6', label=#{product.onStock}, labelSize='col-sm-4', required=false)"></div>
 
-							</th:block>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+							<div th:replace="fragments/inputs :: textarea(field='description',  label=#{general.description}, rows=5 , readonly='false' )"></div>
+						</fieldset>
 
-			<div class="actions">
-				<a tabindex="0" type="button" class="btn btn-default" href="#" th:href="@{'/admin/newProduct?id=' + *{category.id}}" data-th-text="#{product.add}" role="button">Add</a>
-			</div>
-			<section class="main-content"></section>
+						<div th:if="${isNew} and *{selectedCategory==null}" th:class="form-group">
+							<select th:field="*{selectedCategory}" class="form-control input-sm" id="filter">
+								<option th:each="category : *{subCategories}" th:value="*{selectedCategory}" th:text="*{category.name}"></option>
+							</select>
+						</div>
+						<div th:unless="${isNew}" th:class="form-group">
+							<div
+								th:replace="fragments/inputs :: sized-readonly-input(field='category.name',  fieldSize='col-sm-3', label=#{category.name}, labelSize='col-sm-2')"></div>
+							<input type="hidden" th:field="*{id}"></input>
+
+						</div>
+					</div>
+
+
+					<div class="span6">Todo// Pic Here</div>
+				</div>
+<br/>
+						
+						<div class="actions">
+							<button th:if="${isNew}" tabindex="9" class="btn btn-inverse large" type="submit" th:text="#{general.add}"></button>
+
+							<button th:unless="${isNew}" tabindex="9" class="btn btn-inverse large" type="submit" name="save" th:text="#{general.save}"></button>
+						</div>
+			</section>
 		</div>
 	</form>
 
