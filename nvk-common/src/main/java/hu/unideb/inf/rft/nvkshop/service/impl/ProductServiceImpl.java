@@ -198,4 +198,16 @@ public class ProductServiceImpl implements ProductService {
 		product.setDateOfModification(new Date());
 		productDao.save(product);
 	}
+
+	@Override
+	public void deletePictureFromProduct(long id) {
+		Product product = productDao.findOne(id);
+		if (product == null) {
+			throw new DeletedEntityException();
+		}
+
+		product.setPictureAsByte(null);
+		product.setDateOfModification(new Date());
+		productDao.save(product);
+	}
 }

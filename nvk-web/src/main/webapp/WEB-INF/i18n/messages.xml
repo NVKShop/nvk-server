@@ -33,7 +33,7 @@
 	<entry key="titles.passwordRecover"> NVK-Shop : New password</entry>
 	<entry key="titles.lostPassword">NVK-Shop : Lost password</entry>
 	<entry key="titles.editAddress">NVK-Shop : Edit address</entry>
-	
+
 	<!-- Login -->
 	<entry key="login.failure">Wrong username or password!</entry>
 	<entry key="login.password">Password</entry>
@@ -98,13 +98,13 @@
 	<entry key="user.form">User form</entry>
 	<entry key="userEdit.changePassword">Change password</entry>
 	<entry key="userEdit.password">Type your old password:</entry>
-	
+
 	<entry key="user.wrongPassword">Wrong password! Please write your valid password!</entry>
 	<entry key="user.passwordChanged">Your password</entry>
 	<entry key="user.saved">Your profile changes are successfully saved!</entry>
 
 	<entry key="warning.alreadyLoggedIn">You are already logged in!Please log out first.</entry>
-	
+
 	<entry key="category.name">Category name</entry>
 	<entry key="category.subcategories">Subcategories</entry>
 	<entry key="category.items">Items Count</entry>
@@ -118,10 +118,20 @@
 	<entry key="product.price">Price</entry>
 	<entry key="titles.product">Product handling</entry>
 	<entry key="titles.products">All products</entry>
-	
+
 	<entry key="prouduct.created">Product succesfully created!</entry>
-	<entry key="product.cantCreated">Product can't create because of some related categories are deleted, or some datas are bad!</entry>
-		<entry key="product.saved">Product successfully saved!</entry>
-		<entry key="notFound.categoryOrProduct.">Category or product not found!</entry>
+	<entry key="product.cantCreated">Product can't create because of some related
+		categories are deleted, or some datas are bad!</entry>
+	<entry key="product.saved">Product successfully saved!</entry>
+	<entry key="notFound.categoryOrProduct.">Category or product not found!</entry>
+	<entry key="product.picture">Picture of product </entry>
+	
+	<entry key="general.qty">Qty : </entry>
+		<entry key="general.relatedProducts">Related products</entry>
+			<entry key="general.availability">Availability</entry>
+			<entry key="general.moreInformation">More information</entry>
+<entry key="general.addToCart">Add to cart</entry>
+
+<entry key="navbar.allProducts">All products</entry>
 	
 </properties>

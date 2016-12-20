@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head data-th-fragment="head">
+<title data-th-text="#{application.title}">NVK-shop</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<link data-th-href="@{/resources/images/favicon.png}" href="../../images/favicon.png" type="image/png" rel="shortcut icon" />
+<link data-th-href="@{/resources/css/bootstrap.min.css}" href="../../css/bootstrap.min.css" rel="stylesheet"></link>
+<link data-th-href="@{/resources/css/bootstrap-theme.min.css}" href="../../css/bootstrap-theme.min.css" rel="stylesheet"></link>
+<link data-th-href="@{/resources/css/bootstrap-responsive.min.css}" href="../../css/bootstrap-responsive.min.css" rel="stylesheet" />
+<link data-th-href="@{/resources/themes/css/bootstrappage.css}" href="../../themes/css/bootstraprappage.css" rel="stylesheet" />
+<link data-th-href="@{/resources/themes/css/flexslider.css}" href="../../themes/css/flexslider.css" rel="stylesheet" />
+<link data-th-href="@{/resources/themes/css/main.css}" href="../../themes/css/main.css" rel="stylesheet" />
+<link data-th-href="@{/resources/css/toastr.min.css}" href="../../css/toastr.min.css" rel="stylesheet"></link>
+<link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
+</head>
+<body>
+	<form th:action="@{/product.html}" data-th-object="${form}" class="form-stacked" method="post">
+
+		<div th:replace="fragments/navbar :: top-bar"></div>
+		<div id="wrapper" class="container">
+			<div th:replace="fragments/navbar :: inner-bar"></div>
+			<section class="header_text sub">
+				<h4>
+					<span>Product Detail</span>
+				</h4>
+			</section>
+			<section class="main-content">
+				<div class="row">
+					<div class="span9">
+						<div class="row">
+							<div class="span4">
+								<a href="#" class="thumbnail" data-fancybox-group="group1" title="Description 1"><img
+									th:src="@{'/main/product/' + *{product.id} + '/picture'}" /></a>
+								<!-- 								<ul class="thumbnails small">								 -->
+								<!-- 									<li class="span1"> -->
+								<!-- 										<a href="themes/images/ladies/2.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 2"><img src="themes/images/ladies/2.jpg" alt=""></a> -->
+								<!-- 									</li>								 -->
+								<!-- 									<li class="span1"> -->
+								<!-- 										<a href="themes/images/ladies/3.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 3"><img src="themes/images/ladies/3.jpg" alt=""></a> -->
+								<!-- 									</li>													 -->
+								<!-- 									<li class="span1"> -->
+								<!-- 										<a href="themes/images/ladies/4.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 4"><img src="themes/images/ladies/4.jpg" alt=""></a> -->
+								<!-- 									</li> -->
+								<!-- 									<li class="span1"> -->
+								<!-- 										<a href="themes/images/ladies/5.jpg" class="thumbnail" data-fancybox-group="group1" title="Description 5"><img src="themes/images/ladies/5.jpg" alt=""></a> -->
+								<!-- 									</li> -->
+								<!-- 								</ul> -->
+							</div>
+							<div class="span5">
+								<address>
+									<strong th:text="#{general.name} + ' : '">Name</strong> <span th:text="*{product.name}">Apple</span> <br /> <strong
+										th:text="#{general.availability} + ' : '">Availability:</strong> <span th:text="${inStock}">Out Of Stock</span>
+
+								</address>
+								<h4>
+									<strong th:text="#{product.price} + ': ' + *{product.price} + ' HUF'">Price: $587.50</strong>
+								</h4>
+							</div>
+							<div class="span5">
+								<label th:text="#{general.qty}">Qty:</label> <input type="text" class="span1" th:field="*{qty}" placeholder="1" />
+								<button class="btn btn-inverse" type="submit" th:text="#{general.addToCart}">Add to cart</button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="span9">
+								<ul class="nav nav-tabs" id="myTab">
+									<li class="active"><a href="#home" th:text="#{general.description}">Description</a></li>
+									<li class=""><a href="#profile" th:text="#{general.moreInformation}">Additional Information</a></li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane active" id="home" th:text="*{product.description}">Sed ut perspiciatis unde omnis iste natus error sit
+										voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
+										beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
+										consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit
+										amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat
+										voluptatem</div>
+									<div class="tab-pane" id="profile">
+
+										<!-- 										<table class="table table-striped shop_attributes">	 -->
+										<!-- 											<tbody> -->
+										<!-- 												<tr class=""> -->
+										<!-- 													<th>Size</th> -->
+										<!-- 													<td>Large, Medium, Small, X-Large</td> -->
+										<!-- 												</tr>		 -->
+										<!-- 												<tr class="alt"> -->
+										<!-- 													<th>Colour</th> -->
+										<!-- 													<td>Orange, Yellow</td> -->
+										<!-- 												</tr> -->
+										<!-- 											</tbody> -->
+										<!-- 										</table> -->
+									</div>
+								</div>
+							</div>
+							<div class="span9">
+								<br />
+								<h4 class="title">
+									<span class="pull-left"><span class=" text"><strong th:text="#{general.relatedProducts}">Related</strong> Products</span></span> <span
+										class="pull-right"> <a class="left button" href="#myCarousel-1" data-slide="prev"></a><a class="right button"
+										href="#myCarousel-1" data-slide="next"></a>
+									</span>
+								</h4>
+								<div id="myCarousel-1" class="carousel slide">
+									<div class="carousel-inner">
+										<div class="active item">
+											<ul class="thumbnails listing-products">
+												<li th:each="product : *{products}" class="span3">
+													<div class="product-box">
+														<span class="sale_tag"></span> <a href="#" th:href="@{'/product?id=' + ${product.id}}"><img
+															th:src="@{'/main/product/' + ${product.id} + '/picture'}" /></a> <a href="#" th:href="@{'/product?id=' + ${product.id}}"
+															th:text="${product.name}" class="title">Title</a> <a href="#" class="category" th:text="${product.category.name}">Category</a>
+														<p class="price" th:text="${product.price} + ' HUF'">$341</p>
+													</div>
+												</li>
+											</ul>
+										</div>
+										<!-- 										<div class="item"> -->
+										<!-- 											<ul class="thumbnails listing-products"> -->
+										<!-- 												<li class="span3"> -->
+										<!-- 													<div class="product-box"> -->
+										<!-- 														<span class="sale_tag"></span> <a href="product_detail.html"><img alt="" src="themes/images/ladies/1.jpg"></a><br /> <a -->
+										<!-- 															href="product_detail.html" class="title">Fusce id molestie massa</a><br /> <a href="#" class="category">Phasellus -->
+										<!-- 															consequat</a> -->
+										<!-- 														<p class="price">$341</p> -->
+										<!-- 													</div> -->
+										<!-- 												</li> -->
+										<!-- 												<li class="span3"> -->
+										<!-- 													<div class="product-box"> -->
+										<!-- 														<a href="product_detail.html"><img alt="" src="themes/images/ladies/2.jpg"></a><br /> <a href="product_detail.html">Praesent -->
+										<!-- 															tempor sem</a><br /> <a href="#" class="category">Erat gravida</a> -->
+										<!-- 														<p class="price">$28</p> -->
+										<!-- 													</div> -->
+										<!-- 												</li> -->
+										<!-- 												<li class="span3"> -->
+										<!-- 													<div class="product-box"> -->
+										<!-- 														<span class="sale_tag"></span> <a href="product_detail.html"><img alt="" src="themes/images/ladies/3.jpg"></a><br /> <a -->
+										<!-- 															href="product_detail.html" class="title">Wuam ultrices rutrum</a><br /> <a href="#" class="category">Suspendisse aliquet</a> -->
+										<!-- 														<p class="price">$341</p> -->
+										<!-- 													</div> -->
+										<!-- 												</li> -->
+										<!-- 											</ul> -->
+										<!-- 										</div> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+		</div>
+	</form>
+
+</body>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/jquery-1.7.2.min.js}" src="themes/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/superfish.js}" src="themes/js/superfish.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/jquery.scrolltotop.js}" src="themes/js/jquery.scrolltotop.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/js/toastr.min.js}" src="js/toastr.min.js"></script>
+<script type="text/javascript" data-th-src="@{/resources/themes/js/common.js}" src="themes/js/common.js"></script>
+<script data-th-if="${successMsg}" data-th-inline="javascript" type="text/javascript">
+	/*<![CDATA[*/
+		toastr.success([[#{${successMsg}}]], [[#{general.toastrSuccess}]]);
+	/*]]>*/
+	</script>
+<script data-th-if="${errorMsg}" data-th-inline="javascript" type="text/javascript">
+	/*<![CDATA[*/
+		toastr.error([[#{${errorMsg}}]], [[#{general.toastrError}]]);
+	/*]]>*/
+	</script>
+<script data-th-if="${warningMsg}" data-th-inline="javascript" type="text/javascript">
+	/*<![CDATA[*/
+		toastr.warning([[#{${warningMsg}}]], [[#{general.toastrWarning}]]);
+	/*]]>*/
+	</script>
+	<script src="themes/js/common.js"></script>
+		<script>
+			$(function () {
+				$('#myTab a:first').tab('show');
+				$('#myTab a').click(function (e) {
+					e.preventDefault();
+					$(this).tab('show');
+				})
+			})
+			$(document).ready(function() {
+				$('.thumbnail').fancybox({
+					openEffect  : 'none',
+					closeEffect : 'none'
+				});
+				
+				$('#myCarousel-2').carousel({
+                    interval: 2500
+                });								
+			});
+		</script>
+</html>

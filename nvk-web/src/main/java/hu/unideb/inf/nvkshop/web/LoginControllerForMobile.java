@@ -37,7 +37,7 @@ public class LoginControllerForMobile extends AbstractNvkController {
 	public String main(Model model, RedirectAttributes redAttrs) {
 
 		RegistrationRequestForm form = new RegistrationRequestForm();
-		addDatasForUser(form);
+		addDatasForUser(form, null);
 		model.addAttribute("form", form);
 		// log.info("Registration request handling.");
 		return "mobile/main";

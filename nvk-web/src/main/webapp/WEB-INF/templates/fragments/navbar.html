@@ -163,20 +163,20 @@
 		<br />
 	</div>
 	
-	<section class="navbar main-menu">
+	<section class="navbar main-menu" th:fragment="inner-bar()">
 				<div class="navbar-inner main-menu">				
 <!-- 					<a href="index.html" class="logo pull-left"><img src="themes/images//logo.png" class="site_logo" alt=""></a> -->
 					<nav id="menu" class="pull-right">
 						<ul>
-							<li th:each="category : *{rootCategory}" ><a href="#" th:text="#{#{navbar.productsByCategory} + category.name}">Main category</a>			
-								<ul th:if="${category.subCategory.size() > 0}" th:each = "subCategory : *{category.subCategories}">
-									<li><a href="#" th:text="#{#{navbar.productsByCategory} + category.name}" th:href="@{'/products/category?id=' + ${subCategory.id}}">Subcategory multiple</a></li>									
+							<li th:each="category : *{rootCategory}" ><a href="#" th:text="${category.name}">Main category</a>			
+								<ul th:if="${category.subCategories.size() > 0}" th:each = "subCategory : ${category.subCategories}">
+									<li><a href="#" th:text="${subCategory.name}" th:href="@{'/main?categoryId=' + ${subCategory.id}}">Subcategory multiple</a></li>									
 								</ul>
-								<ul th:if="${category.subCategory.size() = 0}">
-									<li><a href="#" th:text="#{#{navbar.productsByCategory} + category.name}" th:href="@{'/products/category?id=' + ${category.id}}">No subcategory</a></li>									
+								<ul th:if="${category.subCategories.size() == 0}">
+									<li><a href="#" th:text="${category.name}" th:href="@{'/main?categoryId=' + ${category.id}}">No subcategory</a></li>									
 								</ul>
 							</li>															
-							<li><a href="#"  th:href="@{/products}" th:text="${navbar.allProducts}">All products</a></li>							
+							<li><a href="#"  th:href="@{/main}" th:text="#{navbar.allProducts}">All products</a></li>							
 							<li><a href="#" th:href="@{/search}">Search</a><span class="glyphicon glyphicon-search"></span></li>
 						</ul>
 					</nav>

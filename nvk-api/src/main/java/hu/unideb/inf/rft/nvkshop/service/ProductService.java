@@ -32,4 +32,6 @@ public interface ProductService {
 	List<Product> findAll();
 
 	void uploadPictureForProduct(long id, byte[] pictureInBytes);
+
+	void deletePictureFromProduct(long id);
 }

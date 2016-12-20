@@ -21,20 +21,20 @@ import hu.unideb.inf.rft.nvkshop.security.CustomUserDetails;
 import hu.unideb.inf.rft.nvkshop.security.CustomUserDetailsService;
 import hu.unideb.inf.rft.nvkshop.service.AlreadyLoggedInException;
 import hu.unideb.inf.rft.nvkshop.service.CategoryService;
+import hu.unideb.inf.rft.nvkshop.service.ProductService;
 
 public class AbstractNvkController {
 
-	// protected long authenticatedUserId() {
-	// Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	//
-	// }
 	@Autowired
-	CategoryService categoryService;
+	private CategoryService categoryService;
+
+	@Autowired
+	private ProductService productService;
 
 	@Autowired
 	private CustomUserDetailsService costumUserDetailsService;
 
-	protected <T extends AbstractUserForm> void addTestDatasForUser(T form) {
+	protected <T extends AbstractUserForm> void addTestDatasForUser(T form, Long categoryId) {
 		form.setUserName("Gipsz Jakab");
 		form.setUserId(1L);
 		Product prod1 = new Product();
@@ -46,6 +46,16 @@ public class AbstractNvkController {
 		form.setItems(Arrays.asList(prod1, prod2));
 		form.setTotalValueOfItems(615);
 
+		if (categoryId != null) {
+			Category cat = categoryService.findById(categoryId.longValue());
+			form.setProducts(productService.findByCategory(cat));
+		} else {
+			// TODO: Trimthis
+			form.setProducts(productService.findAll());
+
+		}
+
+		form.setRootCategory(categoryService.findRootCategories());
 	}
 
 	/**
@@ -81,7 +91,7 @@ public class AbstractNvkController {
 		return principal.getUser().getId();
 	}
 
-	protected <T extends AbstractUserForm> void addDatasForUser(T form) {
+	protected <T extends AbstractUserForm> void addDatasForUser(T form, Long categoryId) {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails principal = null;
@@ -107,6 +117,17 @@ public class AbstractNvkController {
 			form.setTotalValueOfItems(615);
 
 			form.setItems(testProducts);
+
+			if (categoryId != null) {
+				Category cat = categoryService.findById(categoryId.longValue());
+				form.setProducts(productService.findByCategory(cat));
+			} else {
+				// TODO: Trimthis
+				form.setProducts(productService.findAll());
+
+			}
+			form.setRootCategory(categoryService.findRootCategories());
+
 		}
 	}
 

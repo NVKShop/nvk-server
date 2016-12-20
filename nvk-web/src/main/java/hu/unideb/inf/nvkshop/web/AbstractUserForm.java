@@ -2,6 +2,7 @@ package hu.unideb.inf.nvkshop.web;
 
 import java.util.List;
 
+import hu.unideb.inf.nvkshop.web.main.MainForm;
 import hu.unideb.inf.rft.nvkshop.entities.product.Category;
 import hu.unideb.inf.rft.nvkshop.entities.product.Product;
 import hu.unideb.inf.rft.nvkshop.entities.security.Language;
@@ -12,7 +13,7 @@ import hu.unideb.inf.rft.nvkshop.entities.security.Language;
  * @author FV
  *
  */
-public class AbstractUserForm {
+public class AbstractUserForm extends MainForm {
 
 	private Long userId;
 	private String userName;

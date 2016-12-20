@@ -267,7 +267,7 @@ public class AdminController extends AbstractNvkController {
 
 	}
 
-	@RequestMapping(value = "/admin/product/{id}/picture", method = RequestMethod.GET)
+	@RequestMapping(value = "/product/{id}/picture", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> imageOfProduct(@PathVariable long id) {
 
 		Product product = productService.findById(id);
@@ -288,4 +288,14 @@ public class AdminController extends AbstractNvkController {
 
 		return "admin/products";
 	}
+
+	@RequestMapping(value = "/deletepicture", method = RequestMethod.GET, produces = "text/html")
+	public String deleteAddress(@RequestParam("id") long id, Errors errors, Model model, RedirectAttributes redAttrs) {
+
+		// Long id = authenticationUserId();
+		productService.deletePictureFromProduct(id);
+
+		return "redirect:/admin/product?id=" + id;
+	}
+
 }

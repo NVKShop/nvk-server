@@ -16,7 +16,7 @@
 <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
 </head>
 <body>
-	<form th:action="@{/admin/product.html}" data-th-object="${form}" class="form-stacked" enctype="multipart/form-data"  method="post">
+	<form th:action="@{/admin/product.html}" data-th-object="${form}" class="form-stacked" enctype="multipart/form-data" method="post">
 
 		<!-- 		<div -->
 		<!-- 			th:replace="fragments/navbar :: top-bar"></div> -->
@@ -38,6 +38,11 @@
 							<div th:replace="fragments/inputs :: textarea(field='description',  label=#{general.description}, rows=5 , readonly='false' )"></div>
 						</fieldset>
 
+
+					</div>
+
+
+					<div class="span6">
 						<div th:if="*{isNew == true} and *{selectedCategoryId != null}" th:class="form-group">
 							<select th:field="*{selectedCategoryId}" class="form-control input-sm" id="filter">
 								<option th:each="category : *{subCategories}" th:value="${category.id}" th:text="${category.name}"></option>
@@ -49,25 +54,25 @@
 							<input type="hidden" th:field="*{id}"></input>
 
 						</div>
-					</div>
+						<label th:text="#{product.picture}">Picture</label>
+						<div class="form-group col-sm-12" th:if="*{pictureFlag}"
+							data-th-class="${#fields.hasErrors('picture')} ? 'form-group has-error' : 'form-group'">
+							<img th:src="@{'/admin/product/' + *{id} + '/picture'}" />
+							<!-- 									<div> -->
+							<!-- 										<input data-th-field="*{picture}" type="file" class="form-control" /> -->
+							<!-- 									</div> -->
+							<br /> <br /> <a tabindex="0" role="button" class="btn btn-default btn-xs" data-trigger="focus" data-toggle="popover"
+								th:attr="data-entity=${id}"><span class="glyphicon glyphicon-trash"></span> <span th:text="#{general.delete}">Delete</span></a>
 
 
-					<div class="span6">
-					
-							<div class="col-sm-12"  th:if="${picture == null}" data-th-class="${#fields.hasErrors('picture')} ? 'form-group has-error' : 'form-group'" >
-<!-- 								<label for="pic" class=" control-label" data-th-text="#{product.picture}">Picture</label> -->
-									<input data-th-field="*{picture}" type="file" class="form-control" />
-<!-- 									 <span data-th-if="${#fields.hasErrors('picture')}" -->
-<!-- 										class="help-block" data-th-errors="*{picture}">Error message</span> -->
-								<div data-th-utext="#{validation.fileSize}"></div>
-							</div>
-<!-- 							<div  class="form-group col-sm-12"  th:if="${pictureFlag == true}" data-th-class="${#fields.hasErrors('picture')} ? 'form-group has-error' : 'form-group'" > -->
-								<label for="document" class="control-label" data-th-text="#{product.picture}">Picture</label>
-<!--  									<div class="form-control-static "> -->
-									<img th:src="@{'/admin/product/' + *{id} + '/picture'}" />
-									
-									
-<!-- 							</div> -->
+						</div>
+						<div class="col-sm-12" th:if="${pictureFlag == false}"
+							data-th-class="${#fields.hasErrors('picture')} ? 'form-group has-error' : 'form-group'">
+							<label for="pic" class=" control-label" data-th-text="#{product.picture}">Picture</label> <input data-th-field="*{picture}"
+								type="file" class="form-control" /> <span data-th-if="${#fields.hasErrors('picture')}" class="help-block"
+								data-th-errors="*{picture}">Error message</span>
+							<div data-th-utext="#{validation.fileSize}"></div>
+						</div>
 					</div>
 				</div>
 				<br />
@@ -104,5 +109,59 @@
 	/*<![CDATA[*/
 		toastr.warning([[#{${warningMsg}}]], [[#{general.toastrWarning}]]);
 	/*]]>*/
+	</script>
+<script type="text/javascript" th:inline="javascript">
+	$(function(){
+		var openPopover = null;
+		
+		$('body').on('click', function(e) {
+		    if (openPopover!=null){
+		    	$('[data-toggle="popover"]').popover('hide');
+		    	openPopover=null;
+		    }
+		});
+		
+		$('[data-toggle="popover"]').popover({
+			title: [[#{general.warning}]],
+		  	content: '<p>' + [[#{general.deleteConfirm}]] + '</p><div class="text-center"><div class="btn-group"><button id="confirmYesButton" type="button" class="btn btn-danger btn-xs">' + [[#{general.yes}]] + '</button><button id="confirmNoButton" type="button" class="btn btn-default btn-xs">' + [[#{general.no}]] + '</button></div></div>',
+		  	container: 'body',
+		  	placement: 'top',
+		  	trigger: 'manual',
+		  	selector: 'data-role="popover"',
+			html: true
+		}).on('click',function(e) {
+			popover = $(this).attr('data-entity');
+			
+			$entity = $(this).attr('data-entity');
+		    if (openPopover==$entity){
+		    	// close
+		    	openPopover=null;
+		    } else {
+		    	if (openPopover==null) {
+		    		// open
+			    	openPopover=$entity;
+			    	$(this).popover('toggle');		    	
+		    	} else {
+		    		// close others, but open a new one
+			    	$('[data-toggle="popover"]').popover('hide');
+			    	openPopover=$entity;
+			    	$(this).popover('toggle');
+			    	
+			    	
+		    	}
+		       	$('#confirmYesButton').click(function() {
+					location.assign([[@{/admin/deletepicture.html(id)}]]+'='+$entity); });	
+					$('#confirmNoButton').click(function() { 	$('[data-toggle="popover"]').popover('hide'); });	
+		    	
+		    	// a new popover has surely been created
+		    	$('.popover').on('click', function(e) {
+		    		if (!$(e.target).hasClass('btn')) {
+		    			e.stopPropagation();
+		    		}
+				});
+		    }
+	    	e.stopPropagation();
+	    });
+	});
 	</script>
 </html>

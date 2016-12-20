@@ -16,12 +16,33 @@
 <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
 </head>
 <body>
-	<form th:action="@{/admin/item.html}" data-th-object="${form}" class="form-stacked"  method="post">
+	<form th:action="@{/main.html}" data-th-object="${form}" class="form-stacked"  method="post">
 
 		<div
 			th:replace="fragments/navbar :: top-bar"></div>
 		<div id="wrapper" class="container">
+			<div
+			th:replace="fragments/navbar :: inner-bar"></div>
 
+			<section class="main-content">
+				
+				<div class="row">						
+					<div class="span9">								
+						<ul class="thumbnails listing-products">
+							<li th:each="product : *{products}" class="span3">
+								<div class="product-box">
+									<span class="sale_tag"></span>												
+									<a href="#" th:href="@{'/product?id=' + ${product.id}}"><img th:src="@{'/main/product/' + ${product.id} + '/picture'}" /></a><br/>
+									<a href="#" th:href="@{'/product?id=' + ${product.id}}" th:text="${product.name}" class="title">Title</a><br/>
+									<a href="#" class="category" th:text="${product.category.name}">Category</a>
+									<p class="price" th:text="${product.price} + ' HUF'">$341</p>
+								</div>
+							</li>       
+						</ul>								
+						<hr/>
+					</div>
+					</div>
+			</section>
 
 			<!-- 			<section class="header_text sub"> -->
 			<!-- 				<br /> -->
@@ -30,8 +51,7 @@
 			<!-- 					<span data-th-text="#{titles.registration}">Regsiter</span> -->
 			<!-- 				</h4> -->
 			<!-- 			</section> -->
-			<section class="main-content">
-			</section>
+			
 		</div>
 		</form>
 

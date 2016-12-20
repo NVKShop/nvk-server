@@ -45,7 +45,7 @@ public class UserController extends AbstractNvkController {
 		User user = userService.findById(authenticationUserId());
 
 		UserForm form = new UserForm();
-		addDatasForUser(form);
+		addDatasForUser(form, null);
 
 		// User user = userService.findById(form.getUserId());
 		if (user == null) {
@@ -133,7 +133,7 @@ public class UserController extends AbstractNvkController {
 
 		}
 		PasswordRecoveryForm form = new PasswordRecoveryForm();
-		addDatasForUser(form);
+		addDatasForUser(form, null);
 
 		model.addAttribute("passwordRecoveryForm", form);
 
@@ -168,7 +168,7 @@ public class UserController extends AbstractNvkController {
 
 		}
 		AddressForm form = new AddressForm(address);
-		addDatasForUser(form);
+		addDatasForUser(form, null);
 		model.addAttribute("addressForm", form);
 
 		return "user/address";
