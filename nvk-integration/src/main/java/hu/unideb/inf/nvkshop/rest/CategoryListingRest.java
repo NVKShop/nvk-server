@@ -15,7 +15,7 @@ import hu.unideb.inf.nvkshop.rest.vo.PublicCategory;
 import hu.unideb.inf.rft.nvkshop.entities.product.Category;
 import hu.unideb.inf.rft.nvkshop.service.CategoryService;
 
-@RestController(value="/rest")
+@RestController
 public class CategoryListingRest {
 
 	@Autowired

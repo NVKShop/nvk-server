@@ -36,6 +36,9 @@ public class Address extends BaseEntity {
 	@Column(name = "description")
 	private String description;
 
+	@Column(name = "house_number")
+	private String houseNumber;
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -188,6 +191,14 @@ public class Address extends BaseEntity {
 		} else if (!zipCode.equals(other.zipCode))
 			return false;
 		return true;
+	}
+
+	public String getHouseNumber() {
+		return houseNumber;
+	}
+
+	public void setHouseNumber(String houseNumber) {
+		this.houseNumber = houseNumber;
 	}
 
 }

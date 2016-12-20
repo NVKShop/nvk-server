@@ -1,25 +1,20 @@
 package hu.unideb.inf.nvkshop.rest.vo;
 
-import java.util.List;
-
+import hu.unideb.inf.rft.nvkshop.entities.security.Language;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PublicUser {
+public class UserDetailsChange {
 
-	private String email;
 	private String firstName;
 	private String lastName;
-	private List<String> roles;
 	private String phoneNumber;
-	
-	private PublicAddress address;
+	private Language language;
+
 }

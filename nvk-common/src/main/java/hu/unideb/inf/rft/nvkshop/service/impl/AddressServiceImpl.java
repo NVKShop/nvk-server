@@ -13,7 +13,7 @@ public class AddressServiceImpl implements AddressService {
 
 	@Autowired
 	private AddressDao addressDao;
-	
+
 	@Override
 	public Address findById(Long id) {
 		return addressDao.findOne(id);
@@ -22,6 +22,11 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	public Address getDefaultAddress(User u) {
 		return addressDao.findByUserAndIsPrimary(u, true);
+	}
+
+	@Override
+	public Address save(Address address) {
+		return addressDao.save(address);
 	}
 
 }

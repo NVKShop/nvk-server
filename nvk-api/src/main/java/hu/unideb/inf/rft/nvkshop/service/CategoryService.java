@@ -21,4 +21,7 @@ public interface CategoryService {
 
 	List<Category> findLeafCategories();
 
+	
+	List<Category> findByIds(List<Long> ids);
+	
 }

@@ -9,4 +9,5 @@ public interface AddressService {
 	
 	Address getDefaultAddress(User u);
 	
+	Address save(Address address);
 }
