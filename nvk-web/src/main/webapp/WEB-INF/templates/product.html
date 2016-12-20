@@ -18,7 +18,7 @@
 </head>
 <body>
 	<form th:action="@{/product.html}" data-th-object="${form}" class="form-stacked" method="post">
-
+<input type="hidden" id="form.id" th:value="${form.product.id}" />
 		<div th:replace="fragments/navbar :: top-bar"></div>
 		<div id="wrapper" class="container">
 			<div th:replace="fragments/navbar :: inner-bar"></div>

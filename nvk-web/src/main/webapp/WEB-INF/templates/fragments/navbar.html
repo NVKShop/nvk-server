@@ -130,13 +130,14 @@
 					<ul data-sec-authorize="isAuthenticated()" class="user-menu">
 						<li><a href="#" th:href="@{/user/edit.html}"> <span th:text="#{outerBar.account} + ' (' ">My Account </span><span th:text="*{userName} + ' )' "></span>
 						</a></li>
-						<li  class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<span th:text="#{outerBar.cart} + '('">Cart ( </span><span th:text="#{cart.totalPrice} + ':' ">Total price</span><span th:text="${totalPrice}  + #{amount.HUF} + '  ' "> 300E</span><span th:text="#{outerBar.totalAmount} + ' : '  + *{items.size()} + ' )'"> Total items: 300 ) </span>
+						<li  class="dropdown" >
+							<a href="#" th:if="*{cart != null}" class="dropdown-toggle" data-toggle="dropdown">
+								<span th:text="#{outerBar.cart} + '('">Cart ( </span><span th:text="#{cart.totalPrice} + ':' ">Total price</span><span th:text="${totalPrice}  + #{amount.HUF} + '  ' "> 300E</span><span th:text="#{outerBar.totalAmount} + ' : '  + *{cart.size()} + ' )'"> Total items: 300 ) </span>
 							</a>				
-							<ul class="dropdown-menu" role="menu">
+							<a th:if="*{cart == null}" th:text="#{general.cartIsEmpty}"></a> 
+							<ul  th:if="*{cart != null}" class="dropdown-menu" role="menu">
 								<!-- 							TODO:set item names and views -->
-								<li  th:each= " item: *{items}"><a href="#"><span  th:classappend="col-xs-6"  th:text="${item.name} + ' : ' "></span><span th:classappend="col-xs-6"  th:text="${item.price} + #{amount.HUF}"></span></a></li>
+								<li  th:each= " item : *{cart}"><a href="#"><span  th:classappend="col-xs-6"  th:text="${item.product.name} + ' : ' "></span><span th:classappend="col-xs-6"  th:text="${item.product.price} + #{amount.HUF}"></span></a></li>
 								<li> <a th:href="@{/cart.html}" href="#" th:text="#{outerBar.cartAll}"> See my cart</a></li>
 							</ul>
 						</li>

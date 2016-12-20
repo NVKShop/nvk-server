@@ -3,6 +3,7 @@ package hu.unideb.inf.nvkshop.web.user;
 import java.util.List;
 
 import hu.unideb.inf.nvkshop.web.AbstractUserForm;
+import hu.unideb.inf.rft.nvkshop.entities.product.Item;
 import hu.unideb.inf.rft.nvkshop.entities.security.Address;
 import lombok.Data;
 
@@ -16,5 +17,6 @@ public class UserForm extends AbstractUserForm {
 
 	private List<Address> addresses;
 	private Address newAddress;
+	private List<Item> cart;
 
 }

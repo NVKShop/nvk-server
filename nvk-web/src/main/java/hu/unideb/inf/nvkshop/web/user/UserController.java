@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hu.unideb.inf.nvkshop.web.AbstractNvkController;
@@ -24,6 +25,7 @@ import hu.unideb.inf.rft.nvkshop.service.UserService;
 
 @Controller("userController")
 @RequestMapping("/user")
+@SessionAttributes(types = { UserForm.class })
 public class UserController extends AbstractNvkController {
 
 	@Autowired
@@ -40,11 +42,10 @@ public class UserController extends AbstractNvkController {
 	 * @return the view name
 	 */
 	@RequestMapping(value = "/edit", produces = "text/html")
-	public String editForm(Model model, RedirectAttributes redAttrs) {
+	public String editForm(@ModelAttribute("form") UserForm form, Model model, RedirectAttributes redAttrs) {
 
 		User user = userService.findById(authenticationUserId());
 
-		UserForm form = new UserForm();
 		addDatasForUser(form, null);
 
 		// User user = userService.findById(form.getUserId());
