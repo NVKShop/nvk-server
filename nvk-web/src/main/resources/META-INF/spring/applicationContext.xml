@@ -26,7 +26,7 @@
 	</bean>
 	<bean
 		class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean"
-		p:defaultEncoding="UTF-8" p:templateLoaderPath="file:${project.basedir}/../templates" />
+		p:defaultEncoding="UTF-8" p:templateLoaderPath="classpath:freemarker/templates" />
 
 	<bean class="org.springframework.mail.javamail.JavaMailSenderImpl"
 		p:host="${smtp.host}" p:port="${smtp.port}" p:username="${smtp.user}"

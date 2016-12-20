@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<title>NVK-shop : Purchase registered</title>
+</head>
+<body>
+	<table style="border-bottom:1px dotted #aaa;border-collapse:collapse;width:100%"><tbody>
+		<tr>
+			<td><span style="font-size:x-large;font-variant:small-caps">NVK-shop purchase</span></td>
+		</tr>
+	</tbody></table>
+	<h3 data-th-inline="text">Dear ${userName}</h3>
+	<p>
+		Your purchase was succesfully registered in our system. 
+	</p>
+	<p>
+		<table>
+			<tr>
+				<th>#</th>
+				<th>Item name</th>
+				<th>Quantity</th>
+				<th>Price</th>
+			</tr>
+			<assign counter=1>
+			<#list items as item>
+			<tr>
+				<td>${item?counter}.</td>
+				<td style="width:20%">${item.product.name}</td>
+				<td>${item.quantity}</td>
+				<td>${item.product.price}</td>
+			</tr>
+			<assign counter++>
+			</#list>
+			<tr>
+				<td/>
+				<td/>
+				<td>Total price:</td>
+				<td>${totalPrice}</td>
+			</tr>
+		</table>
+	</p>
+	<p>
+		Sincerelly,<br />
+		NVK-Shop team
+	</p>
+</body>
+</html>
