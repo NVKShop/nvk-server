@@ -20,13 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import hu.unideb.inf.nvkshop.rest.vo.OrderDirection;
 import hu.unideb.inf.nvkshop.rest.vo.PageablePublicProduct;
-import hu.unideb.inf.nvkshop.rest.vo.PublicPicture;
 import hu.unideb.inf.nvkshop.rest.vo.PublicProduct;
 import hu.unideb.inf.rft.nvkshop.entities.product.Category;
 import hu.unideb.inf.rft.nvkshop.entities.product.Product;
 import hu.unideb.inf.rft.nvkshop.service.CategoryService;
 import hu.unideb.inf.rft.nvkshop.service.ProductService;
-import hu.unideb.inf.rft.nvkshop.service.impl.util.PagingUtils;
 import hu.unideb.inf.rft.nvkshop.util.ProductSearch;
 
 @RestController
