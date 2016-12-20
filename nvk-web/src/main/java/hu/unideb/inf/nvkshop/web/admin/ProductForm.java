@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import hu.unideb.inf.nvkshop.web.AbstractUserForm;
 import hu.unideb.inf.rft.nvkshop.entities.product.Category;
+import hu.unideb.inf.rft.nvkshop.entities.product.Item;
 
-public class ProductForm {
+public class ProductForm extends AbstractUserForm {
 
 	private Category category;
 	private String name;
@@ -20,6 +22,26 @@ public class ProductForm {
 	private Boolean isNew;
 	private MultipartFile picture;
 	private boolean pictureFlag;
+	private Boolean isAdmin;
+	private List<Item> cart;
+
+	public List<Item> getCart() {
+		return cart;
+	}
+
+	public void setCart(List<Item> cart) {
+		this.cart = cart;
+	}
+
+	@Override
+	public Boolean getIsAdmin() {
+		return true;
+	}
+
+	@Override
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 
 	public boolean isPictureFlag() {
 		return pictureFlag;
@@ -93,10 +115,12 @@ public class ProductForm {
 		this.onStock = onStock;
 	}
 
+	@Override
 	public Long getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Long id) {
 		this.id = id;
 	}

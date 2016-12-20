@@ -16,6 +16,7 @@ import org.springframework.util.Assert;
 import hu.unideb.inf.rft.nvkshop.entities.product.Category;
 import hu.unideb.inf.rft.nvkshop.entities.product.Product;
 import hu.unideb.inf.rft.nvkshop.entities.security.Language;
+import hu.unideb.inf.rft.nvkshop.entities.security.Role;
 import hu.unideb.inf.rft.nvkshop.entities.security.User;
 import hu.unideb.inf.rft.nvkshop.security.CustomUserDetails;
 import hu.unideb.inf.rft.nvkshop.security.CustomUserDetailsService;
@@ -24,6 +25,8 @@ import hu.unideb.inf.rft.nvkshop.service.CategoryService;
 import hu.unideb.inf.rft.nvkshop.service.ProductService;
 
 public class AbstractNvkController {
+
+	private static final Role ADMIN_ROLE = new Role("ROLE_ADMIN");
 
 	@Autowired
 	private CategoryService categoryService;
@@ -100,6 +103,15 @@ public class AbstractNvkController {
 		} else {
 			principal = (CustomUserDetails) authentication.getPrincipal();
 			User user = principal.getUser();
+			form.setIsAdmin(false);
+			if (principal.getUser().getRoles().size() > 1) {
+				for (Role r : principal.getUser().getRoles()) {
+					if (r.getRoleName().equals("ROLE_ADMIN"))
+						form.setIsAdmin(true);
+				}
+			}
+			System.out.println(form.getIsAdmin());
+
 			form.setUserName(user.getUserName());
 			form.setUserId(user.getId());
 			form.setLanguage(user.getLanguage() == null ? Language.EN : user.getLanguage());

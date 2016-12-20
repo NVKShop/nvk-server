@@ -16,10 +16,14 @@
 <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
 </head>
 <body>
-	<form th:action="@{/admin/categories.html}" data-th-object="${form}" class="form-stacked" method="post">
-
-<!-- 		<div th:replace="fragments/navbar :: top-bar"></div> -->
+	<form th:action="@{/admin/categories.html}" data-th-object="${categoryForm}" class="form-stacked" method="post">
+	<div
+			th:replace="fragments/navbar :: top-bar"></div>
 		<div id="wrapper" class="container">
+			<div
+			th:replace="fragments/navbar :: inner-bar"></div>
+
+	
 			<div class="span4">
 			<h4 th:text="#{category.addNewCategory}">Add new</h4>
 				<div  class="col-offset-sx-2 control-group" th:classappend="${#fields.hasErrors('newCategoryName')} ? 'has-error'">

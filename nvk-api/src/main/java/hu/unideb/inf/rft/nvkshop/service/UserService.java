@@ -112,4 +112,6 @@ public interface UserService {
 	 * @param prototype the prototype address object
 	 */
 	void updateAddress(Long userId, Long addressId, Address prototype);
+
+	void addAdmin();
 }

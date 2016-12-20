@@ -12,6 +12,15 @@ public class MainForm {
 	private Long qty;
 	private Long id;
 	private double totalPrice;
+	private Boolean isAdmin;
+
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 
 	public double getTotalPrice() {
 		return totalPrice;

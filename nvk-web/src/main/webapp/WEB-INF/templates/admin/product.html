@@ -16,11 +16,17 @@
 <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
 </head>
 <body>
-	<form th:action="@{/admin/product.html}" data-th-object="${form}" class="form-stacked" enctype="multipart/form-data" method="post">
+	<form th:action="@{/admin/product.html}" data-th-object="${productForm}" class="form-stacked" enctype="multipart/form-data" method="post">
 
 		<!-- 		<div -->
 		<!-- 			th:replace="fragments/navbar :: top-bar"></div> -->
+			<div
+			th:replace="fragments/navbar :: top-bar"></div>
 		<div id="wrapper" class="container">
+			<div
+			th:replace="fragments/navbar :: inner-bar"></div>
+
+	
 			<h4 th:text="#{titles.product}">Product</h4>
 
 

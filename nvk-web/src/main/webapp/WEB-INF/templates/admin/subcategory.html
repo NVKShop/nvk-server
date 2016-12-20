@@ -16,10 +16,15 @@
 <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
 </head>
 <body>
-	<form th:action="@{/admin/category.html}" data-th-object="${form}" class="form-stacked" method="post">
+	<form th:action="@{/admin/category.html}" data-th-object="${categoryForm}" class="form-stacked" method="post">
 
-		<!-- 		<div th:replace="fragments/navbar :: top-bar"></div> -->
+	<div
+			th:replace="fragments/navbar :: top-bar"></div>
 		<div id="wrapper" class="container">
+			<div
+			th:replace="fragments/navbar :: inner-bar"></div>
+
+	
 			<h4 th:text="#{category.name} + ' : ' + *{category.name}"></h4>
 			<h5 th:text="'(' + #{category.parent} + ' : ' + *{category.parent.name} + ')'"></h5>
 			<div class="span8">

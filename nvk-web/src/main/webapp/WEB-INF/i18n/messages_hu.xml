@@ -43,6 +43,72 @@
 	<entry key="registration.userNameAlreadyRegistered">Ez a felhasználónév már foglalt! Kérjük válasszon egy másikat.</entry>
 	
 	<entry key="validation.required">Kötelező mező!</entry>
+	
+	<entry key="outerBar.account">Account</entry>
+	<entry key="outerBar.cart">Cart</entry>
+	<entry key="outerBar.totalAmount">Total items</entry>
+	<entry key="outerBar.logout">Logout</entry>
+	<entry key="outerBar.cartAll">See all items</entry>
+	<entry key="outerBar.orders">My orders</entry>
 
+	<entry key="cart.totalPrice">Total price</entry>
+	<entry key="amount.HUF">HUF</entry>
+
+	<entry key="language.english">English</entry>
+	<entry key="language.hungarian">Magyar</entry>
+
+	<entry key="lostPassword.typeEmail">Kérjük írja be a már regisztrált email címmét hogy kiküldhessónk egy jelszó emlékeztető emailt!.</entry>
+	<entry key="lostPassword.sendEmail">Küldés</entry>
+
+	<entry key="validation.invalidOrExpiredToken">A kapott token érvénytele vagy lejárt! Kérjük próbálja meg a jelszó helyreállítást újra!</entry>
+	<entry key="validation.passwordsNotMatch">A jelszavak nem eggyeznek!</entry>
+	<entry key="passwordRecover.resetPassword">Jelszó helyreállítás</entry>
+
+
+
+	<entry key="user.form">Felhasználó fiók</entry>
+	<entry key="userEdit.changePassword">Jelszó csere</entry>
+	<entry key="userEdit.password">Adja meg jelszavát újra:</entry>
+
+	<entry key="user.wrongPassword">Hibás jelszó! Kérjük írja be újra!</entry>
+	<entry key="user.passwordChanged">A jelszó sikeresen lecserélésre került!</entry>
+	<entry key="user.saved">A mentések eltárolásra kerültek!</entry>
+
+	<entry key="warning.alreadyLoggedIn">Már be van jelentkezve! Kérjük jelentkezzen ki előbb!</entry>
+
+	<entry key="category.name">Kategória neve</entry>
+	<entry key="category.subcategories">Alkategória</entry>
+	<entry key="category.items">Termékek</entry>
+	<entry key="category.addNewCategory">Új kategória</entry>
+	<entry key="category.parent">Szülő </entry>
+	<entry key="item.name">Temék neve</entry>
+	<entry key="item.onStrock">Készlet</entry>
+	<entry key="item.value">Érték</entry>
+	<entry key="product.add">Újtermék</entry>
+	<entry key="product.onStock">Készlet</entry>
+	<entry key="product.price">Ár</entry>
+	<entry key="titles.product">Termék kezelés</entry>
+	<entry key="titles.products">Minden termék</entry>
+
+	<entry key="prouduct.created">Termék létrehozva!</entry>
+	<entry key="product.cantCreated">Termék nem hozható létre mivel a kategória elérhetetlen!</entry>
+	<entry key="product.saved">Termék elmentve!</entry>
+	<entry key="notFound.categoryOrProduct.">Termék vagy kategória nem található!</entry>
+	<entry key="product.picture">Termék képe</entry>
+
+	<entry key="general.qty">Mennyiség : </entry>
+	<entry key="general.relatedProducts">Hasonló termékek</entry>
+	<entry key="general.availability">Elérhetőség</entry>
+	<entry key="general.moreInformation">Bővebb információ</entry>
+	<entry key="general.addToCart">Kosárba</entry>
+	<entry key="general.cartIsEmpty">Üres kosár :( </entry>
+	<entry key="order.placed">Rendszerünk sikeresen feldolgozta rendelését!</entry>
+
+	<entry key="general.product">Termék</entry>
+	<entry key="navbar.allProducts">Minden termék</entry>
+	<entry key="general.submitOrder">Rendelés leadása</entry>
+	<entry key="menu.admin">Admin menü</entry>
+	<entry key="general.categories">Kategóriák</entry>
+<entry key="general.products">Termékek</entry>
 
 </properties>

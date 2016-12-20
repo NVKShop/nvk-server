@@ -1,6 +1,7 @@
 package hu.unideb.inf.rft.nvkshop.service.impl;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import hu.unideb.inf.rft.nvkshop.entities.security.Address;
 import hu.unideb.inf.rft.nvkshop.entities.security.Language;
+import hu.unideb.inf.rft.nvkshop.entities.security.Role;
 import hu.unideb.inf.rft.nvkshop.entities.security.User;
 import hu.unideb.inf.rft.nvkshop.entities.security.UserRegistrationRequest;
 import hu.unideb.inf.rft.nvkshop.repositories.AddressDao;
@@ -67,6 +69,9 @@ public class UserServiceImpl extends AbstrackNvkService implements UserService {
 
 		User u = dozerMapper.map(request, User.class);
 		u.setBanned(false);
+		List<Role> roles = new LinkedList<Role>();
+		roles.add(new Role("ROLE_USER"));
+		u.setRoles(roles);
 		userDao.save(u);
 		userRegistrationRequestSerivce.remove(request);
 	}
@@ -120,6 +125,41 @@ public class UserServiceImpl extends AbstrackNvkService implements UserService {
 			savePrimaryAddress(id, savedAddress.getId());
 		}
 
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void addAdmin() {
+		log.info("Admin creation process. Use only testing.");
+
+		User admin = new User();
+		admin.setBanned(false);
+		admin.setEmail("nvkshop.noreply@gmail.com");
+		admin.setUserName("admin");
+		admin.setPassword(BCrypt.hashpw("passwordNVK", BCrypt.gensalt()));
+		List<Role> roles = new LinkedList<Role>();
+		roles.add(new Role("ROLE_ADMIN"));
+		roles.add(new Role("ROLE_USER"));
+		admin.setRoles(roles);
+		admin.setFirstName("Teszter");
+		admin.setLastName("Eszter");
+		admin.setUserName("Admin");
+		admin.setLanguage(Language.EN);
+		admin.setDateOfCreation(new Date());
+		userDao.save(admin);
+
+		admin = userDao.save(admin);
+
+		Address address = new Address();
+		address.setCountry("Neverland");
+		address.setDateOfCreation(dateOf(now()));
+		address.setPrimary(false);
+		address.setRecipient("Teszter Eszter");
+		address.setStreet("Highway to hell!");
+		address.setUser(admin);
+		address.setZipCode("666");
+		address.setDateOfCreation(dateOf(now()));
+		Address savedAddress = addressDao.saveAndFlush(address);
 	}
 
 	@Override

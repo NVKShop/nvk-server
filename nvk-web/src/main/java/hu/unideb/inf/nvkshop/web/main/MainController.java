@@ -157,4 +157,5 @@ public class MainController extends AbstractNvkController {
 		model.addAttribute("form", form);
 		return "redirect:/main.html";
 	}
+
 }

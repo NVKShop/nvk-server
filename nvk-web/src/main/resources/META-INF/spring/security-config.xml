@@ -20,8 +20,8 @@
 	
 <!-- 	<security:intercept-url pattern="/**"  access="permitAll" /> -->
 
-<!-- 	<security:intercept-url pattern="/user/** "  access="hasRole('ROLE_USER')" /> -->
-<!-- 	<security:intercept-url pattern="/order/**"  access="hasRole('ROLE_USER')" /> -->
+	<security:intercept-url pattern="/user/** "  access="hasRole('ROLE_USER')" />
+	<security:intercept-url pattern="/admin/**"  access="hasRole('ROLE_ADMIN')" />
 	<security:form-login login-page="/login.xhtml"
 			login-processing-url="/login" default-target-url="/main.html"
 			authentication-failure-url="/login.html?error=1"

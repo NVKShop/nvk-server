@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hu.unideb.inf.nvkshop.web.AbstractNvkController;
+import hu.unideb.inf.nvkshop.web.user.UserForm;
 import hu.unideb.inf.rft.nvkshop.entities.product.Category;
 import hu.unideb.inf.rft.nvkshop.entities.product.Product;
 import hu.unideb.inf.rft.nvkshop.service.CategoryService;
@@ -35,6 +37,8 @@ import hu.unideb.inf.rft.nvkshop.validation.product.ProductValidationViolation;
  */
 @Controller("adminController")
 @RequestMapping("/admin")
+@SessionAttributes(types = { UserForm.class })
+
 public class AdminController extends AbstractNvkController {
 
 	/** Max file size : 20 Mb */
@@ -47,21 +51,23 @@ public class AdminController extends AbstractNvkController {
 	private ProductService productService;
 
 	@RequestMapping(value = "/categories", method = RequestMethod.GET, produces = "text/html")
-	public String categoryForm(Model model, RedirectAttributes redAttrs) {
-		CategoryForm form = new CategoryForm();
-		form.setRootCategories(categoryService.findRootCategories());
-		model.addAttribute("form", form);
+	public String categoryForm(@ModelAttribute("form") UserForm form, Model model, RedirectAttributes redAttrs) {
+		CategoryForm categoryForm = new CategoryForm();
+		categoryForm.setRootCategories(categoryService.findRootCategories());
+		categoryForm.setIsAdmin(true);
+		model.addAttribute("categoryForm", categoryForm);
+		addDatasForUser(categoryForm, null);
 		return "admin/categories";
 	}
 
 	@RequestMapping(value = "/categories", produces = "text/html", method = RequestMethod.POST)
-	public String categoryFormAddNewCategory(@ModelAttribute("form") CategoryForm form, Model model, Errors errors,
-			RedirectAttributes redAttrs) {
+	public String categoryFormAddNewCategory(@ModelAttribute("form") UserForm form,
+			@ModelAttribute("categoryForm") CategoryForm categoryForm, Model model, Errors errors, RedirectAttributes redAttrs) {
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newCategoryName", "validation.required");
 
 		try {
-			categoryService.addCategory(form.getNewCategoryName(), null);
+			categoryService.addCategory(categoryForm.getNewCategoryName(), null);
 		} catch (ValidationException e) {
 			errors.reject("newCategoryName", "category.notValidCategory");
 		}
@@ -69,29 +75,30 @@ public class AdminController extends AbstractNvkController {
 	}
 
 	@RequestMapping(value = "/category/{id}/edit", produces = "text/html")
-	public String categorySubForm(@PathVariable("id") long id, Model model, RedirectAttributes redAttrs) {
-		CategoryForm form = new CategoryForm();
+	public String categorySubForm(@ModelAttribute("form") UserForm form, @PathVariable("id") long id, Model model,
+			RedirectAttributes redAttrs) {
+		CategoryForm categoryForm = new CategoryForm();
 
 		Category cat = categoryService.findById(id);
 		if (cat == null) {
 			// TODO: log or smtg
 			return "redirect:/admin/categories";
 		}
-		form.setCategory(cat);
+		categoryForm.setCategory(cat);
 		model.addAttribute("form", form);
 		return "admin/category";
 
 	}
 
 	@RequestMapping(value = "/category/{id}/edit", produces = "text/html", method = RequestMethod.POST)
-	public String categorySubFormSubmit(@PathVariable("id") long id, @ModelAttribute("form") CategoryForm form, Model model, Errors errors,
-			RedirectAttributes redAttrs) {
+	public String categorySubFormSubmit(@ModelAttribute("form") UserForm form, @PathVariable("id") long id,
+			@ModelAttribute("form") CategoryForm categoryForm, Model model, Errors errors, RedirectAttributes redAttrs) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newCategoryName", "validation.required");
 		if (errors.hasErrors()) {
 			return "admin/edit";
 		}
 		try {
-			categoryService.addSubCategory(id, form.getNewCategoryName());
+			categoryService.addSubCategory(id, categoryForm.getNewCategoryName());
 		} catch (ValidationException e) {
 			errors.reject("newCategoryName", "category.notValidCategory");
 		}
@@ -100,16 +107,16 @@ public class AdminController extends AbstractNvkController {
 	}
 
 	@RequestMapping(value = "/category/{id}/subcategory/{subId}/edit", produces = "text/html")
-	public String categorySubEditForm(@PathVariable("id") long id, @PathVariable("subId") long subId, Model model,
-			RedirectAttributes redAttrs) {
-		CategoryForm form = new CategoryForm();
+	public String categorySubEditForm(@ModelAttribute("form") UserForm form, @PathVariable("id") long id, @PathVariable("subId") long subId,
+			Model model, RedirectAttributes redAttrs) {
+		CategoryForm categoryForm = new CategoryForm();
 
 		Category cat = categoryService.findById(subId);
 		if (cat == null) {
 			// TODO: log or smtg
 			return "redirect:/admin/categories";
 		}
-		form.setCategory(cat);
+		categoryForm.setCategory(cat);
 		model.addAttribute("form", form);
 		return "admin/subcategory";
 
@@ -117,13 +124,14 @@ public class AdminController extends AbstractNvkController {
 
 	@RequestMapping(value = "/category/{id}/subcategory/{subId}/edit", produces = "text/html", method = RequestMethod.POST)
 	public String categorySubEditFormSubmit(@PathVariable("id") long id, @PathVariable("subId") long subId,
-			@ModelAttribute("form") CategoryForm form, Model model, Errors errors, RedirectAttributes redAttrs) {
+			@ModelAttribute("form") CategoryForm categoryForm, @ModelAttribute("form") UserForm form, Model model, Errors errors,
+			RedirectAttributes redAttrs) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newCategoryName", "validation.required");
 		if (errors.hasErrors()) {
 			return "admin/edit";
 		}
 		try {
-			categoryService.addSubCategory(id, form.getNewCategoryName());
+			categoryService.addSubCategory(id, categoryForm.getNewCategoryName());
 		} catch (ValidationException e) {
 			errors.reject("newCategoryName", "category.notValidCategory");
 		}
@@ -132,16 +140,18 @@ public class AdminController extends AbstractNvkController {
 	}
 
 	@RequestMapping(value = "/newProduct", method = RequestMethod.GET, produces = "text/html")
-	public String productForm(@RequestParam(value = "id", required = false) Long id, Model model, RedirectAttributes redAttrs) {
-		ProductForm form = new ProductForm();
+	public String productForm(@RequestParam(value = "id", required = false) Long id, Model model, @ModelAttribute("form") UserForm form,
+			RedirectAttributes redAttrs) {
+		ProductForm productForm = new ProductForm();
+		addDatasForUser(productForm, null);
 		if (id != null) {
 			Category cat = categoryService.findById(id);
 			if (cat == null) {
 				// TODO: log or smtg
 				return "redirect:/admin/categories";
 			}
-			form.setSelectedCategory(cat);
-			form.setSelectedCategoryId(cat.getId());
+			productForm.setSelectedCategory(cat);
+			productForm.setSelectedCategoryId(cat.getId());
 
 		}
 		List<Category> cats = categoryService.findLeafCategories();
@@ -149,39 +159,40 @@ public class AdminController extends AbstractNvkController {
 			System.out.println(cat.toString());
 		}
 
-		form.setSubCategories(categoryService.findLeafCategories());
-		for (Category cat : form.getSubCategories()) {
+		productForm.setSubCategories(categoryService.findLeafCategories());
+		for (Category cat : productForm.getSubCategories()) {
 			System.out.println(cat.toString());
 		}
-		form.setIsNew(true);
+		productForm.setIsNew(true);
 		model.addAttribute("form", form);
 		return "admin/product";
 	}
 
 	@RequestMapping(value = "/product", method = RequestMethod.GET, produces = "text/html")
-	public String productEditForm(@RequestParam(value = "id", required = true) long id, Model model, RedirectAttributes redAttrs) {
-		ProductForm form = new ProductForm();
+	public String productEditForm(@ModelAttribute("form") UserForm form, @RequestParam(value = "id", required = true) long id, Model model,
+			RedirectAttributes redAttrs) {
+		ProductForm productForm = new ProductForm();
 		Product product = productService.findById(id);
 		if (product == null) {
 			return "redirect:/admin/products";
 		}
-		form.setName(product.getName());
-		form.setDescription(product.getDescription());
-		form.setPrice(product.getPrice());
+		productForm.setName(product.getName());
+		productForm.setDescription(product.getDescription());
+		productForm.setPrice(product.getPrice());
 		// TODO:
-		form.setOnStock(100);
-		form.setCategory(product.getCategory());
+		productForm.setOnStock(100);
+		productForm.setCategory(product.getCategory());
 
-		form.setIsNew(false);
-		form.setPictureFlag(product.getPictureAsByte().length > 0);
-		form.setId(product.getId());
+		productForm.setIsNew(false);
+		productForm.setPictureFlag(product.getPictureAsByte().length > 0);
+		productForm.setId(product.getId());
 		model.addAttribute("form", form);
 		return "admin/product";
 	}
 
 	@RequestMapping(value = "/product", method = RequestMethod.POST, produces = "text/html")
-	public String productEditFormSubmit(@ModelAttribute("form") ProductForm form, Model model, Errors errors, RedirectAttributes redAttrs)
-			throws IOException {
+	public String productEditFormSubmit(@ModelAttribute("form") UserForm form, @ModelAttribute("productForm") ProductForm productForm,
+			Model model, Errors errors, RedirectAttributes redAttrs) throws IOException {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "validation.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "validation.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "price", "validation.required");
@@ -191,10 +202,10 @@ public class AdminController extends AbstractNvkController {
 		}
 
 		if (form.getId() == null) {
-			if (form.getIsNew() == true) {
+			if (productForm.getIsNew() == true) {
 				try {
-					productService.addProduct(form.getName(), form.getDescription(), form.getPrice(), form.getOnStock(),
-							form.getSelectedCategoryId());
+					productService.addProduct(productForm.getName(), productForm.getDescription(), productForm.getPrice(),
+							productForm.getOnStock(), productForm.getSelectedCategoryId());
 				} catch (ValidationException e) {
 					for (ValidationViolation violation : e.getViolations()) {
 						if (violation instanceof ProductValidationViolation) {
@@ -226,14 +237,14 @@ public class AdminController extends AbstractNvkController {
 			}
 		} else {
 			try {
-				productService.updateProduct(form.getId(), form.getName(), form.getDescription(), form.getPrice(), form.getOnStock(),
-						form.getSelectedCategoryId());
-				if (form.getPicture() != null && form.getPicture().getBytes().length > 0) {
+				productService.updateProduct(productForm.getId(), productForm.getName(), productForm.getDescription(),
+						productForm.getPrice(), productForm.getOnStock(), productForm.getSelectedCategoryId());
+				if (productForm.getPicture() != null && productForm.getPicture().getBytes().length > 0) {
 					// if (form.getPicture().getBytes().length > MAX_FILE_SIZE) {
 					// errors.rejectValue("picture", "validation.tooBigFile");
 					// return "admin/product";
 					// }
-					productService.uploadPictureForProduct(form.getId().longValue(), form.getPicture().getBytes());
+					productService.uploadPictureForProduct(form.getId().longValue(), productForm.getPicture().getBytes());
 
 				}
 			} catch (ValidationException e) {
@@ -281,7 +292,7 @@ public class AdminController extends AbstractNvkController {
 	}
 
 	@RequestMapping(value = "/products", method = RequestMethod.GET, produces = "text/html")
-	public String productsList(Model model, RedirectAttributes redAttrs) {
+	public String productsList(@ModelAttribute("form") UserForm form, Model model, RedirectAttributes redAttrs) {
 
 		List<Product> products = productService.findAll();
 		model.addAttribute("products", products);
@@ -290,7 +301,8 @@ public class AdminController extends AbstractNvkController {
 	}
 
 	@RequestMapping(value = "/deletepicture", method = RequestMethod.GET, produces = "text/html")
-	public String deleteAddress(@RequestParam("id") long id, Errors errors, Model model, RedirectAttributes redAttrs) {
+	public String deleteAddress(@ModelAttribute("form") UserForm form, @RequestParam("id") long id, Errors errors, Model model,
+			RedirectAttributes redAttrs) {
 
 		// Long id = authenticationUserId();
 		productService.deletePictureFromProduct(id);
