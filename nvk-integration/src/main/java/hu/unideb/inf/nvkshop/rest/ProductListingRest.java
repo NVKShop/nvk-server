@@ -60,7 +60,7 @@ public class ProductListingRest {
 		Page<Product> products = productService.search(search);
 
 		PageablePublicProduct pageable = new PageablePublicProduct(products.hasPrevious(), products.hasNext(),
-				mapToPublicVo(products.getContent()));
+				new Long(products.getTotalElements()), mapToPublicVo(products.getContent()));
 
 		return pageable;
 	}
@@ -70,14 +70,13 @@ public class ProductListingRest {
 			@RequestParam("pageSize") int pageSize, @RequestParam("pageNumber") int pageNumber) throws IOException {
 		Category category = categoryServcice.findById(categoryId);
 		ProductSearch search = ProductSearch.builder().inCategories(Arrays.asList(category)).sortBy("name")
-				.pageSize(pageSize).sortDirection(Direction.ASC)
-				.from(pageNumber).build();
+				.pageSize(pageSize).sortDirection(Direction.ASC).from(pageNumber).build();
 
 		Page<Product> products = productService.search(search);
 
 		PageablePublicProduct pageable;
 		pageable = new PageablePublicProduct(new Boolean(products.hasPrevious()), new Boolean(products.hasNext()),
-				mapToPublicVo(products.getContent()));
+				new Long(products.getTotalElements()), mapToPublicVo(products.getContent()));
 		return pageable;
 	}
 
