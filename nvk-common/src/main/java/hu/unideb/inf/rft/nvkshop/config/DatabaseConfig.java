@@ -51,7 +51,7 @@ public class DatabaseConfig {
 	public HikariDataSource dataSource() {
 		HikariConfig config = new HikariConfig();
 		config.setDriverClassName("com.mysql.jdbc.Driver");
-		config.setMaximumPoolSize(100);
+		config.setMaximumPoolSize(100000);
 		config.setJdbcUrl(env.getRequiredProperty(JDBC_URL));
 		config.setUsername(env.getRequiredProperty(JDBC_USERNAME));
 		config.setPassword(env.getRequiredProperty(JDBC_PASSWORD));

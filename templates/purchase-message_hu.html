@@ -9,20 +9,20 @@
 <body>
 	<table style="border-bottom:1px dotted #aaa;border-collapse:collapse;width:100%"><tbody>
 		<tr>
-			<td><span style="font-size:x-large;font-variant:small-caps">NVK-shop purchase</span></td>
+			<td><span style="font-size:x-large;font-variant:small-caps">NVK-shop vásárlás</span></td>
 		</tr>
 	</tbody></table>
-	<h3 data-th-inline="text">Dear ${userName}</h3>
+	<h3 data-th-inline="text">Tisztelt ${userName}</h3>
 	<p>
-		Your purchase was succesfully registered in our system. 
+		A vásárlását sikeresen rögzítettük.
 	</p>
 	<p>
 		<table>
 			<tr>
 				<th>#</th>
-				<th>Item name</th>
-				<th>Quantity</th>
-				<th>Price</th>
+				<th>Termék neve</th>
+				<th>Mennyiség</th>
+				<th>Ár</th>
 			</tr>
 			<#list items as item>
 			<tr>
@@ -32,6 +32,12 @@
 				<td>${item.product.price}</td>
 			</tr>
 			</#list>
+						<tr>
+				<td/>
+				<td/>
+				<td>Teljes ár:</td>
+				<td>${totalPrice}</td>
+			</tr>
 		</table>
 	</p>
 	<p>

@@ -131,7 +131,7 @@ public class ProductServiceImpl implements ProductService {
 
 		emailPayload.put("userName", order.getUser().getUserName());
 		emailPayload.put("items", order.getItems());
-		emailPayload.put("total", getTotalOfOrder(order));
+		emailPayload.put("totalPrice", getTotalOfOrder(order));
 		EmailSendingEvent event = new EmailSendingEvent(EventType.PURCHASE, emailPayload, order.getUser().getEmail());
 		eventPublisher.publishEvent(event);
 		archiveOrderDao.save(archiveOrder);
