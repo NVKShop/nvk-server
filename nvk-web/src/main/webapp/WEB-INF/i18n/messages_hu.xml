@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 
-<!-- Application -->
+	<!-- Application -->
 	<entry key="application.title">NVK-Webshop</entry>
 
 	<!-- Titles -->
@@ -10,13 +10,13 @@
 	<entry key="titles.login"> NVK-shop : Bejelentkezés</entry>
 	<entry key="titles.passwordReset"> NVK-Shop : Jelszó helyreállítás</entry>
 	<entry key="titles.passwordRecover"> NVK-Shop :Új jelszó</entry>
-	
+
 	<!-- Login -->
 	<entry key="login.failure">Hibás felhasználónév vagy jelszó!</entry>
- 	<entry key="login.password">Jelszó</entry>
- 	<entry key="login.userName">Felhasználó</entry>
- 	<entry key="login.submit">Bejelentkezés</entry>
- 	<entry key="login.title">Bejelentkezés</entry>
+	<entry key="login.password">Jelszó</entry>
+	<entry key="login.userName">Felhasználó</entry>
+	<entry key="login.submit">Bejelentkezés</entry>
+	<entry key="login.title">Bejelentkezés</entry>
 
 	<!-- Registration -->
 	<entry key="registration.passwordConfirm">Kérjük adja meg újra jelszavát!</entry>
@@ -24,12 +24,17 @@
 	<entry key="registration.passwordMatch">A jelszavak egyeznek!</entry>
 	<entry key="registration.registration">Regisztráció</entry>
 	<entry key="registration.submit">Regisztráció véglegesítése</entry>
-	<entry key="registration.success">Sikeresen regisztrált webshopunkra! A megadott email címre hamarosan küldünk egy aktivációs linket tartalmazó levelet. </entry>
- 	<entry key="registration.invalidToken">A regisztráció aktivációja nem sikerült mivel a megadott token lejárt!</entry>
-	<entry key="registration.activationSuccess">A regisztráció aktiválása sikerült! Mostmár bejelentkezhet fiókjába!</entry>
+	<entry key="registration.success">Sikeresen regisztrált webshopunkra! A megadott email
+		címre hamarosan küldünk egy aktivációs linket tartalmazó levelet. </entry>
+	<entry key="registration.invalidToken">A regisztráció aktivációja nem sikerült mivel a
+		megadott token lejárt!</entry>
+	<entry key="registration.activationSuccess">A regisztráció aktiválása sikerült! Mostmár
+		bejelentkezhet fiókjába!</entry>
 	<entry key="registration.sendRecovery">Jelszó helyreállító email küldése</entry>
-	<entry key="registration.lostPasswordInfo">A jelszó helyreállító email kiküldéséhez kérjük adja meg korában  regisztrált email címmét</entry>
-	<entry key="registration.passwordRecoverySent">A jelszó helyreállító email elküldésre került a megadott email címre!</entry>
+	<entry key="registration.lostPasswordInfo">A jelszó helyreállító email kiküldéséhez kérjük adja
+		meg korában regisztrált email címmét</entry>
+	<entry key="registration.passwordRecoverySent">A jelszó helyreállító email elküldésre került a
+		megadott email címre!</entry>
 	<entry key="registration.lostPassword">Jelszó helyreállítás</entry>
 	<entry key="registration.passwordReseted">Az Ön jelszava helyreállításra került.</entry>
 	<entry key="registration.permamentlyDeletedUser">Ez a fiók átmenetileg zárolásra került.</entry>
@@ -38,12 +43,14 @@
 	<entry key="registration.userName">Felhasználónév</entry>
 	<entry key="registration.firstName">Keresztnév</entry>
 	<entry key="registration.lastName">Vezetéknév</entry>
-	<entry key="registration.emailAlreadyRegistered">Ez az email-cím már regisztrálva van a rendszerünkben!Kérjük próbálja meg a jelszó helyreállítást.</entry>
+	<entry key="registration.emailAlreadyRegistered">Ez az email-cím már regisztrálva van a
+		rendszerünkben!Kérjük próbálja meg a jelszó helyreállítást.</entry>
 	<entry key="registration.emailNotValid">Kérjük adjon meg egy valós email címmet!</entry>
-	<entry key="registration.userNameAlreadyRegistered">Ez a felhasználónév már foglalt! Kérjük válasszon egy másikat.</entry>
-	
+	<entry key="registration.userNameAlreadyRegistered">Ez a felhasználónév már foglalt! Kérjük válasszon egy
+		másikat.</entry>
+
 	<entry key="validation.required">Kötelező mező!</entry>
-	
+
 	<entry key="outerBar.account">Account</entry>
 	<entry key="outerBar.cart">Cart</entry>
 	<entry key="outerBar.totalAmount">Total items</entry>
@@ -57,10 +64,12 @@
 	<entry key="language.english">English</entry>
 	<entry key="language.hungarian">Magyar</entry>
 
-	<entry key="lostPassword.typeEmail">Kérjük írja be a már regisztrált email címmét hogy kiküldhessónk egy jelszó emlékeztető emailt!.</entry>
+	<entry key="lostPassword.typeEmail">Kérjük írja be a már regisztrált email címmét hogy
+		kiküldhessónk egy jelszó emlékeztető emailt!.</entry>
 	<entry key="lostPassword.sendEmail">Küldés</entry>
 
-	<entry key="validation.invalidOrExpiredToken">A kapott token érvénytele vagy lejárt! Kérjük próbálja meg a jelszó helyreállítást újra!</entry>
+	<entry key="validation.invalidOrExpiredToken">A kapott token érvénytele vagy lejárt! Kérjük próbálja
+		meg a jelszó helyreállítást újra!</entry>
 	<entry key="validation.passwordsNotMatch">A jelszavak nem eggyeznek!</entry>
 	<entry key="passwordRecover.resetPassword">Jelszó helyreállítás</entry>
 
@@ -75,6 +84,23 @@
 	<entry key="user.saved">A mentések eltárolásra kerültek!</entry>
 
 	<entry key="warning.alreadyLoggedIn">Már be van jelentkezve! Kérjük jelentkezzen ki előbb!</entry>
+	<entry key="address.addNew">Új cím hozzáadása</entry>
+
+	<entry key="address.zipCode">Irányítószám</entry>
+	<entry key="address.country">Ország</entry>
+	<entry key="address.street">Utca</entry>
+	<entry key="address.city">Város</entry>
+	<entry key="address.recipient">Címzett</entry>
+	<entry key="address.newAddress">Új cím</entry>
+	<entry key="address.addNew">Add new address</entry>
+	<entry key="address.editAddress">Cím szerkesztése</entry>
+	<entry key="general.phoneNumber">Telefonszám</entry>
+
+	<entry key="general.description">Leírás</entry>
+	<entry key="general.edit">Szerkesztés</entry>
+	<entry key="general.save">Mentés</entry>
+	<entry key="general.view">Megtekintés</entry>
+	<entry key="general.add">Hozzáadás</entry>
 
 	<entry key="category.name">Kategória neve</entry>
 	<entry key="category.subcategories">Alkategória</entry>
@@ -91,7 +117,8 @@
 	<entry key="titles.products">Minden termék</entry>
 
 	<entry key="prouduct.created">Termék létrehozva!</entry>
-	<entry key="product.cantCreated">Termék nem hozható létre mivel a kategória elérhetetlen!</entry>
+	<entry key="product.cantCreated">Termék nem hozható létre mivel a kategória
+		elérhetetlen!</entry>
 	<entry key="product.saved">Termék elmentve!</entry>
 	<entry key="notFound.categoryOrProduct.">Termék vagy kategória nem található!</entry>
 	<entry key="product.picture">Termék képe</entry>
@@ -109,6 +136,6 @@
 	<entry key="general.submitOrder">Rendelés leadása</entry>
 	<entry key="menu.admin">Admin menü</entry>
 	<entry key="general.categories">Kategóriák</entry>
-<entry key="general.products">Termékek</entry>
+	<entry key="general.products">Termékek</entry>
 
 </properties>

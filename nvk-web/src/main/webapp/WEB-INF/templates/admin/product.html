@@ -49,7 +49,7 @@
 
 
 					<div class="span6">
-						<div th:if="*{isNew == true} and *{selectedCategoryId != null}" th:class="form-group">
+						<div  th:class="form-group">
 							<select th:field="*{selectedCategoryId}" class="form-control input-sm" id="filter">
 								<option th:each="category : *{subCategories}" th:value="${category.id}" th:text="${category.name}"></option>
 							</select>
@@ -61,11 +61,10 @@
 
 						</div>
 						<label th:text="#{product.picture}">Picture</label>
-						<div class="form-group col-sm-12" th:if="*{pictureFlag}"
-							data-th-class="${#fields.hasErrors('picture')} ? 'form-group has-error' : 'form-group'">
+						<div class="form-group col-sm-12" data-th-class="${#fields.hasErrors('picture')} ? 'form-group has-error' : 'form-group'">
 							<img th:src="@{'/admin/product/' + *{id} + '/picture'}" />
 							<!-- 									<div> -->
-							<!-- 										<input data-th-field="*{picture}" type="file" class="form-control" /> -->
+																	<input data-th-field="*{picture}" type="file" class="form-control" />
 							<!-- 									</div> -->
 							<br /> <br /> <a tabindex="0" role="button" class="btn btn-default btn-xs" data-trigger="focus" data-toggle="popover"
 								th:attr="data-entity=${id}"><span class="glyphicon glyphicon-trash"></span> <span th:text="#{general.delete}">Delete</span></a>

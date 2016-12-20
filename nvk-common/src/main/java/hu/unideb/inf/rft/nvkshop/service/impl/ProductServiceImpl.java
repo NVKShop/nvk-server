@@ -77,7 +77,7 @@ public class ProductServiceImpl implements ProductService {
 			throws ValidationException {
 
 		Product product = new Product();
-		Category selectedCategory = categoryDao.findOne(selectedCategoryId);
+		Category selectedCategory = categoryDao.findOne(selectedCategoryId.longValue());
 		if (selectedCategory == null) {
 			throw new DeletedEntityException();
 		}

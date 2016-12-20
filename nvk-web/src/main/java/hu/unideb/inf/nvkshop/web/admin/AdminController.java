@@ -37,7 +37,7 @@ import hu.unideb.inf.rft.nvkshop.validation.product.ProductValidationViolation;
  */
 @Controller("adminController")
 @RequestMapping("/admin")
-@SessionAttributes(types = { UserForm.class })
+@SessionAttributes(types = { UserForm.class, CategoryForm.class, ProductForm.class })
 
 public class AdminController extends AbstractNvkController {
 
@@ -77,22 +77,21 @@ public class AdminController extends AbstractNvkController {
 	@RequestMapping(value = "/category/{id}/edit", produces = "text/html")
 	public String categorySubForm(@ModelAttribute("form") UserForm form, @PathVariable("id") long id, Model model,
 			RedirectAttributes redAttrs) {
-		CategoryForm categoryForm = new CategoryForm();
-
 		Category cat = categoryService.findById(id);
 		if (cat == null) {
 			// TODO: log or smtg
 			return "redirect:/admin/categories";
 		}
+		CategoryForm categoryForm = new CategoryForm();
 		categoryForm.setCategory(cat);
-		model.addAttribute("form", form);
+		model.addAttribute("categoryForm", categoryForm);
 		return "admin/category";
 
 	}
 
 	@RequestMapping(value = "/category/{id}/edit", produces = "text/html", method = RequestMethod.POST)
 	public String categorySubFormSubmit(@ModelAttribute("form") UserForm form, @PathVariable("id") long id,
-			@ModelAttribute("form") CategoryForm categoryForm, Model model, Errors errors, RedirectAttributes redAttrs) {
+			@ModelAttribute("categoryForm") CategoryForm categoryForm, Model model, Errors errors, RedirectAttributes redAttrs) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newCategoryName", "validation.required");
 		if (errors.hasErrors()) {
 			return "admin/edit";
@@ -107,9 +106,9 @@ public class AdminController extends AbstractNvkController {
 	}
 
 	@RequestMapping(value = "/category/{id}/subcategory/{subId}/edit", produces = "text/html")
-	public String categorySubEditForm(@ModelAttribute("form") UserForm form, @PathVariable("id") long id, @PathVariable("subId") long subId,
-			Model model, RedirectAttributes redAttrs) {
-		CategoryForm categoryForm = new CategoryForm();
+	public String categorySubEditForm(@ModelAttribute("form") UserForm form, @ModelAttribute("categoryForm") CategoryForm categoryForm,
+			@PathVariable("id") long id, @PathVariable("subId") long subId, Model model, RedirectAttributes redAttrs) {
+		// CategoryForm categoryForm = new CategoryForm();
 
 		Category cat = categoryService.findById(subId);
 		if (cat == null) {
@@ -164,7 +163,7 @@ public class AdminController extends AbstractNvkController {
 			System.out.println(cat.toString());
 		}
 		productForm.setIsNew(true);
-		model.addAttribute("form", form);
+		model.addAttribute("productForm", productForm);
 		return "admin/product";
 	}
 
@@ -172,7 +171,9 @@ public class AdminController extends AbstractNvkController {
 	public String productEditForm(@ModelAttribute("form") UserForm form, @RequestParam(value = "id", required = true) long id, Model model,
 			RedirectAttributes redAttrs) {
 		ProductForm productForm = new ProductForm();
+		addDatasForUser(productForm, null);
 		Product product = productService.findById(id);
+		addDatasForUser(form, null);
 		if (product == null) {
 			return "redirect:/admin/products";
 		}
@@ -183,10 +184,10 @@ public class AdminController extends AbstractNvkController {
 		productForm.setOnStock(100);
 		productForm.setCategory(product.getCategory());
 
-		productForm.setIsNew(false);
+		productForm.setIsNew(true);
 		productForm.setPictureFlag(product.getPictureAsByte().length > 0);
 		productForm.setId(product.getId());
-		model.addAttribute("form", form);
+		model.addAttribute("productForm", productForm);
 		return "admin/product";
 	}
 
@@ -197,11 +198,11 @@ public class AdminController extends AbstractNvkController {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "validation.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "price", "validation.required");
 
-		if (errors.hasErrors()) {
-			return "admin/product";
-		}
+		// if (errors.hasErrors()) {
+		// return "redirect:/admin/product";
+		// }
 
-		if (form.getId() == null) {
+		if (productForm.getId() == null) {
 			if (productForm.getIsNew() == true) {
 				try {
 					productService.addProduct(productForm.getName(), productForm.getDescription(), productForm.getPrice(),
@@ -265,7 +266,7 @@ public class AdminController extends AbstractNvkController {
 						}
 					}
 				}
-				return "admin/product?id=" + form.getId();
+				return "admin/product?id=" + productForm.getId();
 			} catch (DeletedEntityException e) {
 				redAttrs.addFlashAttribute("errorMsg", "notFound.categoryOrProduct");
 				return "redirect:/admin/products";
