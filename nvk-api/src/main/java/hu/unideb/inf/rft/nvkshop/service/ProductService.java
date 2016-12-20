@@ -16,13 +16,20 @@ public interface ProductService {
 
 	List<Product> findByCategory(Category category);
 
-	Product addProduct(Product p) throws ValidationException;
-
 	List<Product> getDiscountedProducts();
-	
+
 	void placeOrder(Order o);
 
 	Double getTotalOfOrder(Order order);
-	
+
 	Product findById(Long id);
+
+	Product addProduct(String name, String description, Double price, Integer onStrock, Long selectedCategoryId) throws ValidationException;
+
+	Product updateProduct(long id, String name, String description, Double price, Integer onStrock, Long selectedCategoryId)
+			throws ValidationException;
+
+	List<Product> findAll();
+
+	void uploadPictureForProduct(long id, byte[] pictureInBytes);
 }

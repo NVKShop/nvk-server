@@ -8,9 +8,11 @@ import org.springframework.stereotype.Repository;
 import hu.unideb.inf.rft.nvkshop.entities.product.Category;
 
 @Repository
-public interface CategoryDao extends JpaRepository<Category,Long> {
+public interface CategoryDao extends JpaRepository<Category, Long> {
 
 	List<Category> findByParent(Category category);
-	
+
 	List<Category> findByParentIsNull();
+
+	List<Category> findBySubCategoriesIsNull();
 }

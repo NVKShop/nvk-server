@@ -16,13 +16,14 @@
 <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
 </head>
 <body>
-	<form th:action="@{/admin/category.html}" data-th-object="${form}" class="form-stacked" method="post">
-
-		<!-- 		<div th:replace="fragments/navbar :: top-bar"></div> -->
+	<form th:action="@{/admin/products.html}" data-th-object="${form}" class="form-stacked" method="post">
+		<!-- 		<div -->
+		<!-- 			th:replace="fragments/navbar :: top-bar"></div> -->
 		<div id="wrapper" class="container">
-			<h4 th:text="#{category.name} + ' : ' + *{category.name}"></h4>
-			<h5 th:text="'(' + #{category.parent} + ' : ' + *{category.parent.name} + ')'"></h5>
-			<div class="span8">
+			<h4 th:text="#{titles.products}">Products</h4>
+
+
+			<div class="span12">
 
 				<table class="table table-hover table-condensed">
 					<thead>
@@ -35,12 +36,13 @@
 					</thead>
 					<tbody>
 
-						<tr th:each="product : *{category.products}">
+						<tr th:each="product : ${products}">
 							<th:block>
 								<td th:text="${product.name}">Name</td>
 								<td></td>
 								<td th:text="${product.price}">Value</td>
-								<td><a tabindex="0" type="button" class="btn btn-default" href="#" th:href="@{'/admin/product?id='+${product.id}}" data-th-text="#{general.edit}" role="button">Edit</a></td>
+								<td><a tabindex="0" type="button" class="btn btn-default" href="#" th:href="@{'/admin/product?id='+${product.id}}"
+									data-th-text="#{general.edit}" role="button">Edit</a></td>
 
 							</th:block>
 						</tr>
@@ -49,9 +51,12 @@
 			</div>
 
 			<div class="actions">
-				<a tabindex="0" type="button" class="btn btn-default" href="#" th:href="@{'/admin/newProduct?id=' + *{category.id}}" data-th-text="#{product.add}" role="button">Add</a>
+				<a tabindex="0" type="button" class="btn btn-default" href="#" th:href="@{/admin/newProduct}"
+					data-th-text="#{product.add}" role="button">Add</a>
 			</div>
-			<section class="main-content"></section>
+						<section class="main-content"></section>
+			
+
 		</div>
 	</form>
 

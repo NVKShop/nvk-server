@@ -117,5 +117,11 @@
 	<entry key="product.onStock">On stock</entry>
 	<entry key="product.price">Price</entry>
 	<entry key="titles.product">Product handling</entry>
+	<entry key="titles.products">All products</entry>
+	
+	<entry key="prouduct.created">Product succesfully created!</entry>
+	<entry key="product.cantCreated">Product can't create because of some related categories are deleted, or some datas are bad!</entry>
+		<entry key="product.saved">Product successfully saved!</entry>
+		<entry key="notFound.categoryOrProduct.">Category or product not found!</entry>
 	
 </properties>

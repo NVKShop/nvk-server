@@ -16,7 +16,7 @@
 <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
 </head>
 <body>
-	<form th:action="@{/admin/product.html}" data-th-object="${form}" class="form-stacked" method="post">
+	<form th:action="@{/admin/product.html}" data-th-object="${form}" class="form-stacked" enctype="multipart/form-data"  method="post">
 
 		<!-- 		<div -->
 		<!-- 			th:replace="fragments/navbar :: top-bar"></div> -->
@@ -38,12 +38,12 @@
 							<div th:replace="fragments/inputs :: textarea(field='description',  label=#{general.description}, rows=5 , readonly='false' )"></div>
 						</fieldset>
 
-						<div th:if="${isNew} and *{selectedCategory==null}" th:class="form-group">
-							<select th:field="*{selectedCategory}" class="form-control input-sm" id="filter">
-								<option th:each="category : *{subCategories}" th:value="*{selectedCategory}" th:text="*{category.name}"></option>
+						<div th:if="*{isNew == true} and *{selectedCategoryId != null}" th:class="form-group">
+							<select th:field="*{selectedCategoryId}" class="form-control input-sm" id="filter">
+								<option th:each="category : *{subCategories}" th:value="${category.id}" th:text="${category.name}"></option>
 							</select>
 						</div>
-						<div th:unless="${isNew}" th:class="form-group">
+						<div th:unless="*{isNew == true}" th:class="form-group">
 							<div
 								th:replace="fragments/inputs :: sized-readonly-input(field='category.name',  fieldSize='col-sm-3', label=#{category.name}, labelSize='col-sm-2')"></div>
 							<input type="hidden" th:field="*{id}"></input>
@@ -52,17 +52,35 @@
 					</div>
 
 
-					<div class="span6">Todo// Pic Here</div>
+					<div class="span6">
+					
+							<div class="col-sm-12"  th:if="${picture == null}" data-th-class="${#fields.hasErrors('picture')} ? 'form-group has-error' : 'form-group'" >
+<!-- 								<label for="pic" class=" control-label" data-th-text="#{product.picture}">Picture</label> -->
+									<input data-th-field="*{picture}" type="file" class="form-control" />
+<!-- 									 <span data-th-if="${#fields.hasErrors('picture')}" -->
+<!-- 										class="help-block" data-th-errors="*{picture}">Error message</span> -->
+								<div data-th-utext="#{validation.fileSize}"></div>
+							</div>
+<!-- 							<div  class="form-group col-sm-12"  th:if="${pictureFlag == true}" data-th-class="${#fields.hasErrors('picture')} ? 'form-group has-error' : 'form-group'" > -->
+								<label for="document" class="control-label" data-th-text="#{product.picture}">Picture</label>
+<!--  									<div class="form-control-static "> -->
+									<img th:src="@{'/admin/product/' + *{id} + '/picture'}" />
+									
+									
+<!-- 							</div> -->
+					</div>
 				</div>
-<br/>
-						
-						<div class="actions">
-							<button th:if="${isNew}" tabindex="9" class="btn btn-inverse large" type="submit" th:text="#{general.add}"></button>
+				<br />
 
-							<button th:unless="${isNew}" tabindex="9" class="btn btn-inverse large" type="submit" name="save" th:text="#{general.save}"></button>
-						</div>
+				<div class="actions">
+					<button th:if="*{isNew == true}" tabindex="9" class="btn btn-inverse large" type="submit" th:text="#{general.add}"></button>
+
+					<button th:unless="*{isNew}" tabindex="9" class="btn btn-inverse large" type="submit" name="save" th:text="#{general.save}"></button>
+				</div>
 			</section>
 		</div>
+		<input type="hidden" th:field="*{isNew}"></input>
+
 	</form>
 
 </body>

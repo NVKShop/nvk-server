@@ -19,4 +19,6 @@ public interface CategoryService {
 
 	void addSubCategory(long id, String newCategoryName) throws ValidationException;
 
+	List<Category> findLeafCategories();
+
 }

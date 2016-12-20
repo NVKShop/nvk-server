@@ -2,6 +2,7 @@ package hu.unideb.inf.rft.nvkshop.service.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,9 @@ import hu.unideb.inf.rft.nvkshop.eventhandling.EmailSendingEvent;
 import hu.unideb.inf.rft.nvkshop.eventhandling.EventType;
 import hu.unideb.inf.rft.nvkshop.repositories.ActiveDiscountDao;
 import hu.unideb.inf.rft.nvkshop.repositories.ArchiveOrderDao;
+import hu.unideb.inf.rft.nvkshop.repositories.CategoryDao;
 import hu.unideb.inf.rft.nvkshop.repositories.ProductDao;
+import hu.unideb.inf.rft.nvkshop.service.DeletedEntityException;
 import hu.unideb.inf.rft.nvkshop.service.ProductService;
 import hu.unideb.inf.rft.nvkshop.util.ProductSearch;
 import hu.unideb.inf.rft.nvkshop.validation.exception.ValidationException;
@@ -51,14 +54,17 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ApplicationEventPublisher eventPublisher;
 
+	@Autowired
+	private CategoryDao categoryDao;
+
 	@Override
 	public Page<Product> search(ProductSearch search) {
 
 		Sort sort = new Sort(search.getSortDirection(), Arrays.asList(search.getSortBy()));
 		PageRequest pageRequest = new PageRequest(search.getFrom(), search.getPageSize(), sort);
-		return productDao.search(ObjectUtils.defaultIfNull(search.getSearchTerm(), StringUtils.EMPTY),
-				search.getInCategories(), ObjectUtils.defaultIfNull(search.getLowerPrice(), 0D),
-				ObjectUtils.defaultIfNull(search.getUpperPrice(), Double.MAX_VALUE), pageRequest);
+		return productDao.search(ObjectUtils.defaultIfNull(search.getSearchTerm(), StringUtils.EMPTY), search.getInCategories(),
+				ObjectUtils.defaultIfNull(search.getLowerPrice(), 0D), ObjectUtils.defaultIfNull(search.getUpperPrice(), Double.MAX_VALUE),
+				pageRequest);
 	}
 
 	@Override
@@ -67,9 +73,48 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Product addProduct(Product product) throws ValidationException {
+	public Product addProduct(String name, String description, Double price, Integer onStrock, Long selectedCategoryId)
+			throws ValidationException {
+
+		Product product = new Product();
+		Category selectedCategory = categoryDao.findOne(selectedCategoryId);
+		if (selectedCategory == null) {
+			throw new DeletedEntityException();
+		}
+		product.setCategory(selectedCategory);
+		product.setDateOfCreation(new Date());
+		product.setDescription(description);
+		product.setName(name);
+		product.setPrice(price);
+		// TODO: onstock
+
 		validator.validate(product);
 		return productDao.save(product);
+	}
+
+	@Override
+	public Product updateProduct(long id, String name, String description, Double price, Integer onStrock, Long selectedCategoryId)
+			throws ValidationException {
+
+		Product product = productDao.findOne(id);
+		if (product == null) {
+			throw new DeletedEntityException();
+		}
+		if (selectedCategoryId != null) {
+			Category selectedCategory = categoryDao.findOne(selectedCategoryId.longValue());
+			if (selectedCategory == null) {
+				throw new DeletedEntityException();
+			}
+			product.setCategory(selectedCategory);
+		}
+		product.setDescription(description);
+		product.setName(name);
+		product.setPrice(price);
+		// TODO: onstock
+
+		validator.validate(product);
+		return productDao.save(product);
+
 	}
 
 	@Override
@@ -129,8 +174,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Double getTotalOfOrder(Order order) {
-		return order.getItems().stream().map((Item i) -> i.getProduct().getPrice() * i.getQuantity())
-				.reduce(Double::sum).orElse(0D);
+		return order.getItems().stream().map((Item i) -> i.getProduct().getPrice() * i.getQuantity()).reduce(Double::sum).orElse(0D);
 	}
 
 	@Override
@@ -138,4 +182,20 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.findOne(id);
 	}
 
+	@Override
+	public List<Product> findAll() {
+		return productDao.findAll();
+	}
+
+	@Override
+	public void uploadPictureForProduct(long id, byte[] pictureInBytes) {
+		Product product = productDao.findOne(id);
+		if (product == null) {
+			throw new DeletedEntityException();
+		}
+
+		product.setPictureAsByte(pictureInBytes);
+		product.setDateOfModification(new Date());
+		productDao.save(product);
+	}
 }

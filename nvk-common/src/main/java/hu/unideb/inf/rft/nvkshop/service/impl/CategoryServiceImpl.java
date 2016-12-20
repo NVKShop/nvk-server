@@ -28,6 +28,11 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
+	public List<Category> findLeafCategories() {
+		return categoryDao.findBySubCategoriesIsNull();
+	}
+
+	@Override
 	public List<Category> findByParent(Category category) {
 		return categoryDao.findByParent(category);
 	}
