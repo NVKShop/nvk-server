@@ -46,8 +46,6 @@ public class UserController extends AbstractNvkController {
 
 		User user = userService.findById(authenticationUserId());
 
-		addDatasForUser(form, null);
-
 		// User user = userService.findById(form.getUserId());
 		if (user == null) {
 			redAttrs.addAttribute("errorMsg", "user.notValidUser");
@@ -60,8 +58,8 @@ public class UserController extends AbstractNvkController {
 		form.setEmail(user.getEmail());
 
 		model.addAttribute("addresses", user.getAddresses());
-		model.addAttribute("userForm", form);
 		model.addAttribute("addressForm", new AddressForm());
+		// TODO: maybe add form.
 		return "user/edit";
 	}
 
@@ -98,7 +96,7 @@ public class UserController extends AbstractNvkController {
 	}
 
 	@RequestMapping(value = "/edit", params = "addAddress", method = RequestMethod.POST, produces = "text/html")
-	public String editFormAddAddress(@ModelAttribute("userForm") UserForm form, Errors errors, Model model, RedirectAttributes redAttrs) {
+	public String editFormAddAddress(@ModelAttribute("form") UserForm form, Errors errors, Model model, RedirectAttributes redAttrs) {
 
 		Long id = authenticationUserId();
 
@@ -116,7 +114,7 @@ public class UserController extends AbstractNvkController {
 	}
 
 	@RequestMapping(value = "/edit", params = "newPassword", method = RequestMethod.POST, produces = "text/html")
-	public String changePassword(@ModelAttribute("userForm") UserForm userForm, Errors errors, Model model, RedirectAttributes redAttrs) {
+	public String changePassword(@ModelAttribute("form") UserForm userForm, Errors errors, Model model, RedirectAttributes redAttrs) {
 
 		Long id = authenticationUserId();
 
@@ -142,7 +140,7 @@ public class UserController extends AbstractNvkController {
 	}
 
 	@RequestMapping(value = "/setprimaryaddress", method = RequestMethod.GET, produces = "text/html")
-	public String savePrimaryAddress(@ModelAttribute("userForm") UserForm userForm, @RequestParam("id") long addressId, Errors errors,
+	public String savePrimaryAddress(@ModelAttribute("form") UserForm userForm, @RequestParam("id") long addressId, Errors errors,
 			Model model, RedirectAttributes redAttrs) {
 
 		Long id = authenticationUserId();
@@ -157,7 +155,7 @@ public class UserController extends AbstractNvkController {
 	}
 
 	@RequestMapping(value = "/address", method = RequestMethod.GET, produces = "text/html")
-	public String address(@ModelAttribute("userForm") UserForm userForm, @RequestParam("id") long addressId, Errors errors, Model model,
+	public String address(@ModelAttribute("form") UserForm userForm, @RequestParam("id") long addressId, Errors errors, Model model,
 			RedirectAttributes redAttrs) {
 
 		Long id = authenticationUserId();
@@ -205,8 +203,8 @@ public class UserController extends AbstractNvkController {
 	}
 
 	@RequestMapping(value = "/deleteaddress", method = RequestMethod.GET, produces = "text/html")
-	public String deleteAddress(@ModelAttribute("userForm") UserForm userForm, @RequestParam("id") long addressId, Errors errors,
-			Model model, RedirectAttributes redAttrs) {
+	public String deleteAddress(@ModelAttribute("form") UserForm userForm, @RequestParam("id") long addressId, Errors errors, Model model,
+			RedirectAttributes redAttrs) {
 
 		Long id = authenticationUserId();
 		userService.deleteAddress(addressId, id);

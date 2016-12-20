@@ -16,29 +16,40 @@
 <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
 </head>
 <body>
-	<form th:action="@{/orders.html}" data-th-object="${form}" class="form-stacked"  method="post">
+	<form th:action="@{/orders.html}" data-th-object="${form}" class="form-stacked" method="post">
 
-		<div
-			th:replace="fragments/navbar :: top-bar"></div>
+		<div th:replace="fragments/navbar :: top-bar"></div>
 		<div id="wrapper" class="container">
-			<div
-			th:replace="fragments/navbar :: inner-bar"></div>
+			<div th:replace="fragments/navbar :: inner-bar"></div>
 
 			<section class="main-content">
-				
-				
-			</section>
 
-			<!-- 			<section class="header_text sub"> -->
-			<!-- 				<br /> -->
-			<!-- 			<img class="pageBanner" src="themes/images/pageBanner.png" alt="New products" /> -->
-			<!-- 				<h4> -->
-			<!-- 					<span data-th-text="#{titles.registration}">Regsiter</span> -->
-			<!-- 				</h4> -->
-			<!-- 			</section> -->
-			
+				<table th:if="*{cart != null}" class="table table-hover table-condensed table-info">
+					<thead>
+						<tr>
+							<th class="col-xs-2" th:text="#{general.product}">name</th>
+							<th class="col-xs-3" th:text="#{general.qty}">qty</th>
+							<th class="col-xs-2" th:text="#{general.operations}">Operations</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- 									th:field="*{inscriptions[__${stat.index}__].attend}" -->
+						<!--                         th:value="${inscription.attend}" type="checkbox" -->
+						<tr th:each="item, stat: *{cart}" class="table-info">
+							<td th:text="${item.product.name}">Product name</td>
+							<td><input type="text" th:field="*{cart[__${stat.index} __].quantity}" class="input-xlarge" /> Qty</td>
+							<td><a tabindex="0" role="button" class="btn btn-default btn-xs" data-trigger="focus" data-toggle="popover"
+								th:attr="data-entity=${stat.index}"><span class="glyphicon glyphicon-trash"></span> <span th:text="#{general.delete}">Delete</span></a>
+								<button type="submit" class="btn btn-default" th:text="#{general.save}">Save</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+			<button type="submit" class="btn btn-default" name="addOrder" th:text="#{general.submitOrder}">Order</button>
+
+
 		</div>
-		</form>
+	</form>
 
 </body>
 <script type="text/javascript" data-th-src="@{/resources/themes/js/jquery-1.7.2.min.js}" src="themes/js/jquery-1.7.2.min.js"></script>
@@ -47,17 +58,17 @@
 <script type="text/javascript" data-th-src="@{/resources/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" data-th-src="@{/resources/js/toastr.min.js}" src="js/toastr.min.js"></script>
 <script type="text/javascript" data-th-src="@{/resources/themes/js/common.js}" src="themes/js/common.js"></script>
-		<script data-th-if="${successMsg}" data-th-inline="javascript" type="text/javascript">
+<script data-th-if="${successMsg}" data-th-inline="javascript" type="text/javascript">
 	/*<![CDATA[*/
 		toastr.success([[#{${successMsg}}]], [[#{general.toastrSuccess}]]);
 	/*]]>*/
 	</script>
-	<script data-th-if="${errorMsg}" data-th-inline="javascript" type="text/javascript">
+<script data-th-if="${errorMsg}" data-th-inline="javascript" type="text/javascript">
 	/*<![CDATA[*/
 		toastr.error([[#{${errorMsg}}]], [[#{general.toastrError}]]);
 	/*]]>*/
 	</script>
-		<script data-th-if="${warningMsg}" data-th-inline="javascript" type="text/javascript">
+<script data-th-if="${warningMsg}" data-th-inline="javascript" type="text/javascript">
 	/*<![CDATA[*/
 		toastr.warning([[#{${warningMsg}}]], [[#{general.toastrWarning}]]);
 	/*]]>*/

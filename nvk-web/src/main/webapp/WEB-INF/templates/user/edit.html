@@ -16,11 +16,10 @@
 <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"></link>
 </head>
 <body>
-	<form id="form1" th:action="@{/user/edit.html}" data-th-object="${userForm}" class="form-stacked" method="post">
+	<form id="form1" th:action="@{/user/edit.html}" data-th-object="${form}" class="form-stacked" method="post">
 		<div th:replace="fragments/navbar :: top-bar"></div>
 		<div id="wrapper" class="container">
-		<div
-			th:replace="fragments/navbar :: inner-bar"></div>
+			<div th:replace="fragments/navbar :: inner-bar"></div>
 			<section class="main-content">
 				<div class="row">
 					<div class="span12">
@@ -67,7 +66,7 @@
 												<td th:text="${address.street}">Operations</td>
 												<td><a tabindex="0" role="button" class="btn btn-default btn-xs" data-trigger="focus" data-toggle="popover"
 													th:attr="data-entity=${address.id}"><span class="glyphicon glyphicon-trash"></span> <span th:text="#{general.delete}">Delete</span></a>
-																<a tabindex="0" type="button" class="btn btn-default" href="#" th:href="@{'/user/address.html?id=' + ${address.id}}"
+													<a tabindex="0" type="button" class="btn btn-default" href="#" th:href="@{'/user/address.html?id=' + ${address.id}}"
 													data-th-text="#{general.edit}" role="button">Edit</a></td>
 											</th:block>
 
@@ -77,32 +76,27 @@
 												<td th:text="${address.zipCode}">Zip</td>
 												<td th:text="${address.country}">Contry</td>
 												<td th:text="${address.street}">Operations</td>
-												<td>
-												<a tabindex="0" role="button" class="btn btn-default btn-xs" data-trigger="focus" data-toggle="popover"
+												<td><a tabindex="0" role="button" class="btn btn-default btn-xs" data-trigger="focus" data-toggle="popover"
 													th:attr="data-entity=${address.id}"><span class="glyphicon glyphicon-trash"></span> <span th:text="#{general.delete}">Delete</span></a>
 
 													<a tabindex="0" type="button" class="btn btn-default" href="#" th:href="@{'/user/address.html?id=' + ${address.id}}"
-													data-th-text="#{general.edit}" role="button">Edit</a>
-
-<!-- 													<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#addressModal" -->
-<!-- 														data-th-text="#{general.edit}" role="button">Edit</button>  -->
-													<a class="btn btn-success" href="#"
-													th:href="@{'/user/setprimaryaddress.html?id=' + ${address.id}}" th:text="#{address.setPrimary}"> </a>
-													</td>
+													data-th-text="#{general.edit}" role="button">Edit</a> <!-- 													<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#addressModal" -->
+													<!-- 														data-th-text="#{general.edit}" role="button">Edit</button>  --> <a class="btn btn-success" href="#"
+													th:href="@{'/user/setprimaryaddress.html?id=' + ${address.id}}" th:text="#{address.setPrimary}"> </a></td>
 											</th:block>
 										</tr>
 									</tbody>
 								</table>
 							</div>
 						</div>
-						<br/>
-						
-						<div class="actions">
-									<button tabindex="7" class="btn btn-inverse large left" data-toggle="modal" data-target="#newAddressModal"
-										th:text="#{address.addNew}"></button>
+						<br />
 
-									<button tabindex="7" class="btn btn-inverse large left" data-toggle="modal" data-target="#newPasswordModal"
-										th:text="#{userEdit.changePassword}"></button>
+						<div class="actions">
+							<button tabindex="7" class="btn btn-inverse large left" data-toggle="modal" data-target="#newAddressModal"
+								th:text="#{address.addNew}"></button>
+
+							<button tabindex="7" class="btn btn-inverse large left" data-toggle="modal" data-target="#newPasswordModal"
+								th:text="#{userEdit.changePassword}"></button>
 							<button tabindex="9" class="btn btn-inverse large" type="submit" name="save" th:text="#{general.save}"></button>
 						</div>
 
@@ -123,7 +117,7 @@
 	<!-- 					<h4 class="modal-title" id="" data-th-text="#{address.editAddress}">Edit address</h4> -->
 	<!-- 				</div> -->
 	<!-- 				<div class="modal-body"> -->
-	<!-- 					<form th:action="@{/user/addresses.html}" data-th-object="${userForm.newAddress}" class="form-stacked" method="post"> -->
+	<!-- 					<form th:action="@{/user/addresses.html}" data-th-object="${form.newAddress}" class="form-stacked" method="post"> -->
 
 	<!-- 						<div -->
 	<!-- 							th:replace="fragments/inputs :: sized-input(field='zipCode',  fieldSize='col-sm-3', label=#{address.zipCode}, labelSize='col-sm-2', required=true)"></div> -->
@@ -168,7 +162,7 @@
 					<h4 class="modal-title" id="" data-th-text="#{address.newAddress}">Add new address</h4>
 				</div>
 				<div class="modal-body">
-					<form id="form1" data-th-object="${userForm}" class="form-stacked" method="post">
+					<form id="form1" data-th-object="${form}" class="form-stacked" method="post">
 
 						<div class="col-sm-6">
 							<div
@@ -219,7 +213,7 @@
 					<h4 class="modal-title" id="" data-th-text="#{userEdit.changePassword}">Change password</h4>
 				</div>
 				<div class="modal-body">
-					<form id="form1" data-th-object="${userForm}" class="form-stacked" method="post">
+					<form id="form1" data-th-object="${form}" class="form-stacked" method="post">
 						<div class="control-group" th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
 							<label class="control-label"> <span th:text="#{userEdit.password}">Password</span> <sup class="text-danger">*</sup>
 							</label>

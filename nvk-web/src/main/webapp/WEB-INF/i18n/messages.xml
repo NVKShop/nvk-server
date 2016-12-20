@@ -119,7 +119,7 @@
 	<entry key="titles.product">Product handling</entry>
 	<entry key="titles.products">All products</entry>
 
-	<entry key="prouduct.created">Product succesfully created!</entry>
+	<entry key="prouduct.created">Product succesfully created!</entry>	
 	<entry key="product.cantCreated">Product can't create because of some related
 		categories are deleted, or some datas are bad!</entry>
 	<entry key="product.saved">Product successfully saved!</entry>
@@ -132,7 +132,10 @@
 			<entry key="general.moreInformation">More information</entry>
 <entry key="general.addToCart">Add to cart</entry>
 <entry key="general.cartIsEmpty">Empty cart :( </entry>
+	<entry key="order.placed">Our system has susseccfully accept your order! </entry>
 
+<entry key="general.product">Product</entry>
 <entry key="navbar.allProducts">All products</entry>
-	
+<entry key="general.submitOrder">Submit order</entry>
+
 </properties>

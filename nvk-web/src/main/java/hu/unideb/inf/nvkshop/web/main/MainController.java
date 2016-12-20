@@ -15,15 +15,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hu.unideb.inf.nvkshop.web.AbstractNvkController;
 import hu.unideb.inf.nvkshop.web.user.UserForm;
-import hu.unideb.inf.rft.nvkshop.entities.product.Category;
 import hu.unideb.inf.rft.nvkshop.entities.product.Item;
+import hu.unideb.inf.rft.nvkshop.entities.product.Order;
 import hu.unideb.inf.rft.nvkshop.entities.product.Product;
+import hu.unideb.inf.rft.nvkshop.entities.security.Address;
+import hu.unideb.inf.rft.nvkshop.entities.security.User;
+import hu.unideb.inf.rft.nvkshop.service.AddressService;
 import hu.unideb.inf.rft.nvkshop.service.CategoryService;
 import hu.unideb.inf.rft.nvkshop.service.ProductService;
+import hu.unideb.inf.rft.nvkshop.service.UserService;
 
 @Controller("mainController")
 @SessionAttributes(types = { UserForm.class })
@@ -33,20 +38,26 @@ public class MainController extends AbstractNvkController {
 	private ProductService productService;
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private AddressService addressService;
+	@Autowired
+	private UserService userService;
+
+	@RequestMapping(value = "/main-welcome", method = RequestMethod.GET, produces = "text/html")
+	public String mainWelcome(Model model, RedirectAttributes redAttrs) {
+
+		UserForm form = new UserForm();
+		addDatasForUser(form, null);
+
+		model.addAttribute("form", form);
+		return "main";
+	}
 
 	@RequestMapping(value = "/main", method = RequestMethod.GET, produces = "text/html")
-	public String main(@RequestParam(value = "categoryId", required = false) Long id, Model model, RedirectAttributes redAttrs) {
-		UserForm form = new UserForm();
+	public String main(@ModelAttribute(value = "form") UserForm form, @RequestParam(value = "categoryId", required = false) Long id,
+			Model model, RedirectAttributes redAttrs) {
 		addDatasForUser(form, id);
 
-		if (id != null) {
-			Category cat = categoryService.findById(id.longValue());
-			form.setProducts(productService.findByCategory(cat));
-		} else {
-			// TODO: Trimthis
-			form.setProducts(productService.findAll());
-
-		}
 		model.addAttribute("form", form);
 
 		return "main";
@@ -66,8 +77,8 @@ public class MainController extends AbstractNvkController {
 	}
 
 	@RequestMapping(value = "/product", method = RequestMethod.GET, produces = "text/html")
-	public String product(@RequestParam(value = "id", required = true) Long id, Model model, RedirectAttributes redAttrs) {
-		UserForm form = new UserForm();
+	public String product(@ModelAttribute("form") UserForm form, @RequestParam(value = "id", required = true) Long id, Model model,
+			RedirectAttributes redAttrs) {
 		addDatasForUser(form, null);
 
 		form.setProduct(productService.findById(id));
@@ -84,10 +95,15 @@ public class MainController extends AbstractNvkController {
 			form.setCart(new LinkedList<Item>());
 		}
 		if (form.getQty() != null && form.getQty() > 0) {
+			form.setTotalPrice(new Double(0));
 			if (form.getProduct().getId() != null) {
 				Product product = productService.findById(form.getProduct().getId().longValue());
+				Item item1 = new Item(product, form.getQty());
 
-				form.getCart().add(new Item(product, form.getQty()));
+				form.getCart().add(item1);
+				for (Item item : form.getCart()) {
+					form.setTotalPrice(form.getTotalPrice() + (item.getProduct().getPrice() * item.getQuantity()));
+				}
 			}
 		}
 		return "product";
@@ -96,7 +112,49 @@ public class MainController extends AbstractNvkController {
 	@RequestMapping(value = "/orders", method = RequestMethod.GET, produces = "text/html")
 	public String orders(@ModelAttribute("form") UserForm form, Model model, RedirectAttributes redAttrs) {
 
-		return "product";
+		return "orders";
 	}
 
+	@RequestMapping(value = "/orders", method = RequestMethod.POST, produces = "text/html")
+	public String orderSubmit(@ModelAttribute("form") UserForm form, Model model, RedirectAttributes redAttrs) {
+
+		form.setTotalPrice(new Double(0));
+		for (Item item : form.getCart()) {
+			form.setTotalPrice(form.getTotalPrice() + (item.getProduct().getPrice() * item.getQuantity()));
+		}
+
+		return "orders";
+	}
+
+	@RequestMapping(value = "/orders", params = "addOrder", method = RequestMethod.POST, produces = "text/html")
+	public String orderFinalizeOrder(@ModelAttribute("form") UserForm form, Model model, RedirectAttributes redAttrs,
+			SessionStatus status) {
+
+		long id = authenticationUserId();
+		User user = userService.findById(id);
+		Address primary = addressService.getDefaultAddress(user);
+		Order order = new Order();
+		order.setAddress(primary);
+		order.setItems(form.getCart());
+		order.setUser(user);
+		productService.placeOrder(order);
+
+		status.setComplete();
+
+		form = new UserForm();
+		addDatasForUser(form, null);
+
+		return "redirect:/order-success";
+	}
+
+	@RequestMapping(value = "/order-success", method = RequestMethod.GET, produces = "text/html")
+	public String orderFinalizeOrder(Model model, RedirectAttributes redAttrs) {
+
+		UserForm form = new UserForm();
+		addDatasForUser(form, null);
+		redAttrs.addFlashAttribute("successMsg", "order.placed");
+
+		model.addAttribute("form", form);
+		return "redirect:/main.html";
+	}
 }

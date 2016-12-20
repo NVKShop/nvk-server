@@ -11,6 +11,15 @@ public class MainForm {
 	private Product product;
 	private Long qty;
 	private Long id;
+	private double totalPrice;
+
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 
 	public Long getId() {
 		return id;
