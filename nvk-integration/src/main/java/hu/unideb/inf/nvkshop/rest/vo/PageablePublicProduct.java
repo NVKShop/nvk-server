@@ -8,13 +8,17 @@ public class PageablePublicProduct {
 
 	private Boolean nextPageExists;
 
+	private Long totalElements;
+
 	private List<PublicProduct> products;
 
-	public PageablePublicProduct(Boolean previousPageExists, Boolean nextPageExists, List<PublicProduct> products) {
+	public PageablePublicProduct(Boolean previousPageExists, Boolean nextPageExists, Long totalElements,
+			List<PublicProduct> products) {
 		super();
 		this.previousPageExists = previousPageExists;
 		this.nextPageExists = nextPageExists;
 		this.products = products;
+		this.totalElements = totalElements;
 	}
 
 	public Boolean getPreviousPageExists() {
@@ -39,6 +43,14 @@ public class PageablePublicProduct {
 
 	public void setProducts(List<PublicProduct> products) {
 		this.products = products;
+	}
+
+	public Long getTotalElements() {
+		return totalElements;
+	}
+
+	public void setTotalElements(Long totalElements) {
+		this.totalElements = totalElements;
 	}
 
 }
