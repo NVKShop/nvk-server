@@ -9,13 +9,22 @@ public class MainForm {
 	private List<Category> rootCategories;
 	private List<Product> products;
 	private Product product;
-	private Integer qty;
+	private Long qty;
+	private Long id;
 
-	public Integer getQty() {
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getQty() {
 		return qty;
 	}
 
-	public void setQty(Integer qty) {
+	public void setQty(Long qty) {
 		this.qty = qty;
 	}
 

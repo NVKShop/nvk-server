@@ -131,6 +131,7 @@
 			<entry key="general.availability">Availability</entry>
 			<entry key="general.moreInformation">More information</entry>
 <entry key="general.addToCart">Add to cart</entry>
+<entry key="general.cartIsEmpty">Empty cart :( </entry>
 
 <entry key="navbar.allProducts">All products</entry>
 	
